@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishMepedia - คลังความรู้ปลาตู้และไม้น้ำสดใสร่าเริง</title>
+    <title>FishMepedia — สารานุกรมปลาสวยงามและตู้ไม้น้ำ</title>
     <!-- Google Font & FontAwesome Icon -->
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,1102 +11,118 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     
     <style>
-        :root {
-            --bg-light: #f4fbf7;
-            --card-bg: #ffffff;
-            --card-border: #e2f2e9;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            
-            --green-primary: #10b981;
-            --green-dark: #047857;
-            --green-light: #d1fae5;
-            --green-soft: #ecfdf5;
-            
-            --yellow-accent: #f59e0b;
-            --yellow-light: #fef3c7;
-            
-            --green-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --hero-gradient: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
-        }
-
-        /* CUSTOM CURSOR */
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="9" r="2" fill="%23a7f3d0"/></svg>') 12 12, auto;
-        }
-
-        button, a, select, input {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%2310b981" stroke="%23047857" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="8" cy="8" r="2" fill="%23ffffff"/></svg>') 12 12, pointer !important;
-        }
-        
-        body { 
-            background-color: var(--bg-light); 
-            color: var(--text-dark); 
-            line-height: 1.6;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(52, 211, 153, 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 85% 20%, rgba(251, 191, 36, 0.18) 0%, transparent 35%),
-                radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.12) 0%, transparent 50%);
-            background-attachment: fixed;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* FLOATING BUBBLES BACKGROUND */
-        .bubbles-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .bubble {
-            position: absolute;
-            bottom: -60px;
-            background: rgba(16, 185, 129, 0.12);
-            border: 1.5px solid rgba(52, 211, 153, 0.35);
-            border-radius: 50%;
-            animation: floatUp 10s infinite linear;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.8); opacity: 0; }
-            20% { opacity: 0.7; }
-            80% { opacity: 0.5; }
-            100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
-        }
-
-        /* Header */
-        header {
-            padding: 3.5rem 1rem 2rem; 
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .welcome-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #ffffff;
-            border: 2px solid #a7f3d0;
-            padding: 6px 20px;
-            border-radius: 50px;
-            color: var(--green-dark);
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.12);
-            animation: bounce 2s infinite alternate;
-        }
-
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-4px); }
-        }
-
-        header h1 { 
-            font-size: 3rem; 
-            font-weight: 700; 
-            letter-spacing: -0.5px;
-            background: var(--hero-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-            text-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
-        }
-
-        header p { 
-            font-weight: 400; 
-            color: var(--text-muted); 
-            font-size: 1.15rem; 
-        }
-        
-        .social-links { margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-        .social-btn { 
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #ffffff;
-            border: 2px solid var(--card-border);
-            color: var(--text-dark); 
-            padding: 9px 20px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .social-btn:hover { 
-            transform: translateY(-4px) scale(1.05); 
-            background: var(--green-primary);
-            color: #ffffff;
-            border-color: var(--green-primary);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.25);
-        }
-
-        /* LUCKY DIP SEPARATE BUTTONS */
-        .lucky-fish {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            border-color: #38bdf8;
-            color: #0369a1;
-        }
-        .lucky-fish:hover {
-            background: #0284c7 !important;
-            border-color: #0284c7 !important;
-            color: #ffffff !important;
-        }
-
-        .lucky-plant {
-            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-            border-color: #4ade80;
-            color: #15803d;
-        }
-        .lucky-plant:hover {
-            background: #16a34a !important;
-            border-color: #16a34a !important;
-            color: #ffffff !important;
-        }
-
-        /* Controls / Filter */
-        .controls-container {
-            max-width: 1000px; 
-            margin: 0 auto 35px; 
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .search-box { margin-bottom: 16px; }
-        .search-bar {
-            width: 100%; 
-            padding: 18px 28px; 
-            border-radius: 50px;
-            border: 2px solid #a7f3d0; 
-            background: #ffffff;
-            color: var(--text-dark);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.08);
-            font-size: 1.05rem; 
-            outline: none; 
-            transition: all 0.3s;
-        }
-        .search-bar::placeholder { color: #94a3b8; }
-        .search-bar:focus { 
-            border-color: var(--green-primary); 
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
-            transform: scale(1.01);
-        }
-
-        .filter-group {
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 12px;
-            background: #ffffff; 
-            padding: 18px; 
-            border-radius: 28px;
-            border: 2px solid var(--card-border);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.03);
-        }
-
-        .filter-select {
-            padding: 12px 18px; 
-            border-radius: 18px; 
-            border: 2px solid #e2e8f0;
-            background-color: var(--bg-light); 
-            color: var(--text-dark); 
-            font-size: 0.95rem;
-            font-weight: 500;
-            outline: none; 
-            transition: all 0.3s;
-        }
-        .filter-select:focus { 
-            border-color: var(--green-primary); 
-            background-color: #ffffff;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
-        }
-        .filter-select:disabled { opacity: 0.4; }
-
-        /* Grid การ์ด */
-        .grid {
-            max-width: 1250px; 
-            margin: 0 auto; 
-            padding: 10px 20px 60px;
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-            gap: 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card {
-            background: var(--card-bg); 
-            border-radius: 28px; 
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.06); 
-            border: 2px solid var(--card-border);
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            display: flex; 
-            flex-direction: column; 
-            position: relative;
-        }
-        .card:hover {
-            transform: translateY(-8px) scale(1.02); 
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.18);
-            border-color: var(--green-primary);
-        }
-
-        .card-media-box {
-            width: 100%; 
-            aspect-ratio: 4/5; 
-            background: #f1f5f9; 
-            position: relative;
-            overflow: hidden; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-        }
-        
-        .media-count-badge {
-            position: absolute; 
-            top: 14px; 
-            right: 14px; 
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #a7f3d0;
-            color: var(--green-dark); 
-            font-size: 0.8rem; 
-            padding: 4px 12px; 
-            border-radius: 20px;
-            backdrop-filter: blur(8px); 
-            z-index: 2; 
-            font-weight: 600;
-        }
-
-        .card-body { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
-        
-        .category-badge {
-            font-size: 0.78rem; 
-            font-weight: 600; 
-            color: var(--green-dark);
-            background: var(--green-light); 
-            padding: 5px 14px; 
-            border-radius: 20px;
-            align-self: flex-start; 
-            margin-bottom: 8px;
-        }
-
-        /* CARE FEATURE BADGES */
-        .feature-badges-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-        .feature-badge {
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .badge-easy { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-        .badge-medium { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-        .badge-hard { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
-
-        .card-title { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
-        .card-subtitle { font-size: 0.9rem; color: var(--text-muted); font-style: italic; margin-bottom: 18px; }
-
-        .view-btn {
-            margin-top: auto; 
-            padding: 12px; 
-            border-radius: 18px;
-            background: var(--green-soft); 
-            color: var(--green-dark); 
-            font-weight: 600; 
-            font-size: 0.95rem;
-            text-align: center; 
-            border: 2px solid #a7f3d0; 
-            transition: all 0.3s;
-        }
-        .card:hover .view-btn { 
-            background: var(--green-gradient); 
-            color: #ffffff; 
-            border-color: transparent;
-            font-weight: 700;
-            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        /* FLOATING ACTION TOOLBAR */
-        .float-toolbar {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 99;
-        }
-
-        .calc-float-btn {
-            background: var(--green-gradient);
-            color: #ffffff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-        .calc-float-btn.elec-btn {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.35);
-        }
-        .calc-float-btn:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 28px rgba(16, 185, 129, 0.45);
-        }
-
-        .calc-box {
-            background: #f8fafc;
-            border: 2px solid var(--card-border);
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 15px;
-        }
-        .calc-input-group {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .calc-field label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px; }
-        .calc-field input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1.5px solid #cbd5e1;
-            font-size: 0.95rem;
-            outline: none;
-            text-align: center;
-        }
-        .calc-field input:focus { border-color: var(--green-primary); }
-
-        .calc-result-card {
-            background: var(--green-soft);
-            border: 2px dashed #a7f3d0;
-            border-radius: 16px;
-            padding: 15px;
-            text-align: center;
-        }
-        .calc-result-val { font-size: 1.8rem; font-weight: 700; color: var(--green-dark); }
-
-        /* ELECTRICITY CALCULATOR SPECIFIC STYLES */
-        .rate-preset-btn {
-            font-size: 0.78rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid #fde68a;
-            background: #fffbeb;
-            color: #b45309;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .rate-preset-btn:hover {
-            background: #f59e0b;
-            color: #ffffff;
-            border-color: #f59e0b;
-        }
-
-        .elec-item-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr auto;
-            gap: 8px;
-            align-items: center;
-            background: #ffffff;
-            padding: 10px 12px;
-            border-radius: 14px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 8px;
-        }
-        .elec-item-row input {
-            padding: 8px 10px;
-            border-radius: 10px;
-            border: 1.5px solid #e2e8f0;
-            font-size: 0.88rem;
-            outline: none;
-        }
-        .elec-item-row input:focus { border-color: var(--yellow-accent); }
-        .del-item-btn {
-            background: #fee2e2;
-            color: #ef4444;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-        .del-item-btn:hover { background: #ef4444; color: #ffffff; }
-
-        .add-device-btn {
-            width: 100%;
-            padding: 10px;
-            background: #ffffff;
-            border: 2px dashed #f59e0b;
-            color: #d97706;
-            font-weight: 600;
-            border-radius: 14px;
-            font-size: 0.9rem;
-            margin-top: 5px;
-            transition: all 0.2s;
-        }
-        .add-device-btn:hover { background: #fef3c7; }
-
-        /* POP-UP MODAL GENERAL */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.4); 
-            backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease;
-            padding: 20px;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-
-        .modal-container {
-            background: #ffffff; 
-            width: 100%; 
-            max-width: 880px; 
-            max-height: 88vh;
-            border-radius: 32px; 
-            overflow: hidden; 
-            border: 3px solid #a7f3d0;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
-            display: flex; 
-            flex-direction: column; 
-            position: relative;
-            transform: scale(0.9) translateY(20px); 
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .modal-overlay.active .modal-container { transform: scale(1) translateY(0); }
-
-        .close-modal-btn {
-            position: absolute; top: 18px; right: 18px; z-index: 20;
-            width: 42px; height: 42px; border-radius: 50%; 
-            background: #ffffff;
-            border: 2px solid var(--card-border);
-            color: var(--text-dark); 
-            font-size: 1.2rem; 
-            display: flex; align-items: center; justify-content: center; 
-            transition: all 0.3s;
-        }
-        .close-modal-btn:hover { 
-            background: #ff6b4a; color: #ffffff; border-color: #ff6b4a; transform: rotate(90deg) scale(1.1);
-        }
-
-        .modal-body { display: grid; grid-template-columns: 360px 1fr; overflow-y: auto; max-height: 88vh; }
-        .modal-media-col { background: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-height: 400px; border-right: 2px solid var(--card-border); }
-        
-        .media-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--green-primary) #f8fafc; width: 100%; height: 100%; max-height: 520px; }
-        .media-slider::-webkit-scrollbar { height: 6px; }
-        .media-slider::-webkit-scrollbar-thumb { background: var(--green-primary); border-radius: 10px; }
-        .media-wrapper { flex: 0 0 100%; scroll-snap-align: start; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f8fafc; }
-        .media-item { width: 100%; height: 100%; object-fit: contain; border: 0; }
-
-        .swipe-hint { position: absolute; bottom: 14px; background: rgba(255, 255, 255, 0.95); border: 2px solid #a7f3d0; color: var(--green-dark); font-size: 0.8rem; padding: 6px 16px; border-radius: 20px; pointer-events: none; z-index: 5; font-weight: 600; }
-
-        .modal-info-col { padding: 35px; display: flex; flex-direction: column; }
-        .modal-path { font-size: 0.82rem; font-weight: 600; color: var(--green-dark); background: var(--green-light); padding: 6px 16px; border-radius: 20px; align-self: flex-start; margin-bottom: 16px; }
-        .modal-title { font-size: 2.2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
-        .modal-subtitle { font-size: 1.05rem; color: var(--text-muted); font-style: italic; margin-bottom: 20px; }
-        
-        .modal-meta { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 16px; background: var(--yellow-light); font-size: 0.95rem; margin-bottom: 22px; border: 1px solid #fde68a; color: #92400e; font-weight: 500; align-self: flex-start; }
-        .modal-desc { font-size: 1.02rem; color: #334155; margin-bottom: 20px; white-space: pre-line; line-height: 1.8; flex-grow: 1; }
-
-        .shopee-btn { display: inline-flex; align-items: center; gap: 6px; background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; text-decoration: none; padding: 8px 16px; border-radius: 12px; font-weight: 500; font-size: 0.88rem; align-self: flex-start; transition: all 0.2s ease; }
-        .shopee-btn:hover { background: #ffedd5; color: #c2410c; border-color: #fed7aa; }
-
-        .loading { text-align: center; font-size: 1.25rem; color: var(--green-dark); padding: 60px; font-weight: 500; }
-
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.3rem; }
-            .modal-body { grid-template-columns: 1fr; }
-            .modal-media-col { min-height: 320px; max-height: 380px; border-right: none; border-bottom: 2px solid var(--card-border); }
-            .modal-info-col { padding: 25px; }
-            .float-toolbar { bottom: 15px; right: 15px; }
-            .calc-float-btn { padding: 10px 16px; font-size: 0.82rem; }
-            .elec-item-row { grid-template-columns: 1fr 1fr auto; }
-            .elec-item-row input:first-child { grid-column: 1 / -1; }
-        }
-    </style>
+:root{--bg:#f4fbf8;--surface:#fff;--surface2:#f7fcfa;--ink:#102a2a;--muted:#64748b;--line:#dceee8;--green:#10b981;--green2:#047857;--mint:#dff8ed;--blue:#0ea5e9;--blue2:#0369a1;--gold:#f59e0b;--danger:#ef4444;--shadow:0 16px 45px rgba(15,118,110,.10);--radius:24px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Kanit',sans-serif}
+html{scroll-behavior:smooth} body{background:radial-gradient(circle at 10% 5%,rgba(16,185,129,.12),transparent 28%),radial-gradient(circle at 90% 12%,rgba(14,165,233,.10),transparent 25%),var(--bg);color:var(--ink);line-height:1.65;overflow-x:hidden}
+button,a,input,select{cursor:pointer} button{font-family:inherit}.bubbles-container{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}.bubble{position:absolute;bottom:-60px;border:1px solid rgba(16,185,129,.22);background:rgba(255,255,255,.18);border-radius:50%;animation:floatUp 12s linear infinite}@keyframes floatUp{to{transform:translateY(-115vh);opacity:0}}
+header{position:relative;z-index:1;padding:42px 20px 24px}.hero{max-width:1180px;margin:auto;border:1px solid rgba(255,255,255,.75);border-radius:34px;padding:42px 38px;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(235,255,247,.88));box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:'🐟';position:absolute;right:40px;bottom:-38px;font-size:150px;opacity:.07;transform:rotate(-12deg)}.welcome-badge{display:inline-flex;gap:8px;align-items:center;padding:7px 15px;border-radius:999px;background:#fff;border:1px solid #bdebd8;color:var(--green2);font-weight:600;font-size:.9rem}.hero h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1;margin:17px 0 10px;background:linear-gradient(120deg,#047857,#10b981,#0ea5e9);-webkit-background-clip:text;color:transparent;font-weight:700;letter-spacing:-1px}.hero p{color:var(--muted);font-size:1.08rem;max-width:680px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.social-btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:.25s}.social-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(15,118,110,.12)}.lucky-fish{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}.lucky-plant{background:#dcfce7;color:#15803d;border-color:#bbf7d0}
+.stats{max-width:1180px;margin:0 auto 24px;padding:0 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative;z-index:1}.stat{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:20px;padding:17px 18px;box-shadow:0 8px 25px rgba(15,118,110,.05)}.stat strong{display:block;font-size:1.7rem;color:var(--green2);line-height:1.1}.stat span{font-size:.82rem;color:var(--muted)}
+.controls-container{max-width:1180px;margin:0 auto 25px;padding:0 20px;position:relative;z-index:2}.search-wrap{position:relative}.search-bar{width:100%;padding:18px 52px 18px 22px;border:2px solid #bfe8d8;border-radius:20px;background:#fff;font-size:1.02rem;outline:none;box-shadow:0 10px 30px rgba(15,118,110,.07)}.search-bar:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(16,185,129,.10)}.clear-search{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:#eef8f4;width:36px;height:36px;border-radius:50%;color:var(--muted)}.filter-panel{margin-top:12px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:22px;padding:15px;box-shadow:0 8px 25px rgba(15,118,110,.04)}.filter-group{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.filter-select{width:100%;padding:11px 14px;border:1px solid #d7e8e2;border-radius:14px;background:var(--surface2);color:var(--ink);outline:none}.filter-select:focus{border-color:var(--green)}.quick-filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.quick-btn{border:1px solid var(--line);background:#fff;color:var(--muted);padding:7px 12px;border-radius:999px;font-size:.82rem}.quick-btn.active,.quick-btn:hover{background:var(--mint);color:var(--green2);border-color:#9de1c5}.results-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;color:var(--muted);font-size:.88rem}.reset-btn{border:0;background:transparent;color:var(--green2);font-weight:600}
+.section{max-width:1180px;margin:0 auto 34px;padding:0 20px;position:relative;z-index:1}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:15px}.section-head h2{font-size:1.45rem}.section-head p{color:var(--muted);font-size:.88rem}.mini-link{color:var(--green2);font-size:.86rem;font-weight:600}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 8px 25px rgba(15,118,110,.06);transition:.28s;position:relative;display:flex;flex-direction:column}.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(15,118,110,.14);border-color:#a9dfca}.favorite-btn{position:absolute;top:12px;left:12px;z-index:4;border:0;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);color:#94a3b8;box-shadow:0 4px 12px rgba(0,0,0,.08)}.favorite-btn.active{color:#ef4444}.card-media-box{aspect-ratio:4/3;background:linear-gradient(135deg,#e9f8f2,#eaf7ff);position:relative;overflow:hidden}.card-media-box img,.card-media-box video,.card-media-box iframe{width:100%;height:100%;object-fit:cover;border:0}.placeholder-art{height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;opacity:.35}.media-count-badge{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);padding:4px 9px;border-radius:999px;font-size:.72rem;color:var(--green2);z-index:3}.card-body{padding:16px;display:flex;flex-direction:column;flex:1}.category-badge{display:inline-flex;align-self:flex-start;padding:4px 9px;border-radius:999px;background:var(--mint);color:var(--green2);font-size:.72rem;font-weight:600;margin-bottom:9px}.feature-badges-group{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.feature-badge{font-size:.68rem;padding:3px 8px;border-radius:999px;font-weight:600}.badge-easy{background:#dcfce7;color:#15803d}.badge-medium{background:#fef3c7;color:#b45309}.badge-hard{background:#ffe4e6;color:#be123c}.card-title{font-size:1.15rem;line-height:1.35}.card-subtitle{font-size:.8rem;color:var(--muted);font-style:italic;margin:4px 0 13px}.view-btn{margin-top:auto;width:100%;padding:9px;border:1px solid #bce8d7;border-radius:12px;background:#f0fbf6;color:var(--green2);font-weight:600}.view-btn:hover{background:var(--green);color:#fff}
+.loading{text-align:center;padding:55px;color:var(--green2);font-size:1.05rem}.empty-state{text-align:center;padding:45px 20px;background:#fff;border:1px dashed #b8ded0;border-radius:20px;color:var(--muted)}
+.tool-section{background:linear-gradient(135deg,#ecfdf5,#effaff);border:1px solid var(--line);border-radius:26px;padding:22px}.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.tool-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px;display:flex;justify-content:space-between;align-items:center;gap:12px}.tool-card h3{font-size:1rem}.tool-card p{font-size:.78rem;color:var(--muted)}.tool-btn{border:0;border-radius:12px;background:var(--green);color:#fff;padding:9px 12px;font-weight:600;white-space:nowrap}
+footer{position:relative;z-index:1;text-align:center;padding:25px 20px 45px;color:var(--muted);font-size:.82rem}.modal-overlay{position:fixed;inset:0;background:rgba(8,35,31,.52);backdrop-filter:blur(8px);display:flex;justify-content:center;align-items:center;z-index:1000;opacity:0;visibility:hidden;transition:.25s;padding:16px}.modal-overlay.active{opacity:1;visibility:visible}.modal-container{background:#fff;width:100%;max-width:920px;max-height:92vh;border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.22);transform:translateY(20px) scale(.97);transition:.3s;position:relative}.modal-overlay.active .modal-container{transform:none}.close-modal-btn{position:absolute;top:14px;right:14px;z-index:20;width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);color:var(--ink);font-size:1.1rem}.close-modal-btn:hover{background:#ef4444;color:#fff}.modal-body{display:grid;grid-template-columns:42% 58%;max-height:92vh;overflow:auto}.modal-media-col{background:#f3faf7;min-height:520px;position:relative}.media-slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;height:100%;min-height:520px}.media-wrapper{flex:0 0 100%;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;min-height:520px}.media-item{width:100%;height:100%;max-height:600px;object-fit:contain;border:0}.modal-info-col{padding:34px}.modal-path{display:inline-flex;flex-wrap:wrap;gap:5px;padding:5px 10px;border-radius:999px;background:var(--mint);color:var(--green2);font-size:.72rem;font-weight:600;margin-bottom:12px}.modal-title{font-size:2rem;line-height:1.25}.modal-subtitle{color:var(--muted);font-style:italic;margin:4px 0 10px}.modal-meta{display:inline-flex;padding:7px 12px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;color:#92400e;font-size:.82rem;margin-bottom:17px}.rich-content{display:grid;gap:10px}.rich-intro{font-size:.98rem;color:#334155;line-height:1.8;margin-bottom:5px}.care-block{background:#f8fcfa;border:1px solid var(--line);border-radius:15px;padding:12px 14px}.care-label{font-weight:600;color:var(--green2);font-size:.84rem;margin-bottom:2px}.care-text{font-size:.9rem;color:#334155}.shopee-btn{display:inline-flex;margin-top:15px;align-items:center;gap:7px;background:#fff7ed;color:#ea580c;border:1px solid #fed7aa;text-decoration:none;padding:9px 14px;border-radius:12px;font-weight:600;font-size:.82rem}.related{margin-top:22px}.related h3{font-size:1rem;margin-bottom:9px}.related-grid{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.related-chip{border:1px solid var(--line);background:#fff;border-radius:13px;padding:8px 11px;min-width:max-content;text-align:left}.related-chip b{display:block;font-size:.78rem}.related-chip span{font-size:.68rem;color:var(--muted)}.random-stage{text-align:center;padding:45px 25px}.random-icon{font-size:5rem;animation:wiggle .7s infinite}@keyframes wiggle{50%{transform:rotate(7deg) scale(1.06)}}.random-stage h2{margin:10px 0 5px}.random-stage p{color:var(--muted)}
+.calc-box{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:15px}.calc-input-group{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}.calc-field label{font-size:.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:4px}.calc-field input{width:100%;padding:10px;border-radius:10px;border:1px solid #cbd5e1;text-align:center}.calc-result-card{background:var(--mint);border:1px dashed #8bd6b7;border-radius:15px;padding:14px;text-align:center}.calc-result-val{font-size:1.8rem;font-weight:700;color:var(--green2)}.elec-item-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;align-items:center;background:#fff;padding:9px;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:7px}.elec-item-row input{padding:8px;border-radius:9px;border:1px solid #e2e8f0}.del-item-btn{background:#fee2e2;color:#ef4444;border:0;width:32px;height:32px;border-radius:9px}.add-device-btn{width:100%;padding:10px;background:#fff;border:1px dashed #f59e0b;color:#d97706;font-weight:600;border-radius:12px;margin-top:5px}.rate-preset-btn{font-size:.75rem;padding:4px 9px;border-radius:20px;border:1px solid #fde68a;background:#fffbeb;color:#b45309}.float-toolbar{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:90}.calc-float-btn{border:0;background:var(--green);color:#fff;padding:10px 14px;border-radius:999px;font-weight:600;box-shadow:0 8px 20px rgba(16,185,129,.25)}.calc-float-btn.elec-btn{background:#d97706}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.filter-group{grid-template-columns:1fr}.modal-body{grid-template-columns:1fr}.modal-media-col,.media-slider,.media-wrapper{min-height:300px;height:300px}.modal-info-col{padding:24px}.tool-grid{grid-template-columns:1fr}}
+@media(max-width:560px){header{padding:20px 12px}.hero{padding:28px 20px;border-radius:25px}.hero h1{font-size:2.65rem}.hero:after{font-size:90px;right:10px}.stats{padding:0 12px;gap:9px}.stat{padding:12px}.stat strong{font-size:1.35rem}.controls-container,.section{padding:0 12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{border-radius:17px}.card-body{padding:12px}.card-title{font-size:.98rem}.card-subtitle{font-size:.68rem}.view-btn{font-size:.72rem}.feature-badge{font-size:.58rem}.float-toolbar{right:10px;bottom:10px}.calc-float-btn{font-size:.72rem;padding:8px 11px}.calc-input-group{grid-template-columns:1fr}.elec-item-row{grid-template-columns:1fr 1fr auto}.elec-item-row input:first-child{grid-column:1/-1}.modal-title{font-size:1.6rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-
-    <!-- BUBBLES CONTAINER -->
-    <div class="bubbles-container" id="bubblesContainer"></div>
-
-    <header>
-        <div class="welcome-badge">✨ เริ่มต้นท่องโลกใต้น้ำสดใสไปด้วยกัน</div>
-        <h1>FishMepedia</h1>
-        <p>สารานุกรมปลาตู้และไม้น้ำสุดชีวา อ่านง่าย สนุก ได้ความรู้ 🐠🌱✨</p>
-        
-        <div class="social-links">
-            <a href="https://www.youtube.com/@fishme2022" target="_blank" class="social-btn">
-                <i class="fa-brands fa-youtube" style="color:#ff0000;"></i> YouTube
-            </a>
-            <a href="https://www.tiktok.com/@fishme22?_r=1&_t=ZS-99JX00F58mD" target="_blank" class="social-btn">
-                <i class="fa-brands fa-tiktok" style="color:#000000;"></i> TikTok
-            </a>
-            <button class="social-btn lucky-fish" onclick="openRandomFishModal()">
-                <i class="fa-solid fa-dice"></i> สุ่มพันธุ์ปลา 🐠
-            </button>
-            <button class="social-btn lucky-plant" onclick="openRandomPlantModal()">
-                <i class="fa-solid fa-dice"></i> สุ่มพรรณไม้น้ำ 🌿
-            </button>
-        </div>
-    </header>
-
-    <div class="controls-container">
-        <div class="search-box">
-            <input type="text" id="searchInput" class="search-bar" placeholder="🔍 พิมพ์ชื่อปลา, ไม้น้ำ, หรือค้นหาสิ่งที่น่าสนใจ...">
-        </div>
-
-        <div class="filter-group">
-            <select id="catSelect" class="filter-select">
-                <option value="">🌱 หมวดหมู่หลักทั้งหมด</option>
-            </select>
-            <select id="subCatSelect" class="filter-select" disabled>
-                <option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>
-            </select>
-            <select id="typeSelect" class="filter-select" disabled>
-                <option value="">🐠 กลุ่มสายพันธุ์ทั้งหมด</option>
-            </select>
-        </div>
+<div class="bubbles-container" id="bubblesContainer"></div>
+<header>
+  <div class="hero">
+    <div class="welcome-badge">✨ ยินดีต้อนรับสู่โลกใต้น้ำ</div>
+    <h1>FishMepedia</h1>
+    <p>สารานุกรมปลาสวยงามและตู้ไม้น้ำ อ่านง่าย ค้นง่าย และสนุกกับการเลือกสายพันธุ์ที่เหมาะกับตู้ของคุณ</p>
+    <div class="hero-actions">
+      <a href="https://www.youtube.com/@fishme2022" target="_blank" rel="noopener" class="social-btn"><i class="fa-brands fa-youtube"></i> YouTube</a>
+      <a href="https://www.tiktok.com/@fishme22" target="_blank" rel="noopener" class="social-btn"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+      <button class="social-btn lucky-fish" onclick="openRandomFishModal()"><i class="fa-solid fa-dice"></i> วันนี้เลี้ยงอะไรดี?</button>
+      <button class="social-btn lucky-plant" onclick="openRandomPlantModal()"><i class="fa-solid fa-seedling"></i> สุ่มพรรณไม้น้ำ</button>
     </div>
-
-    <div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> กำลังเตรียมข้อมูลสดใสๆ ให้คุณ...</div>
-    <div class="grid" id="dataContainer"></div>
-
-    <!-- FLOATING ACTION BUTTONS -->
-    <div class="float-toolbar">
-        <button class="calc-float-btn elec-btn" onclick="openElecModal()">
-            <i class="fa-solid fa-bolt"></i> คำนวณค่าไฟตู้ปลา
-        </button>
-        <button class="calc-float-btn" onclick="openCalcModal()">
-            <i class="fa-solid fa-droplet"></i> คำนวณน้ำในตู้ปลา
-        </button>
+  </div>
+</header>
+<section class="stats" id="statsSection">
+  <div class="stat"><strong id="statFish">0</strong><span>รายการปลา</span></div>
+  <div class="stat"><strong id="statPlants">0</strong><span>พรรณไม้น้ำ</span></div>
+  <div class="stat"><strong id="statEasy">0</strong><span>สายพันธุ์มือใหม่</span></div>
+  <div class="stat"><strong id="statGroups">0</strong><span>กลุ่มสายพันธุ์</span></div>
+</section>
+<div class="controls-container" id="catalog">
+  <div class="search-wrap"><input type="text" id="searchInput" class="search-bar" placeholder="🔍 ค้นหาชื่อไทย ชื่อวิทยาศาสตร์ กลุ่มปลา หรือคำในคำแนะนำ..."><button id="clearSearch" class="clear-search" title="ล้างการค้นหา" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="filter-panel">
+    <div class="filter-group">
+      <select id="catSelect" class="filter-select"><option value="">🐟 หมวดหมู่หลักทั้งหมด</option></select>
+      <select id="subCatSelect" class="filter-select" disabled><option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option></select>
+      <select id="typeSelect" class="filter-select" disabled><option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option></select>
     </div>
-
-    <!-- POP-UP DETAIL MODAL -->
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal-container">
-            <button class="close-modal-btn" onclick="closeModal('detailModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-body" id="modalContent"></div>
-        </div>
+    <div class="quick-filters" id="difficultyFilters">
+      <button class="quick-btn active" data-difficulty="">ทั้งหมด</button><button class="quick-btn" data-difficulty="ง่าย">🌱 เลี้ยงง่าย</button><button class="quick-btn" data-difficulty="ปานกลาง">☀️ ปานกลาง</button><button class="quick-btn" data-difficulty="ยาก">🔥 สำหรับผู้มีประสบการณ์</button><button class="quick-btn" data-favorite="true">❤️ รายการโปรด</button>
     </div>
-
-    <!-- TANK CALCULATOR MODAL -->
-    <div class="modal-overlay" id="calcModal">
-        <div class="modal-container" style="max-width: 500px;">
-            <button class="close-modal-btn" onclick="closeModal('calcModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div style="padding: 30px;">
-                <h2 style="color: var(--green-dark); font-size: 1.6rem; margin-bottom: 6px;"><i class="fa-solid fa-droplet"></i> คำนวณ ปริมาณน้ำในตู้ปลา</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">กรอกขนาดตู้ปลาของคุณ (ซม.) เพื่อคำนวณความจุลิตร</p>
-                
-                <div class="calc-box">
-                    <div class="calc-input-group">
-                        <div class="calc-field">
-                            <label>กว้าง (ซม.)</label>
-                            <input type="number" id="calcW" value="30" oninput="calculateWaterVolume()">
-                        </div>
-                        <div class="calc-field">
-                            <label>ยาว (ซม.)</label>
-                            <input type="number" id="calcL" value="60" oninput="calculateWaterVolume()">
-                        </div>
-                        <div class="calc-field">
-                            <label>สูง (ซม.)</label>
-                            <input type="number" id="calcH" value="35" oninput="calculateWaterVolume()">
-                        </div>
-                    </div>
-
-                    <div class="calc-result-card">
-                        <div style="font-size: 0.85rem; color: var(--text-muted);">ปริมาณน้ำประมาณ</div>
-                        <div class="calc-result-val" id="calcLiters">63 ลิตร</div>
-                        <div style="font-size: 0.8rem; color: var(--green-dark);" id="calcGallons">(~ 16.6 แกลลอน)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ELECTRICITY CALCULATOR MODAL -->
-    <div class="modal-overlay" id="elecModal">
-        <div class="modal-container" style="max-width: 620px;">
-            <button class="close-modal-btn" onclick="closeModal('elecModal')"><i class="fa-solid fa-xmark"></i></button>
-            <div style="padding: 30px; max-height: 85vh; overflow-y: auto;">
-                <h2 style="color: #d97706; font-size: 1.6rem; margin-bottom: 4px;">
-                    <i class="fa-solid fa-bolt"></i> คำนวณค่าไฟฟ้าอุปกรณ์ตู้ปลา
-                </h2>
-                <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 15px;">
-                    กรอกข้อมูลอุปกรณ์และอัตราค่าไฟตามพื้นที่ของคุณ
-                </p>
-
-                <!-- RATE INPUT & PRESETS -->
-                <div style="background: #fffbeb; border: 2px solid #fde68a; padding: 15px; border-radius: 18px; margin-bottom: 15px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
-                        <label style="font-weight: 600; color: #92400e; font-size: 0.95rem;">⚡ อัตราค่าไฟต่อยูนิต (บาท):</label>
-                        <div style="display: flex; gap: 6px;">
-                            <button class="rate-preset-btn" onclick="setRatePreset(4.5)">🏠 บ้านพัก (~4.5฿)</button>
-                            <button class="rate-preset-btn" onclick="setRatePreset(8.0)">🏢 หอพัก (~8.0฿)</button>
-                        </div>
-                    </div>
-                    <input type="number" id="elecRate" value="4.5" step="0.1" oninput="calculateElectricityTotal()" 
-                           style="width: 100%; padding: 10px; border-radius: 12px; border: 1.5px solid #fcd34d; font-size: 1.1rem; font-weight: 700; text-align: center; color: #b45309; outline: none;">
-                </div>
-
-                <!-- DYNAMIC DEVICE LIST -->
-                <div style="margin-bottom: 10px; display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); padding: 0 4px;">
-                    <span>ชื่ออุปกรณ์</span>
-                    <span>กำลังไฟ (Watt)</span>
-                    <span>เปิดวันละ (ชม.)</span>
-                    <span></span>
-                </div>
-
-                <div id="elecDeviceList"></div>
-
-                <button class="add-device-btn" onclick="addElecDevice()">
-                    <i class="fa-solid fa-plus"></i> เพิ่มอุปกรณ์ตู้ปลา
-                </button>
-
-                <!-- RESULT DISPLAY -->
-                <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border: 2px dashed #fcd34d; border-radius: 20px; padding: 18px; margin-top: 18px; text-align: center;">
-                    <div style="font-size: 0.85rem; color: #b45309; font-weight: 500;">ค่าไฟฟ้าตู้ปลาโดยประมาณ</div>
-                    <div style="font-size: 2.1rem; font-weight: 800; color: #d97706; line-height: 1.2;" id="totalCostVal">0.00 บาท/เดือน</div>
-                    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 6px; font-size: 0.82rem; color: #92400e;">
-                        <span id="totalUnitsVal">0 ยูนิต/เดือน</span>
-                        <span id="dailyCostVal">(~ 0.00 บาท/วัน)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGP8PdtAvHLh4juRR0vVCefGyxM-tsqDyU50uhymqnuQUN_cJJHb0CVOcmkGE-yefzqS7uMli7jVPk/pub?output=csv'; 
-
-        let allData = [];
-
-        // ตัวแปรเก็บอุปกรณ์สำหรับคำนวณค่าไฟ
-        let elecDevices = [
-            { name: 'โคมไฟ LED', watt: 20, hours: 8 },
-            { name: 'ปั๊มกรองน้ำ', watt: 15, hours: 24 }
-        ];
-
-        async function init() {
-            generateBubbles();
-            Papa.parse(CSV_URL, {
-                download: true,
-                header: true,
-                complete: function(results) {
-                    allData = results.data.filter(item => item.NameTH && item.NameTH.trim() !== '');
-                    setupCategoryDropdowns();
-                    renderCards(allData);
-                    document.getElementById('loading').style.display = 'none';
-                },
-                error: function() {
-                    document.getElementById('loading').innerHTML = '❌ ไม่สามารถโหลดข้อมูลได้ ลองใหม่อีกครั้งนะครับ';
-                }
-            });
-        }
-
-        /* FLOATING BUBBLES GENERATOR */
-        function generateBubbles() {
-            const container = document.getElementById('bubblesContainer');
-            for (let i = 0; i < 15; i++) {
-                const bubble = document.createElement('div');
-                bubble.className = 'bubble';
-                const size = Math.random() * 24 + 8;
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${Math.random() * 100}%`;
-                bubble.style.animationDuration = `${Math.random() * 8 + 6}s`;
-                bubble.style.animationDelay = `${Math.random() * 5}s`;
-                container.appendChild(bubble);
-            }
-        }
-
-        function parseMediaUrls(rawUrls) {
-            if (!rawUrls) return [];
-            return rawUrls
-                .split(/[\r\n,]+/)
-                .map(u => u.trim().replace(/^["']|["']$/g, ''))
-                .filter(u => u.length > 5 && u.startsWith('http'));
-        }
-
-        function fixMediaUrl(url) {
-            let cleanUrl = url.trim();
-            if (cleanUrl.includes('drive.google.com')) {
-                const driveMatch = cleanUrl.match(/(?:file\/d\/|id=|\/d\/)([\w-]+)/);
-                if (driveMatch && driveMatch[1]) {
-                    return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w1000`;
-                }
-            }
-            return cleanUrl;
-        }
-
-        function getYouTubeEmbedUrl(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            if (match && match[2] && match[2].length === 11) {
-                return `https://www.youtube.com/embed/${match[2]}?autoplay=1&mute=1&loop=1&playlist=${match[2]}`;
-            }
-            return null;
-        }
-
-        function createMediaElement(rawUrl) {
-            const cleanUrl = fixMediaUrl(rawUrl);
-            const ytEmbedUrl = getYouTubeEmbedUrl(cleanUrl);
-
-            if (ytEmbedUrl) {
-                return `<iframe class="media-item" src="${ytEmbedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            } else if (cleanUrl.match(/\.(mp4|webm|ogg)$/i)) {
-                return `<video class="media-item" src="${cleanUrl}" autoplay loop muted playsinline controls></video>`;
-            } else {
-                return `<img class="media-item" src="${cleanUrl}" alt="FishMepedia" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x500/ecfdf5/059669?text=FishMepedia';">`;
-            }
-        }
-
-        function setupCategoryDropdowns() {
-            const catSelect = document.getElementById('catSelect');
-            const categories = [...new Set(allData.map(i => i.Category).filter(Boolean))];
-            
-            categories.forEach(cat => {
-                const opt = document.createElement('option');
-                opt.value = cat; opt.textContent = cat;
-                catSelect.appendChild(opt);
-            });
-
-            catSelect.addEventListener('change', () => {
-                updateSubCategoryDropdown();
-                updateSpecificTypeDropdown();
-                applyFilters();
-            });
-
-            document.getElementById('subCatSelect').addEventListener('change', () => {
-                updateSpecificTypeDropdown();
-                applyFilters();
-            });
-
-            document.getElementById('typeSelect').addEventListener('change', applyFilters);
-            document.getElementById('searchInput').addEventListener('input', applyFilters);
-        }
-
-        function updateSubCategoryDropdown() {
-            const selectedCat = document.getElementById('catSelect').value;
-            const subCatSelect = document.getElementById('subCatSelect');
-            subCatSelect.innerHTML = '<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';
-            
-            if(!selectedCat) { subCatSelect.disabled = true; return; }
-
-            const subCats = [...new Set(allData
-                .filter(i => i.Category === selectedCat)
-                .map(i => i.SubCategory).filter(Boolean))];
-
-            subCats.forEach(sub => {
-                const opt = document.createElement('option');
-                opt.value = sub; opt.textContent = sub;
-                subCatSelect.appendChild(opt);
-            });
-            subCatSelect.disabled = false;
-        }
-
-        function updateSpecificTypeDropdown() {
-            const selectedCat = document.getElementById('catSelect').value;
-            const selectedSubCat = document.getElementById('subCatSelect').value;
-            const typeSelect = document.getElementById('typeSelect');
-            typeSelect.innerHTML = '<option value="">🐠 กลุ่มสายพันธุ์ทั้งหมด</option>';
-            
-            if(!selectedSubCat) { typeSelect.disabled = true; return; }
-
-            const types = [...new Set(allData
-                .filter(i => i.Category === selectedCat && i.SubCategory === selectedSubCat)
-                .map(i => i.SpecificType).filter(Boolean))];
-
-            types.forEach(type => {
-                const opt = document.createElement('option');
-                opt.value = type; opt.textContent = type;
-                typeSelect.appendChild(opt);
-            });
-            typeSelect.disabled = false;
-        }
-
-        function applyFilters() {
-            const cat = document.getElementById('catSelect').value;
-            const subCat = document.getElementById('subCatSelect').value;
-            const type = document.getElementById('typeSelect').value;
-            const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
-
-            const filtered = allData.filter(item => {
-                const matchCat = !cat || item.Category === cat;
-                const matchSubCat = !subCat || item.SubCategory === subCat;
-                const matchType = !type || item.SpecificType === type;
-                const matchKeyword = !keyword || 
-                    (item.NameTH && item.NameTH.toLowerCase().includes(keyword)) ||
-                    (item.NameEN && item.NameEN.toLowerCase().includes(keyword)) ||
-                    (item.CareInfo && item.CareInfo.toLowerCase().includes(keyword));
-
-                return matchCat && matchSubCat && matchType && matchKeyword;
-            });
-
-            renderCards(filtered);
-        }
-
-        function getCareBadgesHtml(item) {
-            let html = '';
-            if (item.Difficulty) {
-                if (item.Difficulty.includes('ง่าย')) {
-                    html += `<span class="feature-badge badge-easy">🌱 มือใหม่เลี้ยงง่าย</span>`;
-                } else if (item.Difficulty.includes('ปานกลาง')) {
-                    html += `<span class="feature-badge badge-medium">☀️ ดูแลปานกลาง</span>`;
-                } else if (item.Difficulty.includes('ยาก')) {
-                    html += `<span class="feature-badge badge-hard">🔥 สำหรับผู้มีประสบการณ์</span>`;
-                }
-            }
-            if (item.Category && (item.Category.includes('ไม้น้ำ') || item.Category.includes('พืช'))) {
-                html += `<span class="feature-badge badge-easy" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">🌿 ไม้น้ำ</span>`;
-            }
-            return html;
-        }
-
-        function renderCards(data) {
-            const container = document.getElementById('dataContainer');
-            container.innerHTML = '';
-
-            if (data.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 50px; color: var(--text-muted); font-size: 1.1rem;">🎈 ไม่พบข้อมูลที่คุณค้นหา ลองค้นหาคำอื่นดูนะครับ</p>';
-                return;
-            }
-
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.onclick = () => openModal(item);
-
-                const mediaUrls = parseMediaUrls(item.MediaURLs);
-                const firstMediaUrl = mediaUrls.length > 0 ? mediaUrls[0] : 'https://via.placeholder.com/400x500/ecfdf5/059669?text=FishMepedia';
-                const previewMediaHtml = createMediaElement(firstMediaUrl);
-
-                const countBadge = mediaUrls.length > 1 ? `<span class="media-count-badge"><i class="fa-solid fa-images"></i> 1/${mediaUrls.length}</span>` : '';
-
-                const pathParts = [item.Category, item.SubCategory].filter(Boolean);
-                const pathString = pathParts.join(' • ');
-
-                card.innerHTML = `
-                    <div class="card-media-box">
-                        ${countBadge}
-                        <div style="width:100%; height:100%; pointer-events:none;">${previewMediaHtml}</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category-badge">${pathString}</span>
-                        <div class="feature-badges-group">
-                            ${getCareBadgesHtml(item)}
-                        </div>
-                        <h3 class="card-title">${item.NameTH}</h3>
-                        <div class="card-subtitle">${item.NameEN || ''}</div>
-                        <button class="view-btn"><i class="fa-solid fa-face-smile"></i> อ่านรายละเอียด</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        /* SEPARATED LUCKY DIP FUNCTIONS */
-        function openRandomFishModal() {
-            if (allData.length === 0) return;
-            const fishList = allData.filter(item => {
-                const cat = (item.Category || '').toLowerCase();
-                return !cat.includes('ไม้น้ำ') && !cat.includes('พืช');
-            });
-
-            if (fishList.length === 0) {
-                alert('ยังไม่มีข้อมูลพันธุ์ปลาในขณะนี้ครับ');
-                return;
-            }
-            const randomIndex = Math.floor(Math.random() * fishList.length);
-            openModal(fishList[randomIndex]);
-        }
-
-        function openRandomPlantModal() {
-            if (allData.length === 0) return;
-            const plantList = allData.filter(item => {
-                const cat = (item.Category || '').toLowerCase();
-                return cat.includes('ไม้น้ำ') || cat.includes('พืช');
-            });
-
-            if (plantList.length === 0) {
-                alert('ยังไม่มีข้อมูลพรรณไม้น้ำในขณะนี้ครับ');
-                return;
-            }
-            const randomIndex = Math.floor(Math.random() * plantList.length);
-            openModal(plantList[randomIndex]);
-        }
-
-        function openModal(item) {
-            const modalContent = document.getElementById('modalContent');
-            const mediaUrls = parseMediaUrls(item.MediaURLs);
-
-            let mediaSliderHtml = '';
-            if (mediaUrls.length > 0) {
-                mediaUrls.forEach(url => {
-                    mediaSliderHtml += `<div class="media-wrapper">${createMediaElement(url)}</div>`;
-                });
-            } else {
-                mediaSliderHtml = `<div class="media-wrapper"><img class="media-item" src="https://via.placeholder.com/400x600/ecfdf5/059669?text=FishMepedia" alt="No Image"></div>`;
-            }
-
-            const swipeHintHtml = mediaUrls.length > 1 ? `<div class="swipe-hint"><i class="fa-solid fa-hand-pointer"></i> เลื่อนซ้าย-ขวา เพื่อดูรูป/วิดีโอทั้งหมด (${mediaUrls.length})</div>` : '';
-
-            let shopeeHtml = '';
-            if(item.ShopeeLink) {
-                shopeeHtml = `<a href="${item.ShopeeLink}" target="_blank" class="shopee-btn">
-                    <i class="fa-solid fa-bag-shopping"></i> สนใจสินค้าใน Shopee
-                </a>`;
-            }
-
-            const pathParts = [item.Category, item.SubCategory, item.SpecificType].filter(Boolean);
-            const pathString = pathParts.join(' <i class="fa-solid fa-angle-right" style="font-size:0.7rem;"></i> ');
-
-            modalContent.innerHTML = `
-                <div class="modal-media-col">
-                    <div class="media-slider">
-                        ${mediaSliderHtml}
-                    </div>
-                    ${swipeHintHtml}
-                </div>
-                <div class="modal-info-col">
-                    <div class="modal-path">${pathString}</div>
-                    <h2 class="modal-title">${item.NameTH}</h2>
-                    <div class="modal-subtitle">${item.NameEN || ''}</div>
-                    ${item.Difficulty ? `<div class="modal-meta"><i class="fa-solid fa-star"></i> ระดับการดูแล: <b style="color:#b45309;">${item.Difficulty}</b></div>` : ''}
-                    <div class="modal-desc">${item.CareInfo || 'ไม่มีข้อมูลเพิ่มเติม'}</div>
-                    ${shopeeHtml}
-                </div>
-            `;
-
-            document.getElementById('detailModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        /* TANK WATER CALCULATOR LOGIC */
-        function openCalcModal() {
-            document.getElementById('calcModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            calculateWaterVolume();
-        }
-
-        function calculateWaterVolume() {
-            const w = parseFloat(document.getElementById('calcW').value) || 0;
-            const l = parseFloat(document.getElementById('calcL').value) || 0;
-            const h = parseFloat(document.getElementById('calcH').value) || 0;
-            
-            const liters = (w * l * h) / 1000;
-            const gallons = liters * 0.264172;
-
-            document.getElementById('calcLiters').textContent = `${liters.toFixed(1)} ลิตร`;
-            document.getElementById('calcGallons').textContent = `(~ ${gallons.toFixed(1)} แกลลอน)`;
-        }
-
-        /* ELECTRICITY CALCULATOR LOGIC */
-        function openElecModal() {
-            document.getElementById('elecModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            renderElecDevices();
-            calculateElectricityTotal();
-        }
-
-        function setRatePreset(rate) {
-            document.getElementById('elecRate').value = rate;
-            calculateElectricityTotal();
-        }
-
-        function renderElecDevices() {
-            const container = document.getElementById('elecDeviceList');
-            container.innerHTML = '';
-
-            elecDevices.forEach((dev, idx) => {
-                const row = document.createElement('div');
-                row.className = 'elec-item-row';
-                row.innerHTML = `
-                    <input type="text" value="${dev.name}" placeholder="ชื่ออุปกรณ์" oninput="updateDevVal(${idx}, 'name', this.value)">
-                    <input type="number" value="${dev.watt}" placeholder="Watt" oninput="updateDevVal(${idx}, 'watt', this.value)">
-                    <input type="number" value="${dev.hours}" placeholder="ชม./วัน" max="24" min="0" oninput="updateDevVal(${idx}, 'hours', this.value)">
-                    <button class="del-item-btn" onclick="removeElecDevice(${idx})"><i class="fa-solid fa-trash-can"></i></button>
-                `;
-                container.appendChild(row);
-            });
-        }
-
-        function updateDevVal(index, field, val) {
-            if (field === 'name') elecDevices[index].name = val;
-            else elecDevices[index][field] = parseFloat(val) || 0;
-            calculateElectricityTotal();
-        }
-
-        function addElecDevice() {
-            elecDevices.push({ name: 'อุปกรณ์ใหม่', watt: 10, hours: 12 });
-            renderElecDevices();
-            calculateElectricityTotal();
-        }
-
-        function removeElecDevice(index) {
-            elecDevices.splice(index, 1);
-            renderElecDevices();
-            calculateElectricityTotal();
-        }
-
-        function calculateElectricityTotal() {
-            const rate = parseFloat(document.getElementById('elecRate').value) || 0;
-            let totalUnits = 0;
-
-            elecDevices.forEach(dev => {
-                const dailyKwh = ((dev.watt || 0) * (dev.hours || 0)) / 1000;
-                const monthlyKwh = dailyKwh * 30;
-                totalUnits += monthlyKwh;
-            });
-
-            const totalCost = totalUnits * rate;
-            const dailyCost = totalCost / 30;
-
-            document.getElementById('totalCostVal').textContent = `${totalCost.toFixed(2)} บาท/เดือน`;
-            document.getElementById('totalUnitsVal').textContent = `${totalUnits.toFixed(2)} ยูนิต/เดือน`;
-            document.getElementById('dailyCostVal').textContent = `(~ ${dailyCost.toFixed(2)} บาท/วัน)`;
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close Modal when clicking background
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', (e) => {
-                if(e.target === overlay) {
-                    closeModal(overlay.id);
-                }
-            });
-        });
-
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
+    <div class="results-row"><span id="resultCount">กำลังเตรียมข้อมูล...</span><button class="reset-btn" onclick="resetFilters()">รีเซ็ตตัวกรอง</button></div>
+  </div>
+</div>
+<section class="section" id="featuredSection"><div class="section-head"><div><h2>✨ สายพันธุ์น่าสนใจ</h2><p>เลือกดูตัวอย่างจากฐานข้อมูลได้ทันที</p></div><a class="mini-link" href="#catalog">ดูทั้งหมด ↓</a></div><div class="grid" id="featuredGrid"></div></section>
+<section class="section" id="beginnerSection"><div class="section-head"><div><h2>🌱 เริ่มต้นเลี้ยงปลา</h2><p>รวมสายพันธุ์ที่มีระดับการดูแล “ง่าย” จากข้อมูลของคุณ</p></div></div><div class="grid" id="beginnerGrid"></div></section>
+<section class="section" id="resultsSection"><div class="section-head"><div><h2>🐟 ฐานข้อมูล FishMepedia</h2><p>ค้นหาและกรองข้อมูลได้จาก Google Sheets โดยตรง</p></div></div><div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดฐานข้อมูล...</div><div class="grid" id="dataContainer"></div></section>
+<section class="section"><div class="tool-section"><div class="section-head"><div><h2>🧰 เครื่องมือสำหรับคนเลี้ยงตู้</h2><p>เครื่องมือเล็ก ๆ ที่ช่วยวางแผนตู้ได้ง่ายขึ้น</p></div></div><div class="tool-grid"><div class="tool-card"><div><h3>💧 ปริมาณน้ำในตู้</h3><p>คำนวณจากกว้าง × ยาว × สูง</p></div><button class="tool-btn" onclick="openCalcModal()">เปิดเครื่องมือ</button></div><div class="tool-card"><div><h3>⚡ ค่าไฟตู้ปลา</h3><p>ประเมินค่าไฟจากอุปกรณ์และชั่วโมงใช้งาน</p></div><button class="tool-btn" onclick="openElecModal()">เปิดเครื่องมือ</button></div></div></div></section>
+<div class="float-toolbar"><button class="calc-float-btn elec-btn" onclick="openElecModal()"><i class="fa-solid fa-bolt"></i> ค่าไฟ</button><button class="calc-float-btn" onclick="openCalcModal()"><i class="fa-solid fa-droplet"></i> ปริมาณน้ำ</button></div>
+<footer>FishMepedia · ฐานความรู้สำหรับคนรักปลาสวยงามและตู้ไม้น้ำ<br><span>ข้อมูลเชื่อมต่อจาก Google Sheets</span></footer>
+<div class="modal-overlay" id="detailModal"><div class="modal-container"><button class="close-modal-btn" onclick="closeModal('detailModal')"><i class="fa-solid fa-xmark"></i></button><div class="modal-body" id="modalContent"></div></div></div>
+<div class="modal-overlay" id="randomModal"><div class="modal-container" style="max-width:560px"><button class="close-modal-btn" onclick="closeModal('randomModal')"><i class="fa-solid fa-xmark"></i></button><div id="randomContent"></div></div></div>
+<div class="modal-overlay" id="calcModal"><div class="modal-container" style="max-width:500px"><button class="close-modal-btn" onclick="closeModal('calcModal')"><i class="fa-solid fa-xmark"></i></button><div style="padding:30px"><h2 style="color:var(--green2);font-size:1.5rem">💧 คำนวณปริมาณน้ำในตู้ปลา</h2><p style="color:var(--muted);font-size:.88rem">กรอกขนาดตู้เป็นเซนติเมตร</p><div class="calc-box"><div class="calc-input-group"><div class="calc-field"><label>กว้าง</label><input type="number" id="calcW" value="30" min="0" oninput="calculateWaterVolume()"></div><div class="calc-field"><label>ยาว</label><input type="number" id="calcL" value="60" min="0" oninput="calculateWaterVolume()"></div><div class="calc-field"><label>สูง</label><input type="number" id="calcH" value="35" min="0" oninput="calculateWaterVolume()"></div></div><div class="calc-result-card"><div style="font-size:.8rem;color:var(--muted)">ปริมาณน้ำโดยประมาณ</div><div class="calc-result-val" id="calcLiters">63.0 ลิตร</div><div style="font-size:.78rem;color:var(--green2)" id="calcGallons">(~ 16.6 แกลลอน)</div></div></div></div></div></div>
+<div class="modal-overlay" id="elecModal"><div class="modal-container" style="max-width:650px"><button class="close-modal-btn" onclick="closeModal('elecModal')"><i class="fa-solid fa-xmark"></i></button><div style="padding:30px;max-height:88vh;overflow:auto"><h2 style="color:#d97706;font-size:1.5rem">⚡ คำนวณค่าไฟอุปกรณ์ตู้ปลา</h2><p style="color:var(--muted);font-size:.86rem">ปรับอุปกรณ์และอัตราค่าไฟได้ตามจริง</p><div style="background:#fffbeb;border:1px solid #fde68a;padding:13px;border-radius:15px;margin:14px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><label style="font-weight:600;color:#92400e">อัตราค่าไฟต่อยูนิต (บาท)</label><div><button class="rate-preset-btn" onclick="setRatePreset(4.5)">บ้าน ~4.5฿</button> <button class="rate-preset-btn" onclick="setRatePreset(8)">หอ ~8฿</button></div></div><input type="number" id="elecRate" value="4.5" step=".1" oninput="calculateElectricityTotal()" style="width:100%;padding:10px;margin-top:7px;border:1px solid #fcd34d;border-radius:10px"></div><div style="display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;font-size:.75rem;color:var(--muted);padding:0 4px 6px"><span>ชื่ออุปกรณ์</span><span>Watt</span><span>ชม./วัน</span><span></span></div><div id="elecDeviceList"></div><button class="add-device-btn" onclick="addElecDevice()">＋ เพิ่มอุปกรณ์</button><div style="background:#fffbeb;border:1px dashed #fcd34d;border-radius:16px;padding:17px;margin-top:15px;text-align:center"><div style="font-size:.8rem;color:#b45309">ค่าไฟโดยประมาณ</div><div style="font-size:2rem;font-weight:800;color:#d97706" id="totalCostVal">0.00 บาท/เดือน</div><div style="font-size:.78rem;color:#92400e"><span id="totalUnitsVal">0 ยูนิต/เดือน</span> · <span id="dailyCostVal">~0.00 บาท/วัน</span></div></div></div></div></div>
+<script>
+const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRGP8PdtAvHLh4juRR0vVCefGyxM-tsqDyU50uhymqnuQUN_cJJHb0CVOcmkGE-yefzqS7uMli7jVPk/pub?output=csv';
+let allData=[], currentFiltered=[], selectedDifficulty='', showFavoritesOnly=false;
+let favorites=JSON.parse(localStorage.getItem('fishmepedia_favorites')||'[]');
+let elecDevices=[{name:'โคมไฟ LED',watt:20,hours:8},{name:'ปั๊มกรองน้ำ',watt:15,hours:24}];
+const $=id=>document.getElementById(id);
+function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function normalizeItem(r){return {Category:(r.Category||'').trim(),SubCategory:(r.SubCategory||'').trim(),SpecificType:(r['Specific Type']||r.SpecificType||'').trim(),NameTH:(r['Name TH']||r.NameTH||'').trim(),NameEN:(r.NameEN||'').trim(),CareInfo:(r.CareInfo||'').trim(),Difficulty:(r.Difficulty||'').trim(),MediaURLs:(r.MediaURLs||'').trim(),ShopeeLink:(r.ShopeeLink||'').trim()};}
+async function init(){generateBubbles();setupEvents();$('loading').style.display='block';Papa.parse(CSV_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allData=r.data.map(normalizeItem).filter(x=>x.NameTH);updateStats();setupCategoryDropdowns();renderFeatured();renderBeginner();applyFilters();$('loading').style.display='none';},error:e=>{$('loading').innerHTML='❌ ไม่สามารถโหลดข้อมูลจาก Google Sheets ได้ กรุณาตรวจสอบการเผยแพร่ชีตเป็น CSV';}})}
+function setupEvents(){ $('searchInput').addEventListener('input',applyFilters);$('catSelect').addEventListener('change',()=>{updateSubCategoryDropdown();updateSpecificTypeDropdown();applyFilters()});$('subCatSelect').addEventListener('change',()=>{updateSpecificTypeDropdown();applyFilters()});$('typeSelect').addEventListener('change',applyFilters);document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>{selectedDifficulty=b.dataset.difficulty;document.querySelectorAll('[data-difficulty]').forEach(x=>x.classList.remove('active'));b.classList.add('active');applyFilters()}));document.querySelector('[data-favorite]').addEventListener('click',e=>{showFavoritesOnly=!showFavoritesOnly;e.currentTarget.classList.toggle('active',showFavoritesOnly);applyFilters()});document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.active').forEach(m=>closeModal(m.id))});}
+function updateStats(){const fish=allData.filter(x=>!isPlant(x));const plants=allData.filter(isPlant);$('statFish').textContent=fish.length;$('statPlants').textContent=plants.length;$('statEasy').textContent=allData.filter(x=>x.Difficulty.includes('ง่าย')).length;$('statGroups').textContent=new Set(allData.map(x=>x.SpecificType).filter(Boolean)).size;}
+function isPlant(x){const c=x.Category.toLowerCase();return c.includes('ไม้น้ำ')||c.includes('พืช');}
+function generateBubbles(){const c=$('bubblesContainer');for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const z=Math.random()*22+8;b.style.width=z+'px';b.style.height=z+'px';b.style.left=Math.random()*100+'%';b.style.animationDuration=(Math.random()*8+8)+'s';b.style.animationDelay=(Math.random()*6)+'s';c.appendChild(b)}}
+function parseMediaUrls(raw){return raw?raw.split(/[\r\n,]+/).map(x=>x.trim().replace(/^['"]|['"]$/g,'')).filter(x=>/^https?:\/\//i.test(x)):[]}
+function getYouTubeEmbedUrl(u){const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&#/]+)/i);return m?`https://www.youtube.com/embed/${m[1]}?autoplay=0&mute=1&rel=0`:null}
+function fixMediaUrl(u){const m=u.match(/drive\.google\.com.*(?:file\/d\/|id=|\/d\/)([\w-]+)/);return m?`https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200`:u}
+function mediaHtml(u,cover=false){u=fixMediaUrl(u);const yt=getYouTubeEmbedUrl(u);if(yt)return `<iframe class="media-item" src="${esc(yt)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;if(/\.(mp4|webm|ogg)(\?|$)/i.test(u))return `<video class="media-item" src="${esc(u)}" ${cover?'muted autoplay loop':''} playsinline controls></video>`;return `<img class="media-item" src="${esc(u)}" alt="${esc('ภาพ '+(cover?'ตัวอย่าง':'ปลา'))}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=&quot;placeholder-art&quot;>🐟</div>'">`;}
+function setupCategoryDropdowns(){const s=$('catSelect');s.innerHTML='<option value="">🐟 หมวดหมู่หลักทั้งหมด</option>';[...new Set(allData.map(x=>x.Category).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));updateSubCategoryDropdown()}
+function updateSubCategoryDropdown(){const cat=$('catSelect').value,s=$('subCatSelect');s.innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';if(!cat){s.disabled=true;updateSpecificTypeDropdown();return} [...new Set(allData.filter(x=>x.Category===cat).map(x=>x.SubCategory).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));s.disabled=false}
+function updateSpecificTypeDropdown(){const cat=$('catSelect').value,sub=$('subCatSelect').value,s=$('typeSelect');s.innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';if(!sub){s.disabled=true;return}[...new Set(allData.filter(x=>x.Category===cat&&x.SubCategory===sub).map(x=>x.SpecificType).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));s.disabled=false}
+function applyFilters(){const cat=$('catSelect').value,sub=$('subCatSelect').value,type=$('typeSelect').value,k=$('searchInput').value.toLowerCase().trim();currentFiltered=allData.filter(x=>{const hay=[x.NameTH,x.NameEN,x.Category,x.SubCategory,x.SpecificType,x.CareInfo].join(' ').toLowerCase();return(!cat||x.Category===cat)&&(!sub||x.SubCategory===sub)&&(!type||x.SpecificType===type)&&(!selectedDifficulty||x.Difficulty.includes(selectedDifficulty))&&(!showFavoritesOnly||favorites.includes(favKey(x)))&&(!k||hay.includes(k))});$('resultCount').textContent=`พบ ${currentFiltered.length.toLocaleString()} รายการ`;renderCards(currentFiltered,$('dataContainer'));$('featuredSection').style.display=(k||cat||sub||type||selectedDifficulty||showFavoritesOnly)?'none':'block';$('beginnerSection').style.display=(k||cat||sub||type||selectedDifficulty||showFavoritesOnly)?'none':'block'}
+function resetFilters(){$('searchInput').value='';$('catSelect').value='';$('subCatSelect').innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';$('subCatSelect').disabled=true;$('typeSelect').innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';$('typeSelect').disabled=true;selectedDifficulty='';showFavoritesOnly=false;document.querySelectorAll('.quick-btn').forEach(x=>x.classList.remove('active'));document.querySelector('[data-difficulty=""]').classList.add('active');document.querySelector('[data-favorite]').classList.remove('active');applyFilters()}
+function clearSearch(){$('searchInput').value='';applyFilters();$('searchInput').focus()}
+function getCareBadgesHtml(x){if(!x.Difficulty)return '';let h='';if(x.Difficulty.includes('ง่าย'))h+='<span class="feature-badge badge-easy">🌱 เลี้ยงง่าย</span>';else if(x.Difficulty.includes('ปานกลาง'))h+='<span class="feature-badge badge-medium">☀️ ปานกลาง</span>';else if(x.Difficulty.includes('ยาก'))h+='<span class="feature-badge badge-hard">🔥 ยาก</span>';if(isPlant(x))h+='<span class="feature-badge" style="background:#e0f2fe;color:#0369a1">🌿 ไม้น้ำ</span>';return h}
+function favKey(x){return x.NameEN||x.NameTH}
+function toggleFavorite(x,e){e.stopPropagation();const k=favKey(x);favorites=favorites.includes(k)?favorites.filter(v=>v!==k):[...favorites,k];localStorage.setItem('fishmepedia_favorites',JSON.stringify(favorites));renderCards(currentFiltered,$('dataContainer'));if(!($('featuredSection').style.display==='none')){renderFeatured();renderBeginner()}}
+function cardHtml(x){const urls=parseMediaUrls(x.MediaURLs),u=urls[0];return `<article class="card" onclick='openModalByIndex(${allData.indexOf(x)})'><button class="favorite-btn ${favorites.includes(favKey(x))?'active':''}" title="${favorites.includes(favKey(x))?'นำออกจากรายการโปรด':'เพิ่มในรายการโปรด'}" onclick='toggleFavoriteByIndex(${allData.indexOf(x)},event)'><i class="fa-${favorites.includes(favKey(x))?'solid':'regular'} fa-heart"></i></button><div class="card-media-box">${urls.length>1?`<span class="media-count-badge"><i class="fa-solid fa-images"></i> ${urls.length}</span>`:''}${u?mediaHtml(u,true):'<div class="placeholder-art">🐟</div>'}</div><div class="card-body"><span class="category-badge">${esc([x.Category,x.SubCategory].filter(Boolean).join(' • '))}</span><div class="feature-badges-group">${getCareBadgesHtml(x)}</div><h3 class="card-title">${esc(x.NameTH)}</h3><div class="card-subtitle">${esc(x.NameEN)}</div><button class="view-btn" onclick='openModalByIndex(${allData.indexOf(x)});event.stopPropagation()'><i class="fa-solid fa-book-open"></i> อ่านรายละเอียด</button></div></article>`}
+function renderCards(data,container){container.innerHTML='';if(!data.length){container.innerHTML='<div class="empty-state" style="grid-column:1/-1">🐠 ไม่พบข้อมูลที่ตรงกับการค้นหา<br><small>ลองเปลี่ยนคำค้นหาหรือรีเซ็ตตัวกรองดูนะครับ</small></div>';return}data.forEach(x=>container.insertAdjacentHTML('beforeend',cardHtml(x)))}
+function renderFeatured(){const pool=allData.filter(x=>!isPlant(x));const picks=[...pool].sort(()=>Math.random()-.5).slice(0,6);renderCards(picks,$('featuredGrid'))}
+function renderBeginner(){const picks=allData.filter(x=>x.Difficulty.includes('ง่าย')).slice(0,6);renderCards(picks,$('beginnerGrid'))}
+function openModalByIndex(i){openModal(allData[i])}
+function toggleFavoriteByIndex(i,e){toggleFavorite(allData[i],e)}
+function parseCareInfo(raw){if(!raw)return {intro:'ยังไม่มีคำอธิบายเพิ่มเติม'};const parts=raw.split('|').map(x=>x.trim()).filter(Boolean);let intro='',blocks=[];parts.forEach((p,i)=>{const m=p.match(/^([^:：]+)[:：]\s*(.*)$/);if(m&&i>0)blocks.push({label:m[1].trim(),text:m[2].trim()});else if(i===0)intro=p;else blocks.push({label:'เกร็ดน่ารู้',text:p})});return {intro:intro||'ข้อมูลการเลี้ยงสำหรับสายพันธุ์นี้',blocks}}
+function relatedHtml(x){const rel=allData.filter(y=>y!==x&&x.SpecificType&&y.SpecificType===x.SpecificType).slice(0,8);if(!rel.length)return '';return `<div class="related"><h3>🐟 สายพันธุ์อื่นในกลุ่ม “${esc(x.SpecificType)}”</h3><div class="related-grid">${rel.map(y=>`<button class="related-chip" onclick='openModalByIndex(${allData.indexOf(y)})'><b>${esc(y.NameTH)}</b><span>${esc(y.NameEN)}</span></button>`).join('')}</div></div>`}
+function openModal(x){const urls=parseMediaUrls(x.MediaURLs),media=urls.length?urls.map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>';const care=parseCareInfo(x.CareInfo);const shopee=x.ShopeeLink?`<a class="shopee-btn" href="${esc(x.ShopeeLink)}" target="_blank" rel="noopener"><i class="fa-solid fa-bag-shopping"></i> ดูสินค้าที่เกี่ยวข้อง</a>`:'';$('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(care.intro)}</p>${care.blocks.map(b=>`<div class="care-block"><div class="care-label">${labelIcon(b.label)} ${esc(b.label)}</div><div class="care-text">${esc(b.text)}</div></div>`).join('')}</div>${shopee}${relatedHtml(x)}</div>`;$('detailModal').classList.add('active');document.body.style.overflow='hidden'}
+function labelIcon(l){if(/อุณหภูมิ|น้ำ/.test(l))return '🌡️';if(/นิสัย|พฤติกรรม/.test(l))return '🐟';if(/อาหาร/.test(l))return '🍽️';if(/ตู้|พื้น|สภาพ/.test(l))return '🏝️';if(/ดูแล/.test(l))return '💚';return '💡'}
+function openRandomFishModal(){const list=allData.filter(x=>!isPlant(x));openRandomResult(list,'🐟','วันนี้ปลาอะไรดี?')}
+function openRandomPlantModal(){const list=allData.filter(isPlant);openRandomResult(list,'🌿','วันนี้ปลูกอะไรดี?')}
+function openRandomResult(list,icon,title){if(!list.length){alert('ยังไม่มีข้อมูลในหมวดนี้ครับ');return}const x=list[Math.floor(Math.random()*list.length)];$('randomContent').innerHTML=`<div class="random-stage"><div class="random-icon">${icon}</div><h2>${title}</h2><p>กำลังเลือกจากฐานข้อมูลให้คุณ...</p></div>`;$('randomModal').classList.add('active');document.body.style.overflow='hidden';setTimeout(()=>{$('randomContent').innerHTML=`<div class="random-stage"><div style="font-size:4rem">${icon}</div><h2>${esc(x.NameTH)}</h2><p><i>${esc(x.NameEN)}</i></p><p>${getCareBadgesHtml(x)}</p><button class="tool-btn" style="margin-top:16px" onclick='closeModal("randomModal");openModalByIndex(${allData.indexOf(x)})'>ดูรายละเอียด</button></div>`},650)}
+function closeModal(id){$(id).classList.remove('active');if(!document.querySelector('.modal-overlay.active'))document.body.style.overflow='auto'}
+function openCalcModal(){$('calcModal').classList.add('active');document.body.style.overflow='hidden';calculateWaterVolume()}
+function calculateWaterVolume(){const w=parseFloat($('calcW').value)||0,l=parseFloat($('calcL').value)||0,h=parseFloat($('calcH').value)||0,liters=w*l*h/1000;$('calcLiters').textContent=`${liters.toFixed(1)} ลิตร`;$('calcGallons').textContent=`(~ ${(liters*.264172).toFixed(1)} แกลลอน)`}
+function openElecModal(){$('elecModal').classList.add('active');document.body.style.overflow='hidden';renderElecDevices();calculateElectricityTotal()}
+function setRatePreset(r){$('elecRate').value=r;calculateElectricityTotal()}
+function renderElecDevices(){const c=$('elecDeviceList');c.innerHTML='';elecDevices.forEach((d,i)=>c.insertAdjacentHTML('beforeend',`<div class="elec-item-row"><input value="${esc(d.name)}" oninput="updateDevVal(${i},'name',this.value)"><input type="number" value="${d.watt}" min="0" oninput="updateDevVal(${i},'watt',this.value)"><input type="number" value="${d.hours}" min="0" max="24" oninput="updateDevVal(${i},'hours',this.value)"><button class="del-item-btn" onclick="removeElecDevice(${i})"><i class="fa-solid fa-trash"></i></button></div>`))}
+function updateDevVal(i,f,v){elecDevices[i][f]=f==='name'?v:(parseFloat(v)||0);calculateElectricityTotal()}
+function addElecDevice(){elecDevices.push({name:'อุปกรณ์ใหม่',watt:10,hours:12});renderElecDevices();calculateElectricityTotal()}
+function removeElecDevice(i){elecDevices.splice(i,1);renderElecDevices();calculateElectricityTotal()}
+function calculateElectricityTotal(){const rate=parseFloat($('elecRate').value)||0;let units=0;elecDevices.forEach(d=>units+=(d.watt*d.hours/1000)*30);const cost=units*rate;$('totalCostVal').textContent=`${cost.toFixed(2)} บาท/เดือน`;$('totalUnitsVal').textContent=`${units.toFixed(2)} ยูนิต/เดือน`;$('dailyCostVal').textContent=`~${(cost/30).toFixed(2)} บาท/วัน`}
+window.addEventListener('DOMContentLoaded',init);
+</script>
 </body>
 </html>
