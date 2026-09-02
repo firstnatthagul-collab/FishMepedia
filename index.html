@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FishMepedia — สารานุกรมปลาสวยงามและตู้ไม้น้ำ</title>
+    <title>FishMepedia by FishMe — รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ</title>
     <!-- Google Font & FontAwesome Icon -->
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,21 +26,1245 @@ footer{position:relative;z-index:1;text-align:center;padding:25px 20px 45px;colo
 @media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.filter-group{grid-template-columns:1fr}.modal-body{grid-template-columns:1fr}.modal-media-col,.media-slider,.media-wrapper{min-height:300px;height:300px}.modal-info-col{padding:24px}.tool-grid{grid-template-columns:1fr}}
 @media(max-width:560px){header{padding:20px 12px}.hero{padding:28px 20px;border-radius:25px}.hero h1{font-size:2.65rem}.hero:after{font-size:90px;right:10px}.stats{padding:0 12px;gap:9px}.stat{padding:12px}.stat strong{font-size:1.35rem}.controls-container,.section{padding:0 12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{border-radius:17px}.card-body{padding:12px}.card-title{font-size:.98rem}.card-subtitle{font-size:.68rem}.view-btn{font-size:.72rem}.feature-badge{font-size:.58rem}.float-toolbar{right:10px;bottom:10px}.calc-float-btn{font-size:.72rem;padding:8px 11px}.calc-input-group{grid-template-columns:1fr}.elec-item-row{grid-template-columns:1fr 1fr auto}.elec-item-row input:first-child{grid-column:1/-1}.modal-title{font-size:1.6rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* FishMepedia 2.0 interactive layer */
+.hero-inner{position:relative;z-index:2}.hero-kicker{font-size:.82rem;color:var(--blue2);font-weight:700;letter-spacing:.02em;margin-top:8px;min-height:1.5em}.hero-quote{margin-top:14px;font-size:1rem;color:#334155;max-width:760px}.hero-search-hint{margin-top:20px;display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.82rem}.hero-search-hint kbd{background:#fff;border:1px solid var(--line);border-bottom-width:2px;border-radius:7px;padding:2px 7px}.hero-decor{position:absolute;inset:0;pointer-events:none}.hero-decor span{position:absolute;font-size:2.2rem;opacity:.12;animation:drift 7s ease-in-out infinite}.hero-decor span:nth-child(1){right:12%;top:18%}.hero-decor span:nth-child(2){right:25%;bottom:12%;animation-delay:1s}.hero-decor span:nth-child(3){right:5%;top:48%;animation-delay:2s}@keyframes drift{50%{transform:translateY(-12px) rotate(5deg)}}
+.discover-panel{max-width:1180px;margin:0 auto 30px;padding:0 20px;position:relative;z-index:1}.discover-card{background:linear-gradient(135deg,#082f49,#064e3b);color:#fff;border-radius:26px;padding:24px;position:relative;overflow:hidden;box-shadow:0 18px 45px rgba(2,44,34,.18)}.discover-card:after{content:'✦';position:absolute;right:25px;top:-18px;font-size:120px;opacity:.08}.discover-top{display:flex;justify-content:space-between;gap:15px;align-items:start}.discover-top h2{font-size:1.25rem}.discover-top p{font-size:.82rem;color:rgba(255,255,255,.72);margin-top:2px}.discover-progress{min-width:150px;text-align:right}.discover-progress strong{font-size:1.2rem}.progress-track{height:7px;background:rgba(255,255,255,.16);border-radius:99px;overflow:hidden;margin-top:6px}.progress-fill{height:100%;width:0;background:#6ee7b7;border-radius:99px;transition:width .5s}.discover-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.discover-btn{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:9px 13px;font-family:inherit;font-weight:600}.discover-btn:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}
+.finder{max-width:1180px;margin:0 auto 30px;padding:0 20px}.finder-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 10px 30px rgba(15,118,110,.06)}.finder-head{display:flex;justify-content:space-between;gap:12px;align-items:end}.finder-head h2{font-size:1.3rem}.finder-head p{color:var(--muted);font-size:.84rem}.finder-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.finder-option{border:1px solid var(--line);background:var(--surface2);border-radius:15px;padding:12px;text-align:left;color:var(--ink);transition:.2s}.finder-option:hover,.finder-option.active{border-color:#82d6b1;background:#effcf6;transform:translateY(-2px)}.finder-option b{display:block;font-size:.9rem}.finder-option span{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}.finder-result{margin-top:14px;background:#f8fcfa;border-radius:16px;padding:14px;display:none}.finder-result.active{display:block}.finder-result-title{font-weight:700;color:var(--green2);margin-bottom:8px}.finder-chips{display:flex;gap:8px;flex-wrap:wrap}.finder-chip{border:1px solid #cdebe0;background:#fff;border-radius:999px;padding:7px 11px;color:var(--ink);font-family:inherit}.finder-chip:hover{border-color:var(--green);color:var(--green2)}
+.card-discovery{font-size:.7rem;color:#64748b;margin-top:8px;display:flex;justify-content:space-between;gap:6px}.card-cta{display:flex;align-items:center;justify-content:space-between;margin-top:10px}.card-cta .view-btn{width:auto;padding:7px 11px}.seen-dot{width:8px;height:8px;border-radius:50%;background:#10b981;display:inline-block;margin-right:4px}.empty-state{padding:40px;text-align:center;background:#fff;border:1px dashed #b7ded0;border-radius:20px;color:#64748b}.empty-state strong{display:block;color:#0f766e;font-size:1.05rem;margin-bottom:4px}.random-subtitle{color:var(--muted);font-size:.85rem}.random-pills{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin:14px 0}.random-pill{background:#effcf6;color:#047857;border:1px solid #bce8d7;border-radius:999px;padding:5px 10px;font-size:.72rem}.random-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.random-primary{background:var(--green);color:#fff;border:0;border-radius:12px;padding:10px 15px;font-family:inherit;font-weight:700}.random-secondary{background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:10px 15px;font-family:inherit;font-weight:600}.tip-card{margin-top:15px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:15px;padding:13px;text-align:left;color:#0c4a6e}.tip-card b{display:block;margin-bottom:3px}.shortcut-note{font-size:.72rem;color:var(--muted);margin-top:8px}.modal-info-col{scrollbar-width:thin}.favorite-header-btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 11px;color:#64748b;font-family:inherit}.favorite-header-btn.active{color:#ef4444;background:#fff1f2;border-color:#fecdd3}
+.scientific-name{font-size:.86rem;color:#0f766e;font-style:italic;margin:-4px 0 12px}.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 18px}.profile-item{background:#f7fcfa;border:1px solid var(--line);border-radius:14px;padding:10px 12px}.profile-item small{display:block;color:#6b8790;font-size:.68rem;margin-bottom:2px}.profile-item b{display:block;color:#123f46;font-size:.86rem;line-height:1.4}.detail-section{margin-top:16px}.detail-section h3{font-size:.95rem;color:#075763;margin-bottom:8px}.detail-note{background:#f8fcfa;border:1px solid var(--line);border-radius:15px;padding:12px 14px;color:#334155;font-size:.9rem;line-height:1.7}.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.detail-tag{border:1px solid #bce8d7;background:#effcf6;color:#047857;border-radius:999px;padding:4px 9px;font-size:.7rem}.source-box{margin-top:16px;padding:11px 13px;border-radius:13px;background:#f8fafc;border:1px solid #e2e8f0;font-size:.72rem;color:#64748b}.source-box a{color:#0b7285;font-weight:600;text-decoration:none}.source-box a:hover{text-decoration:underline}@media(max-width:520px){.profile-grid{grid-template-columns:1fr}}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.finder-options{grid-template-columns:1fr}.discover-top{display:block}.discover-progress{text-align:left;margin-top:12px}.modal-body{grid-template-columns:1fr}.modal-media-col,.media-slider,.media-wrapper{min-height:300px}.modal-info-col{padding:23px}.tool-grid{grid-template-columns:1fr}}
+@media(max-width:520px){header{padding-top:20px}.hero{padding:28px 22px;border-radius:25px}.hero h1{font-size:2.8rem}.hero-actions{gap:7px}.social-btn{padding:9px 12px;font-size:.8rem}.stats{padding:0 12px;gap:9px}.controls-container,.section,.finder,.discover-panel{padding-left:12px;padding-right:12px}.grid{grid-template-columns:1fr}.filter-group{grid-template-columns:1fr}.modal-container{border-radius:20px}.modal-title{font-size:1.6rem}}
+
+
+/* =========================================================
+   FISHMEPEDIA — VISUAL SIGNATURE LAYER
+   Aqua-glass / planted-tank aesthetic
+   ========================================================= */
+:root{
+  --fm-deep:#062f36;
+  --fm-deep2:#0a4f59;
+  --fm-aqua:#19c7b1;
+  --fm-cyan:#35d6ef;
+  --fm-glass:rgba(255,255,255,.72);
+  --fm-glass-border:rgba(255,255,255,.78);
+  --fm-glow:rgba(25,199,177,.24);
+}
+body{
+  background:
+    radial-gradient(900px 500px at 8% -8%,rgba(53,214,239,.18),transparent 62%),
+    radial-gradient(760px 460px at 100% 8%,rgba(25,199,177,.16),transparent 60%),
+    radial-gradient(600px 500px at 50% 70%,rgba(16,185,129,.07),transparent 65%),
+    linear-gradient(180deg,#eefcf9 0%,#f7fcfb 44%,#eef8f7 100%);
+}
+body:before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(8,79,89,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(8,79,89,.025) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:linear-gradient(to bottom,black,transparent 78%);
+}
+header{padding:28px 20px 20px}
+.hero{
+  min-height:430px;
+  padding:54px 52px;
+  border-radius:38px;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.42);
+  background:
+    radial-gradient(circle at 83% 28%,rgba(53,214,239,.34),transparent 22%),
+    radial-gradient(circle at 72% 80%,rgba(25,199,177,.26),transparent 30%),
+    linear-gradient(135deg,#063b45 0%,#075763 42%,#08766f 100%);
+  box-shadow:0 28px 70px rgba(3,72,80,.20),inset 0 1px 0 rgba(255,255,255,.25);
+  isolation:isolate;
+}
+.hero:before{
+  content:"";
+  position:absolute;inset:auto -10% -38% -10%;height:58%;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.13),transparent 55%),
+    linear-gradient(180deg,rgba(255,255,255,.08),transparent);
+  border-radius:50% 50% 0 0;
+  transform:rotate(-2deg);
+  z-index:-1;
+}
+.hero:after{
+  content:"";
+  position:absolute;right:-20px;bottom:-55px;
+  width:360px;height:360px;
+  background:
+    radial-gradient(circle at 35% 35%,rgba(255,255,255,.18) 0 2px,transparent 3px),
+    radial-gradient(circle at 62% 62%,rgba(53,214,239,.20) 0 4px,transparent 5px);
+  background-size:34px 34px,76px 76px;
+  border-radius:50%;
+  opacity:.55;
+  transform:none;
+}
+.hero .welcome-badge{
+  background:rgba(255,255,255,.12);
+  color:#d9fffa;
+  border-color:rgba(255,255,255,.24);
+  backdrop-filter:blur(10px);
+}
+.hero-kicker{
+  color:#8ff4e7 !important;
+  font-weight:600;
+  letter-spacing:.02em;
+}
+.hero h1{
+  margin-top:13px;
+  background:linear-gradient(100deg,#fff 0%,#cffff7 48%,#8deeff 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  text-shadow:0 10px 40px rgba(0,0,0,.12);
+}
+.hero p{color:rgba(255,255,255,.82);max-width:720px}
+.hero-search-hint{
+  display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;
+  margin-top:18px;padding:8px 12px;border-radius:12px;
+  background:rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.74);font-size:.78rem;
+}
+.hero kbd{padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.18)}
+.hero-actions{margin-top:24px}
+.hero .social-btn{
+  background:rgba(255,255,255,.10);
+  color:#fff;border-color:rgba(255,255,255,.22);
+  backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.hero .social-btn:hover{background:rgba(255,255,255,.18);box-shadow:0 12px 28px rgba(0,0,0,.13)}
+.hero .lucky-fish{background:rgba(53,214,239,.17);border-color:rgba(141,238,255,.35)}
+.hero .lucky-plant{background:rgba(25,199,177,.18);border-color:rgba(143,244,231,.32)}
+.hero-decor{pointer-events:none;position:absolute;inset:0;overflow:hidden}
+.hero-decor span{position:absolute;filter:drop-shadow(0 10px 25px rgba(0,0,0,.12))}
+.hero-decor span:nth-child(1){right:28%;top:17%;font-size:22px;opacity:.48;animation:fmBubble 5s ease-in-out infinite}
+.hero-decor span:nth-child(2){right:7%;bottom:12%;font-size:110px;opacity:.12;transform:rotate(-12deg)}
+.hero-decor span:nth-child(3){right:11%;top:29%;font-size:130px;opacity:.14;transform:scaleX(-1);animation:fmFish 7s ease-in-out infinite}
+@keyframes fmBubble{50%{transform:translateY(-18px) translateX(7px);opacity:.75}}
+@keyframes fmFish{50%{transform:scaleX(-1) translate(14px,-8px)}}
+.stats{margin-top:0}
+.stat{
+  position:relative;overflow:hidden;
+  background:rgba(255,255,255,.76);
+  backdrop-filter:blur(14px);
+  border-color:rgba(164,216,208,.65);
+  box-shadow:0 12px 30px rgba(4,79,89,.06);
+}
+.stat:after{
+  content:"";position:absolute;right:-22px;bottom:-28px;width:80px;height:80px;
+  border-radius:50%;background:rgba(25,199,177,.08);
+}
+.stat strong{color:var(--fm-deep2)}
+.discover-panel,.finder{position:relative;z-index:1}
+.discover-card,.finder-card{
+  background:rgba(255,255,255,.68) !important;
+  backdrop-filter:blur(16px);
+  border-color:rgba(164,216,208,.65) !important;
+  box-shadow:0 18px 42px rgba(4,79,89,.07) !important;
+}
+.discover-card{border-radius:28px !important}
+.finder-card{border-radius:30px !important;overflow:hidden;position:relative}
+.finder-card:before{
+  content:"";position:absolute;right:-100px;top:-120px;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(53,214,239,.13),transparent 67%);
+}
+.search-bar{
+  border:1px solid rgba(117,194,185,.62);
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(12px);
+  box-shadow:0 15px 38px rgba(4,79,89,.08);
+  height:62px;
+}
+.search-bar:focus{border-color:var(--fm-aqua);box-shadow:0 0 0 5px rgba(25,199,177,.10),0 18px 40px rgba(4,79,89,.08)}
+.filter-panel{
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(14px);
+  box-shadow:0 12px 32px rgba(4,79,89,.06);
+}
+.card{
+  border-color:rgba(157,211,203,.7);
+  box-shadow:0 12px 32px rgba(4,79,89,.065);
+}
+.card:before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+  border-radius:inherit;border:1px solid rgba(255,255,255,.55);
+}
+.card:hover{
+  transform:translateY(-8px) scale(1.008);
+  box-shadow:0 24px 52px rgba(4,79,89,.13);
+  border-color:rgba(25,199,177,.55);
+}
+.card-media-box{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.55),transparent 22%),
+    linear-gradient(135deg,#dff8f3,#e0f6fb);
+}
+.card-media-box:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 55%,rgba(2,47,54,.10));
+}
+.card-media-box img{transition:transform .55s ease}
+.card:hover .card-media-box img{transform:scale(1.045)}
+.card-body{position:relative}
+.category-badge{background:#e4faf4;border-color:#c5eee3}
+.card-discovery{font-size:.7rem;color:#6b8790;display:flex;justify-content:space-between;gap:8px;margin-bottom:10px}
+.seen-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#19b58f;margin-right:5px;box-shadow:0 0 0 4px rgba(25,181,143,.10)}
+.card-cta .view-btn{
+  border-color:#b7e7dd;background:linear-gradient(135deg,#effcf8,#eefafd);
+}
+.card-cta .view-btn:hover{background:linear-gradient(135deg,#10b981,#0ea5b8)}
+.section-head h2{letter-spacing:-.02em}
+.section-head h2:after{
+  content:"";display:block;width:38px;height:3px;border-radius:99px;
+  margin-top:7px;background:linear-gradient(90deg,var(--fm-aqua),var(--fm-cyan));
+}
+.tool-section{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(53,214,239,.14),transparent 26%),
+    linear-gradient(135deg,rgba(232,252,247,.9),rgba(236,250,253,.9));
+  box-shadow:0 18px 42px rgba(4,79,89,.06);
+}
+.tool-card{
+  transition:.25s ease;
+  box-shadow:0 7px 20px rgba(4,79,89,.04);
+}
+.tool-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(4,79,89,.09)}
+.tool-btn{background:linear-gradient(135deg,#0fb98f,#0e9fbd);box-shadow:0 8px 18px rgba(14,159,189,.18)}
+.modal-overlay{background:rgba(2,34,40,.62)}
+.modal-container{
+  border:1px solid rgba(255,255,255,.65);
+  box-shadow:0 34px 90px rgba(0,30,35,.28);
+}
+.modal-media-col{
+  background:
+    radial-gradient(circle at 30% 20%,rgba(53,214,239,.15),transparent 28%),
+    linear-gradient(145deg,#e9fbf7,#eaf8fc);
+}
+.modal-info-col{background:linear-gradient(180deg,#fff 0%,#fbfffe 100%)}
+.modal-path{background:#e5faf5}
+.modal-meta{box-shadow:0 6px 16px rgba(245,158,11,.07)}
+.care-block{background:linear-gradient(135deg,#f8fdfb,#f5fbfc);transition:.2s}
+.care-block:hover{transform:translateX(3px);border-color:#bce8df}
+.related-chip{transition:.2s;background:#fbfffe}
+.related-chip:hover{transform:translateY(-2px);border-color:#8fded1;box-shadow:0 7px 16px rgba(4,79,89,.07)}
+footer{
+  margin-top:24px;
+  background:linear-gradient(180deg,transparent,rgba(4,79,89,.045));
+  border-top:1px solid rgba(140,201,193,.3);
+}
+.float-toolbar .calc-float-btn{
+  backdrop-filter:blur(10px);
+  box-shadow:0 12px 26px rgba(4,79,89,.17);
+}
+@media(max-width:850px){
+  .hero{padding:42px 30px;min-height:390px}
+  .hero-decor span:nth-child(3){right:2%;font-size:100px}
+}
+@media(max-width:560px){
+  header{padding:16px 12px 15px}
+  .hero{padding:30px 20px;min-height:450px;border-radius:28px}
+  .hero h1{font-size:2.7rem}
+  .hero-decor span:nth-child(3){right:-12px;top:36%;font-size:82px}
+  .hero-decor span:nth-child(2){right:-10px;bottom:18%;font-size:80px}
+  .hero-actions{position:relative;z-index:3}
+  .hero .social-btn{padding:9px 12px;font-size:.75rem}
+  .stat{backdrop-filter:blur(8px)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+
+
+/* ADVANCED FILTERS + TANK TEAM BUILDER */
+.advanced-toggle{margin-top:10px;border:0;background:#eefbf7;color:var(--green2);padding:9px 13px;border-radius:12px;font-weight:600}
+.advanced-filters{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);grid-template-columns:repeat(4,1fr);gap:9px}.advanced-filters.active{display:grid}.filter-label{font-size:.72rem;color:var(--muted);display:block;margin:0 0 4px 3px}.filter-field{min-width:0}
+.team-builder{max-width:1180px;margin:22px auto;padding:0 20px;position:relative;z-index:2}.team-card{background:linear-gradient(135deg,#063b45,#075763 58%,#0b7285);border-radius:28px;padding:26px;color:#fff;box-shadow:0 18px 45px rgba(6,59,69,.18)}.team-card h2{font-size:1.55rem}.team-card>p{opacity:.82;margin-top:4px}.team-form{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:10px;margin-top:17px;align-items:end}.team-field label{display:block;font-size:.75rem;opacity:.8;margin:0 0 5px 4px}.team-field select{width:100%;padding:11px 12px;border:1px solid rgba(255,255,255,.25);border-radius:13px;background:rgba(255,255,255,.12);color:#fff;outline:none}.team-field select option{color:#102a2a;background:#fff}.team-build-btn{padding:12px 16px;border:0;border-radius:13px;background:#fff;color:#075763;font-weight:700;white-space:nowrap}.team-results{display:none;margin-top:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.17);border-radius:18px;padding:15px}.team-results.active{display:block}.team-result-title{font-weight:700;margin-bottom:10px}.team-chips{display:flex;gap:8px;flex-wrap:wrap}.team-chip{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);color:#fff;border-radius:999px;padding:8px 11px}.team-note{font-size:.78rem;opacity:.75;margin-top:10px}
+@media(max-width:900px){.advanced-filters{grid-template-columns:repeat(2,1fr)}.team-form{grid-template-columns:repeat(2,1fr)}.team-build-btn{grid-column:1/-1}.team-form .team-field:last-of-type{grid-column:auto}}
+@media(max-width:560px){.advanced-filters{grid-template-columns:1fr}.team-form{grid-template-columns:1fr}.team-build-btn{grid-column:auto}}
+
+
+/* COMPATIBILITY SCORE */
+.compat-section{margin-top:18px;padding:15px;border:1px solid #cce9e3;border-radius:18px;background:linear-gradient(135deg,#f7fffc,#f2fbff)}
+.compat-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}.compat-head h3{font-size:1rem;color:#075763;margin:0}.compat-head p{font-size:.72rem;color:#64748b;margin-top:2px}.compat-list{display:grid;gap:8px}.compat-row{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid #dceee8;background:#fff;border-radius:13px;padding:9px 10px;text-align:left;color:#102a2a}.compat-row:hover{border-color:#83d7c9;transform:translateY(-1px)}.compat-icon{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.76rem}.compat-good{background:#dcfce7;color:#15803d}.compat-warn{background:#fef3c7;color:#b45309}.compat-bad{background:#ffe4e6;color:#be123c}.compat-name b{display:block;font-size:.8rem}.compat-name span{display:block;color:#64748b;font-size:.66rem}.compat-score{text-align:right}.compat-score strong{display:block;font-size:.88rem}.compat-score small{font-size:.62rem;color:#64748b}.compat-reasons{margin-top:8px;font-size:.69rem;color:#64748b;line-height:1.55}.compat-note{margin-top:9px;padding-top:8px;border-top:1px dashed #cfe5df;font-size:.66rem;color:#718096}
+
+
+/* =========================================================
+   FISHMEPEDIA — CLEAN UI 2026
+   Preserve features, simplify hierarchy and visual density
+   ========================================================= */
+:root{--clean-max:1120px;--clean-radius:18px;--clean-border:#dfecea;--clean-shadow:0 8px 28px rgba(6,59,69,.055)}
+body{background:#f7faf9;color:#173437}
+body:before,.bubbles-container,.hero-decor{display:none!important}
+header{padding:18px 20px 14px}
+.hero{max-width:var(--clean-max);min-height:auto;padding:34px 36px;border-radius:22px;background:#073f48;box-shadow:none;border:0}
+.hero:before,.hero:after{display:none!important}
+.hero .welcome-badge{padding:5px 10px;font-size:.72rem;background:rgba(255,255,255,.09)}
+.hero-kicker{font-size:.76rem;margin-top:12px}
+.hero h1{font-size:clamp(2.25rem,5vw,3.55rem);margin:8px 0 8px;letter-spacing:-1.5px}
+.hero p{font-size:.96rem;max-width:620px}
+.hero-search-hint{margin-top:13px;padding:5px 9px;border:0;background:rgba(255,255,255,.07)}
+.hero-actions{margin-top:17px;gap:7px}.hero .social-btn{padding:7px 11px;font-size:.76rem;box-shadow:none}
+.stats{max-width:var(--clean-max);margin:0 auto 18px;padding:0 20px;gap:8px}.stat{padding:12px 14px;border-radius:14px;background:#fff;box-shadow:none;border:1px solid var(--clean-border)}.stat strong{font-size:1.35rem}.stat span{font-size:.72rem}
+.discover-panel,.finder,.controls-container,.section,.team-builder{max-width:var(--clean-max)}
+.discover-panel{margin-bottom:16px}.discover-card{padding:16px 18px!important;border-radius:16px!important;background:#fff!important;color:var(--ink)!important;box-shadow:none!important;border:1px solid var(--clean-border)!important}.discover-card:after{display:none}.discover-top h2{font-size:1rem}.discover-top p{color:var(--muted)!important}.discover-progress{color:var(--green2)}.progress-track{background:#e9f3f0}.discover-actions{margin-top:11px;gap:6px}.discover-btn{padding:6px 10px;font-size:.73rem;background:#f6faf9;color:#36585b;border:1px solid var(--clean-border)}.discover-btn:hover{background:#edf7f4;color:var(--green2)}
+.finder{margin-bottom:17px}.finder-card{padding:17px!important;border-radius:18px!important;box-shadow:none!important;background:#fff!important}.finder-card:before{display:none}.finder-head h2{font-size:1.1rem}.finder-options{grid-template-columns:repeat(6,1fr);gap:6px;margin-top:11px}.finder-option{padding:9px;border-radius:11px;background:#fafcfc}.finder-option b{font-size:.76rem}.finder-option span{display:none}.finder-result{padding:10px;margin-top:10px}
+.controls-container{margin-bottom:18px}.search-bar{height:52px;padding-top:13px;padding-bottom:13px;border-radius:15px;box-shadow:none;background:#fff}.filter-panel{padding:11px;margin-top:8px;border-radius:15px;box-shadow:none;background:#fff}.filter-select{padding:9px 11px;border-radius:10px;font-size:.8rem}.advanced-toggle{padding:6px 9px;font-size:.73rem;margin-top:7px}.quick-filters{margin-top:8px;gap:5px}.quick-btn{padding:5px 9px;font-size:.72rem}.results-row{margin-top:8px}
+.section{margin-bottom:25px}.section-head{margin-bottom:10px}.section-head h2{font-size:1.18rem}.section-head h2:after{display:none}.section-head p{font-size:.76rem}.grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px}.card{border-radius:16px;box-shadow:none}.card:before{display:none}.card:hover{transform:translateY(-3px);box-shadow:var(--clean-shadow)}.card-media-box{aspect-ratio:16/10}.card-body{padding:12px}.category-badge{font-size:.64rem;padding:3px 7px;margin-bottom:6px}.feature-badges-group{margin-bottom:5px}.feature-badge{font-size:.61rem}.card-title{font-size:1rem}.card-subtitle{font-size:.72rem;margin:2px 0 8px}.card-discovery{margin-bottom:7px}.card-cta{margin-top:6px}.card-cta .view-btn{padding:6px 9px;font-size:.7rem}
+.team-builder{margin-top:14px;margin-bottom:24px}.team-card{padding:19px;background:#073f48;border-radius:18px;box-shadow:none}.team-card h2{font-size:1.18rem}.team-card>p{font-size:.78rem}.team-form{margin-top:12px;gap:7px}.team-field select{padding:8px 9px;border-radius:9px;font-size:.75rem}.team-build-btn{padding:9px 12px;border-radius:9px;font-size:.76rem}
+.tool-section{padding:16px;border-radius:18px;box-shadow:none;background:#f3f8f7}.tool-grid{gap:8px}.tool-card{padding:12px;border-radius:12px;box-shadow:none}.tool-card:hover{transform:none;box-shadow:none}.tool-card h3{font-size:.88rem}.tool-card p{font-size:.7rem}.tool-btn{padding:7px 9px;font-size:.72rem;box-shadow:none}
+.float-toolbar{right:12px;bottom:12px}.calc-float-btn{padding:7px 10px;font-size:.7rem;box-shadow:0 5px 15px rgba(4,79,89,.12)}
+footer{padding-top:20px;background:none;border-top:1px solid var(--clean-border)}
+.modal-container{border-radius:20px;box-shadow:0 24px 70px rgba(0,30,35,.20)}.modal-info-col{padding:27px}.modal-title{font-size:1.65rem}.profile-grid{gap:6px}.profile-item{padding:8px 10px;border-radius:10px}.detail-section{margin-top:12px}.detail-note,.care-block{border-radius:11px;padding:10px 11px}
+/* Hide secondary homepage sections until explicitly needed; features remain accessible elsewhere. */
+#featuredSection,#beginnerSection{display:none!important}
+/* Make catalogue the visual focus. */
+#resultsSection{margin-top:6px}
+@media(max-width:900px){.finder-options{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){header{padding:10px 10px 12px}.hero{padding:25px 19px;border-radius:18px}.hero h1{font-size:2.35rem}.hero-search-hint{display:none}.stats{padding:0 10px;grid-template-columns:repeat(2,1fr)}.finder-options{grid-template-columns:repeat(2,1fr)}.discover-panel,.finder,.controls-container,.section,.team-builder{padding-left:10px;padding-right:10px}.grid{grid-template-columns:1fr}.float-toolbar{display:none}.modal-info-col{padding:20px}}
+
+
+/* =========================================================
+   FISHMEPEDIA — PLAYFUL COLLAPSIBLE LAYER
+   Cute motion + progressive disclosure
+   ========================================================= */
+body:before{
+  display:block!important;
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(53,214,239,.08) 0 2px,transparent 3px),
+    radial-gradient(circle at 86% 24%,rgba(25,199,177,.07) 0 3px,transparent 4px);
+  background-size:120px 120px,170px 170px;
+  opacity:.8;
+}
+.bubbles-container{display:block!important;opacity:.45}
+.bubble{animation-duration:18s!important;border-color:rgba(25,199,177,.16)!important;background:rgba(255,255,255,.12)!important}
+.hero-decor{display:block!important}
+.hero-decor span:nth-child(1){right:18%;top:18%;font-size:22px;opacity:.38;animation:fmBubble 6s ease-in-out infinite}
+.hero-decor span:nth-child(2){right:7%;bottom:8%;font-size:70px;opacity:.10;animation:fmPlant 7s ease-in-out infinite}
+.hero-decor span:nth-child(3){right:11%;top:32%;font-size:76px;opacity:.12;transform:scaleX(-1);animation:fmFish 8s ease-in-out infinite}
+@keyframes fmPlant{50%{transform:rotate(3deg) translateY(-7px)}}
+@keyframes fmFish{50%{transform:scaleX(-1) translate(10px,-6px)}}
+
+/* tiny swimming fish accent */
+.clean-fish{
+  position:fixed;left:-60px;bottom:11vh;z-index:0;pointer-events:none;
+  font-size:24px;opacity:.18;animation:cleanSwim 24s linear infinite;
+}
+.clean-fish.f2{bottom:32vh;font-size:18px;animation-duration:31s;animation-delay:-11s;opacity:.12}
+@keyframes cleanSwim{
+  0%{transform:translateX(-80px) translateY(0) scaleX(-1)}
+  45%{transform:translateX(52vw) translateY(-10px) scaleX(-1)}
+  100%{transform:translateX(calc(100vw + 100px)) translateY(5px) scaleX(-1)}
+}
+
+/* collapsible shells */
+.fm-collapsible{position:relative}
+.fm-collapse-toggle{
+  border:0;background:transparent;color:#47686b;font-family:inherit;
+  display:inline-flex;align-items:center;gap:7px;padding:5px 8px;border-radius:9px;
+  font-size:.75rem;font-weight:600;margin-left:auto;
+}
+.fm-collapse-toggle:hover{background:#eef7f5;color:#075763}
+.fm-collapse-toggle .chev{transition:transform .22s ease;font-size:.65rem}
+.fm-collapsible.is-collapsed .fm-collapse-toggle .chev{transform:rotate(-90deg)}
+.fm-collapse-body{
+  display:grid;grid-template-rows:1fr;opacity:1;
+  transition:grid-template-rows .3s ease,opacity .2s ease,margin .3s ease;
+}
+.fm-collapse-inner{overflow:hidden;min-height:0}
+.fm-collapsible.is-collapsed .fm-collapse-body{
+  grid-template-rows:0fr;opacity:.15;margin-top:0!important;
+}
+.fm-section-top{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.fm-section-top h2{margin:0}
+
+/* turn Smart Finder into a calmer expandable tool */
+.finder-card,.discover-card,.team-card,.tool-section{position:relative}
+.finder-card .fm-section-top,.discover-card .fm-section-top,.team-card .fm-section-top,.tool-section .fm-section-top{
+  margin-bottom:0;
+}
+.finder-card .finder-head{margin-bottom:0}
+.finder-card.is-collapsed,.discover-card.is-collapsed,.team-card.is-collapsed,.tool-section.is-collapsed{
+  padding-top:13px!important;padding-bottom:13px!important;
+}
+.finder-card.is-collapsed .finder-head p,
+.discover-card.is-collapsed .discover-top p,
+.team-card.is-collapsed>p,
+.tool-section.is-collapsed .section-head p{display:none}
+
+/* compact summary pills while collapsed */
+.fm-summary{
+  display:none;color:#72888a;font-size:.72rem;margin-top:3px;
+}
+.is-collapsed .fm-summary{display:block}
+
+/* Keep search/filter prominent, but advanced filter stays optional */
+#advancedFilters{transition:all .25s ease}
+.advanced-toggle{display:inline-flex;align-items:center;gap:5px}
+
+/* smoother reveal */
+.finder-options,.discover-actions,.team-form,.tool-grid,.team-results,.finder-result{
+  animation:fmFadeIn .28s ease both;
+}
+@keyframes fmFadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+@media(max-width:560px){
+  .hero-decor span:nth-child(3){font-size:58px;right:-5px}
+  .hero-decor span:nth-child(2){font-size:52px}
+  .clean-fish{font-size:18px}
+  .fm-collapse-toggle{font-size:.7rem;padding:4px 6px}
+}
+@media(prefers-reduced-motion:reduce){
+  .clean-fish,.bubble,.hero-decor span{animation:none!important}
+  .fm-collapse-body,.fm-collapse-toggle .chev{transition:none!important}
+}
+
+
+/* =========================================================
+   FISH PROFILE V2 — clean, friendly, readable
+   ========================================================= */
+.profile-hero{
+  padding:2px 0 14px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:14px;
+}
+.profile-eyebrow{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  font-size:.72rem;color:#678184;margin-bottom:7px;
+}
+.profile-name-row{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.profile-title-wrap{min-width:0}
+.profile-title-wrap .modal-title{margin:0}
+.profile-subtitle-main{
+  font-size:.86rem;color:#527074;font-style:italic;margin-top:3px;
+}
+.profile-intro{
+  margin-top:10px;color:#334e52;font-size:.92rem;line-height:1.75;
+}
+.profile-quick{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0 4px;
+}
+.profile-quick-item{
+  background:#f7fbfa;border:1px solid var(--line);border-radius:12px;padding:9px 10px;
+}
+.profile-quick-item small{display:block;color:#71888b;font-size:.65rem;margin-bottom:2px}
+.profile-quick-item b{font-size:.8rem;color:#174b52;line-height:1.35}
+
+.profile-tabs{
+  display:flex;gap:6px;flex-wrap:wrap;margin:15px 0 10px;
+}
+.profile-tab{
+  border:1px solid var(--line);background:#fff;color:#607b7e;
+  padding:6px 10px;border-radius:999px;font-size:.72rem;font-family:inherit;font-weight:600;
+}
+.profile-tab.active,.profile-tab:hover{
+  background:#eaf8f4;color:#07655f;border-color:#bce4d9;
+}
+.profile-pane{display:none}
+.profile-pane.active{display:block;animation:profileFade .2s ease}
+@keyframes profileFade{from{opacity:.4;transform:translateY(2px)}to{opacity:1;transform:none}}
+
+.profile-section-card{
+  background:#fbfdfc;border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-bottom:9px;
+}
+.profile-section-card h4{
+  font-size:.82rem;color:#0b6465;margin-bottom:4px;
+}
+.profile-section-card p{
+  font-size:.85rem;color:#38575b;line-height:1.7;
+}
+.profile-tag-list{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.profile-tag{
+  background:#eef8f5;color:#08756e;border:1px solid #cae8df;
+  border-radius:999px;padding:4px 8px;font-size:.66rem;
+}
+
+.compatibility-box{
+  margin-top:10px;border:1px solid #d8e9e6;border-radius:14px;padding:12px;background:#fff;
+}
+.compatibility-box h4{font-size:.86rem;color:#164c53}
+.compat-list{display:grid;gap:7px;margin-top:8px}
+.compat-row{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;
+  border:1px solid var(--line);border-radius:11px;padding:9px 10px;background:#fafdfc;
+}
+.compat-name{min-width:0}
+.compat-name b{display:block;font-size:.78rem;color:#173f45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.compat-name span{font-size:.66rem;color:#7a9092}
+.compat-score{
+  min-width:64px;text-align:center;border-radius:999px;padding:5px 8px;
+  font-size:.68rem;font-weight:700;
+}
+.compat-good{background:#e8f8ef;color:#197548}
+.compat-mid{background:#fff7df;color:#a26a00}
+.compat-low{background:#fff0ee;color:#b44736}
+.compat-note{font-size:.68rem;color:#7b8f91;margin-top:7px;line-height:1.55}
+
+.profile-source{
+  margin-top:13px;padding-top:10px;border-top:1px solid var(--line);
+  font-size:.67rem;color:#809295;
+}
+.profile-source a{color:#08756e;text-decoration:none}
+.profile-source a:hover{text-decoration:underline}
+
+@media(max-width:620px){
+  .profile-quick{grid-template-columns:repeat(2,1fr)}
+  .profile-name-row{display:block}
+  .profile-name-row .favorite-header-btn{margin-top:8px}
+}
+
+
+/* =========================================================
+   MY TANK — persistent aquarium planner
+   ========================================================= */
+.my-tank-wrap{max-width:var(--clean-max);margin:0 auto 22px;padding:0 20px}
+.my-tank-card{
+  background:#fff;border:1px solid var(--clean-border);border-radius:18px;
+  box-shadow:none;padding:14px 16px;
+}
+.my-tank-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.my-tank-title{display:flex;align-items:center;gap:9px}
+.my-tank-title h2{font-size:1rem;color:#164a50;margin:0}
+.my-tank-count{
+  display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;
+  border-radius:999px;background:#e8f7f3;color:#087168;font-size:.72rem;font-weight:700;
+}
+.my-tank-summary{font-size:.72rem;color:#74898b;margin-top:2px}
+.my-tank-body{margin-top:11px}
+.my-tank-empty{
+  border:1px dashed #cfe3df;border-radius:12px;padding:16px;text-align:center;
+  color:#7d9294;font-size:.76rem;background:#fbfdfc;
+}
+.my-tank-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.tank-member{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:#fafdfc;
+}
+.tank-member-main{min-width:0}
+.tank-member-main b{display:block;font-size:.78rem;color:#1c4449;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tank-member-main span{display:block;font-size:.65rem;color:#819295}
+.tank-remove{
+  border:0;background:#fff1ee;color:#a94b3b;border-radius:8px;padding:5px 7px;font-size:.65rem;
+}
+.tank-remove:hover{background:#ffe6e1}
+.my-tank-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:11px
+}
+.tank-metric{
+  border:1px solid var(--line);border-radius:11px;padding:9px 10px;background:#f8fbfa;
+}
+.tank-metric small{display:block;font-size:.62rem;color:#819295;margin-bottom:2px}
+.tank-metric b{font-size:.77rem;color:#155158}
+.tank-health{
+  margin-top:10px;border-radius:12px;padding:10px 11px;font-size:.74rem;line-height:1.55
+}
+.tank-health.good{background:#edf9f2;color:#216646}
+.tank-health.mid{background:#fff8e6;color:#8b6507}
+.tank-health.low{background:#fff0ee;color:#9a4336}
+.tank-pairs{margin-top:10px;display:grid;gap:6px}
+.tank-pair{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;
+  border:1px solid var(--line);border-radius:10px;padding:8px 9px;background:#fff;
+}
+.tank-pair span{font-size:.69rem;color:#456467}
+.tank-pair b{font-size:.67rem}
+.profile-tank-action{
+  margin-top:10px;display:flex;gap:7px;flex-wrap:wrap
+}
+.add-tank-btn{
+  border:0;background:#0d7c72;color:#fff;border-radius:10px;padding:8px 11px;
+  font-family:inherit;font-size:.73rem;font-weight:600;
+}
+.add-tank-btn:hover{background:#09685f}
+.add-tank-btn.added{background:#dff3ed;color:#16705f}
+.view-tank-btn{
+  border:1px solid var(--line);background:#fff;color:#486a6e;border-radius:10px;
+  padding:8px 11px;font-family:inherit;font-size:.73rem;font-weight:600;
+}
+@media(max-width:620px){
+  .my-tank-wrap{padding:0 10px}
+  .my-tank-metrics{grid-template-columns:repeat(2,1fr)}
+}
+
+
+.card-tank-add{
+  width:30px;height:30px;border-radius:9px;border:1px solid #d5e8e3;
+  background:#f4faf8;color:#087168;display:inline-flex;align-items:center;justify-content:center;
+  font-size:1rem;font-weight:700;cursor:pointer;transition:.18s ease;flex:0 0 auto;
+}
+.card-tank-add:hover{background:#dff4ee;transform:translateY(-1px)}
+.card-tank-add.added{background:#0d7c72;color:#fff;border-color:#0d7c72}
+.card-cta{display:flex;align-items:center;gap:6px}
+.card-cta .view-btn{flex:1}
+
+
+/* ===== Smart Finder v2 — guided questions ===== */
+.finder-v2{margin-top:10px}
+.finder-progress-v2{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.finder-progress-dot{height:5px;flex:1;border-radius:999px;background:#e5efed;transition:.2s}
+.finder-progress-dot.active,.finder-progress-dot.done{background:#19a995}
+.finder-step{display:none}
+.finder-step.active{display:block;animation:fmFadeIn .24s ease}
+.finder-question{font-size:.92rem;color:#174a50;font-weight:700;margin-bottom:3px}
+.finder-help{font-size:.72rem;color:#789092;margin-bottom:10px}
+.finder-choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.finder-choice{
+  border:1px solid #dbeae7;background:#fbfdfc;border-radius:11px;padding:10px;
+  font-family:inherit;text-align:left;color:#36595d;cursor:pointer;min-height:58px;
+}
+.finder-choice:hover,.finder-choice.selected{border-color:#77cdbf;background:#edf9f5;color:#076d64}
+.finder-choice b{display:block;font-size:.76rem}.finder-choice span{font-size:.65rem;color:#7b9092}
+.finder-nav{display:flex;justify-content:space-between;gap:7px;margin-top:11px}
+.finder-nav button{
+  border:1px solid #d7e8e4;background:#fff;border-radius:9px;padding:7px 10px;
+  font-family:inherit;font-size:.7rem;color:#496b6e
+}
+.finder-nav .primary{background:#0d7c72;border-color:#0d7c72;color:#fff}
+.finder-v2-results{margin-top:11px}
+.finder-result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:7px}
+.finder-result-card{
+  border:1px solid #dceae7;background:#fff;border-radius:11px;padding:10px;text-align:left;cursor:pointer
+}
+.finder-result-card b{display:block;font-size:.76rem;color:#19494f}
+.finder-result-card small{font-size:.64rem;color:#829395}
+.finder-match{display:inline-block;margin-top:5px;font-size:.62rem;background:#e9f8f4;color:#087268;padding:3px 6px;border-radius:999px}
+@media(max-width:620px){.finder-choice-grid{grid-template-columns:1fr 1fr}}
+
+
+.hero-kicker:empty{display:none!important}
+
+
+  .quick-tools-bar{align-items:flex-start;flex-direction:column}
+  .quick-tools-actions{width:100%}
+  .quick-tool-btn{flex:1}
+}
+
+
+  .beginner-tools-grid{grid-template-columns:1fr}
+}
+
+
+
+
+/* ===== Tank setup calculators: compact utility strip ===== */
+.setup-utils{
+  margin-top:10px;padding-top:10px;border-top:1px solid #e8f0ee;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap
+}
+.setup-utils-label{
+  font-size:.68rem;color:#7b8f92;white-space:nowrap
+}
+.setup-utils-actions{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap
+}
+.setup-util-btn{
+  border:1px solid #d9e9e5;background:#fff;color:#315e63;
+  border-radius:999px;padding:7px 10px;font-family:inherit;font-size:.68rem;
+  font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  transition:.16s ease
+}
+.setup-util-btn:hover{
+  background:#edf8f5;border-color:#b9ddd5;color:#087168;transform:translateY(-1px)
+}
+.setup-util-btn.water i{color:#0ea5e9}
+.setup-util-btn.electric i{color:#d97706}
+@media(max-width:620px){
+  .setup-utils{align-items:flex-start}
+  .setup-utils-label{width:100%}
+  .setup-utils-actions{width:100%}
+  .setup-util-btn{flex:1;justify-content:center}
+}
+
+
+/* ===== Homepage grouped zones ===== */
+.home-group{
+  max-width:var(--clean-max);margin:18px auto 0;padding:0 20px
+}
+.home-group-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+  margin:0 0 8px;padding:0 2px
+}
+.home-group-head h2{
+  margin:0;font-size:.94rem;color:#174c52
+}
+.home-group-head p{
+  margin:2px 0 0;font-size:.66rem;color:#7f9294
+}
+.home-group-stack{
+  display:grid;gap:8px
+}
+.home-group .my-tank-wrap,
+.home-group .team-builder,
+.home-group .discover-panel,
+.home-group .finder{
+  max-width:none;margin:0;padding:0
+}
+.home-group .my-tank-card,
+.home-group .team-card,
+.home-group .discover-card,
+.home-group .finder-card{
+  margin:0
+}
+.explore-more{
+  margin-top:14px;margin-bottom:18px;
+  padding-top:14px;border-top:1px solid #e4eeec
+}
+@media(max-width:620px){
+  .home-group{padding:0 10px}
+  .home-group-head{align-items:flex-start}
+}
+
+
+/* ===== FishMepedia themed load-more ===== */
+.catalog-more-wrap{
+  display:flex;justify-content:center;margin:18px 0 4px
+}
+.catalog-more-card{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(180deg,#f8fdfb,#eef9f5);
+  border:1px solid #d5e9e3;
+  border-radius:16px;
+  padding:8px 10px 8px 12px;
+  box-shadow:0 6px 18px rgba(6,59,69,.05)
+}
+.catalog-more-copy{
+  display:flex;flex-direction:column;align-items:flex-start;line-height:1.2
+}
+.catalog-more-copy b{
+  font-size:.69rem;color:#285b60;font-weight:700
+}
+.catalog-more-copy span{
+  font-size:.61rem;color:#839698;margin-top:2px
+}
+.catalog-more-btn{
+  border:0;background:#0d7c72;color:#fff;
+  border-radius:11px;padding:7px 11px;
+  font-family:inherit;font-size:.68rem;font-weight:700;
+  display:inline-flex;align-items:center;gap:6px;
+  cursor:pointer;transition:.16s ease
+}
+.catalog-more-btn:hover{
+  background:#09695f;transform:translateY(-1px)
+}
+.catalog-more-btn i{font-size:.64rem}
+@media(max-width:520px){
+  .catalog-more-card{
+    width:100%;justify-content:space-between
+  }
+}
+
+
+/* =========================================================
+   FISH PROFILE v3
+   ========================================================= */
+.profile-v3 .profile-hero{padding-bottom:12px}
+.profile-v3 .profile-name-row{align-items:flex-start}
+.profile-v3 .profile-title-wrap{min-width:0}
+.profile-v3 .profile-eyebrow{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.62rem;color:#578084;background:#f0f8f6;
+  border:1px solid #dbece8;border-radius:999px;padding:4px 8px;margin-bottom:7px
+}
+.profile-v3 .modal-title{font-size:1.55rem;line-height:1.12;margin-bottom:2px}
+.profile-v3 .profile-subtitle-main{font-size:.82rem;color:#698487}
+.profile-v3 .scientific-name{font-size:.72rem;color:#87989a;margin-top:2px}
+.profile-v3 .profile-intro{
+  margin-top:10px;font-size:.76rem;line-height:1.7;color:#49686c;
+  max-width:760px
+}
+.profile-v3-summary{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;
+  margin-top:11px
+}
+.profile-v3-stat{
+  min-width:0;border:1px solid #dfebe8;background:#fbfdfc;border-radius:10px;
+  padding:7px 8px
+}
+.profile-v3-stat small{display:block;font-size:.57rem;color:#899b9d;margin-bottom:2px}
+.profile-v3-stat b{
+  display:block;font-size:.69rem;color:#28545a;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis
+}
+.profile-v3-status{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px
+}
+.profile-v3-chip{
+  font-size:.61rem;padding:4px 7px;border-radius:999px;
+  background:#edf8f5;color:#137469;border:1px solid #d4ebe5
+}
+.profile-v3-chip.warn{background:#fff8eb;color:#8b6416;border-color:#f2e2bc}
+.profile-v3 .profile-tank-action{
+  margin-top:9px;padding-top:9px;border-top:1px solid #e7efed
+}
+.profile-v3 .profile-tabs{
+  position:sticky;top:0;z-index:2;background:#fff;
+  padding:7px 0 8px;margin-top:2px;border-bottom:1px solid #e8efed;
+  display:flex;gap:5px;overflow:auto
+}
+.profile-v3 .profile-tab{
+  border-radius:999px;padding:6px 10px;white-space:nowrap;font-size:.67rem
+}
+.profile-v3 .profile-tab.active{
+  background:#0d7c72;color:#fff;border-color:#0d7c72
+}
+.profile-v3 .profile-pane{padding-top:10px}
+.profile-v3 .profile-section-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px
+}
+.profile-v3 .profile-section-card{
+  margin:0;border:1px solid #e1ece9;border-radius:11px;padding:9px 10px;background:#fff
+}
+.profile-v3 .profile-section-card h4{font-size:.68rem;margin-bottom:4px;color:#2d5960}
+.profile-v3 .profile-section-card p{font-size:.69rem;line-height:1.6;color:#5a7478}
+.profile-v3 .profile-section-card.full{grid-column:1/-1}
+.profile-v3 .profile-source{
+  margin-top:12px;border-top:1px solid #e8efed;padding-top:9px;
+  font-size:.61rem;color:#8a9a9c;line-height:1.6
+}
+.profile-v3 .profile-source a{color:#137b70;font-weight:600}
+.profile-v3 .compatibility-box{margin-top:0}
+.profile-v3 .compat-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.profile-v3 .compat-row{
+  border:1px solid #e0ebe8;background:#fbfdfc;border-radius:10px;padding:8px 9px
+}
+.profile-v3 .compat-note{
+  margin-top:8px;padding:8px 9px;border-radius:9px;background:#f7faf9;
+  font-size:.61rem;line-height:1.55;color:#7d9193
+}
+@media(max-width:760px){
+  .profile-v3-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .profile-v3 .profile-section-grid{grid-template-columns:1fr}
+  .profile-v3 .compat-list{grid-template-columns:1fr}
+}
+
+
+/* =========================================================
+   MY TANK v2
+   ========================================================= */
+.my-tank-v2-shell{
+  display:grid;grid-template-columns:280px 1fr;gap:10px
+}
+.my-tank-v2-panel{
+  border:1px solid #dfeae7;background:#fff;border-radius:12px;padding:10px
+}
+.my-tank-v2-panel h4{
+  margin:0 0 7px;font-size:.73rem;color:#28565c
+}
+.my-tank-v2-field{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:7px 0;border-bottom:1px dashed #e7efed
+}
+.my-tank-v2-field:last-child{border-bottom:0}
+.my-tank-v2-field label{font-size:.64rem;color:#72888b}
+.my-tank-v2-field input{
+  width:92px;border:1px solid #d9e7e4;border-radius:8px;padding:6px 7px;
+  font-family:inherit;font-size:.68rem;color:#315b60;background:#fbfdfc
+}
+.my-tank-v2-summary{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px
+}
+.my-tank-v2-stat{
+  border:1px solid #e0ebe8;background:#fbfdfc;border-radius:10px;padding:8px
+}
+.my-tank-v2-stat small{display:block;font-size:.56rem;color:#8a999b;margin-bottom:2px}
+.my-tank-v2-stat b{display:block;font-size:.72rem;color:#25575d}
+.my-tank-v2-alert{
+  border-radius:10px;padding:8px 9px;font-size:.63rem;line-height:1.5;margin-bottom:8px;
+  background:#f4faf8;color:#477076;border:1px solid #deece8
+}
+.my-tank-v2-alert.warn{background:#fff8eb;border-color:#f1e1bb;color:#86621d}
+.my-tank-v2-alert.bad{background:#fff1f0;border-color:#f2d3cf;color:#9a4d47}
+.my-tank-v2-list{display:grid;gap:6px}
+.my-tank-v2-item{
+  display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:8px;
+  border:1px solid #e1ece9;background:#fff;border-radius:10px;padding:8px 9px
+}
+.my-tank-v2-name b{display:block;font-size:.69rem;color:#2b555b}
+.my-tank-v2-name small{font-size:.58rem;color:#87989a}
+.my-tank-v2-qty{
+  display:flex;align-items:center;gap:4px
+}
+.my-tank-v2-qty button{
+  width:25px;height:25px;border:1px solid #d8e7e3;background:#f8fbfa;border-radius:7px;
+  color:#356266;font-weight:700
+}
+.my-tank-v2-qty span{min-width:22px;text-align:center;font-size:.68rem;font-weight:700;color:#285a60}
+.my-tank-v2-remove{
+  border:0;background:transparent;color:#a25d57;font-size:.65rem
+}
+.my-tank-v2-pairs{
+  margin-top:8px;display:grid;gap:5px
+}
+.my-tank-v2-pair{
+  display:flex;justify-content:space-between;gap:8px;align-items:center;
+  border:1px solid #e5eeec;border-radius:9px;padding:7px 8px;background:#fbfdfc
+}
+.my-tank-v2-pair span{font-size:.61rem;color:#607d80}
+.my-tank-v2-pair b{font-size:.63rem}
+.my-tank-v2-empty{
+  text-align:center;padding:18px 10px;color:#859799;font-size:.67rem
+}
+@media(max-width:760px){
+  .my-tank-v2-shell{grid-template-columns:1fr}
+  .my-tank-v2-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+
+/* =========================================================
+   SMART FINDER v3
+   ========================================================= */
+.finder-v3-shell{
+  display:grid;grid-template-columns:220px 1fr;gap:10px
+}
+.finder-v3-stepnav{
+  border:1px solid #e0ebe8;background:#fbfdfc;border-radius:12px;padding:9px
+}
+.finder-v3-step{
+  display:flex;align-items:center;gap:7px;padding:7px 8px;border-radius:9px;
+  font-size:.62rem;color:#73898c
+}
+.finder-v3-step .dot{
+  width:21px;height:21px;border-radius:50%;display:grid;place-items:center;
+  background:#edf5f3;color:#6f898c;font-size:.58rem;font-weight:700;flex:0 0 auto
+}
+.finder-v3-step.active{
+  background:#eef9f6;color:#1d6963;font-weight:700
+}
+.finder-v3-step.active .dot{background:#0d7c72;color:#fff}
+.finder-v3-step.done .dot{background:#dff2ec;color:#14766c}
+.finder-v3-main{
+  border:1px solid #e0ebe8;background:#fff;border-radius:12px;padding:11px
+}
+.finder-v3-head h4{margin:0;font-size:.78rem;color:#28565c}
+.finder-v3-head p{margin:4px 0 0;font-size:.63rem;line-height:1.5;color:#7b8f91}
+.finder-v3-options{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px
+}
+.finder-v3-option{
+  border:1px solid #dfeae7;background:#fbfdfc;border-radius:10px;padding:9px;
+  cursor:pointer;text-align:left;transition:.15s
+}
+.finder-v3-option:hover{border-color:#b9dcd5;transform:translateY(-1px)}
+.finder-v3-option.active{
+  border-color:#0d7c72;background:#eef9f6;box-shadow:0 0 0 1px rgba(13,124,114,.05)
+}
+.finder-v3-option b{display:block;font-size:.68rem;color:#315d62}
+.finder-v3-option small{display:block;font-size:.57rem;color:#87989a;margin-top:2px;line-height:1.45}
+.finder-v3-actions{
+  display:flex;justify-content:space-between;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid #e8efed
+}
+.finder-v3-actions button{
+  border:1px solid #d8e6e3;background:#fff;color:#456d72;border-radius:9px;
+  padding:7px 10px;font-family:inherit;font-size:.65rem;font-weight:700
+}
+.finder-v3-actions .primary{background:#0d7c72;border-color:#0d7c72;color:#fff}
+.finder-v3-results{display:grid;gap:7px;margin-top:10px}
+.finder-v3-result{
+  border:1px solid #dfeae7;background:#fff;border-radius:11px;padding:9px
+}
+.finder-v3-result-top{
+  display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start
+}
+.finder-v3-result h5{margin:0;font-size:.72rem;color:#28565c}
+.finder-v3-result .scientific{font-size:.57rem;color:#8a999b;margin-top:1px}
+.finder-v3-score{
+  min-width:48px;text-align:center;background:#eef9f6;color:#0e746b;
+  border-radius:999px;padding:4px 7px;font-size:.61rem;font-weight:700
+}
+.finder-v3-reasons{
+  display:flex;flex-wrap:wrap;gap:4px;margin-top:7px
+}
+.finder-v3-reason{
+  font-size:.56rem;color:#55767a;background:#f5f9f8;border:1px solid #e1ece9;
+  border-radius:999px;padding:3px 6px
+}
+.finder-v3-result-actions{
+  display:flex;gap:6px;margin-top:8px
+}
+.finder-v3-result-actions button{
+  border:1px solid #d8e6e3;background:#fff;color:#456d72;border-radius:8px;
+  padding:6px 8px;font-family:inherit;font-size:.6rem;font-weight:700
+}
+.finder-v3-result-actions .add{background:#0d7c72;border-color:#0d7c72;color:#fff}
+.finder-v3-empty{
+  margin-top:10px;padding:14px;text-align:center;border:1px dashed #d8e6e3;
+  border-radius:10px;color:#87999b;font-size:.64rem
+}
+@media(max-width:760px){
+  .finder-v3-shell{grid-template-columns:1fr}
+  .finder-v3-stepnav{display:flex;overflow:auto}
+  .finder-v3-step{min-width:max-content}
+}
+@media(max-width:520px){
+  .finder-v3-options{grid-template-columns:1fr}
+}
+
+
+/* =========================================================
+   IMAGE SYSTEM v1.1 — safe build
+   ========================================================= */
+.fm-image-wrap{
+  position:relative;overflow:hidden;width:100%;height:100%;
+  background:radial-gradient(circle at 25% 20%,rgba(53,214,239,.16),transparent 34%),
+             linear-gradient(160deg,#edf9f7,#e8f5f8 55%,#f8fcfb);
+}
+.fm-image{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s ease,transform .25s ease}
+.fm-image.fm-loading{opacity:.35}.fm-image.fm-loaded{opacity:1}
+.fm-image-wrap:hover .fm-image.fm-loaded{transform:scale(1.018)}
+.fm-placeholder{
+  width:100%;height:100%;min-height:150px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:7px;text-align:center;padding:14px;
+  color:#62888b;background:radial-gradient(circle at 50% 40%,rgba(25,199,177,.13),transparent 33%),
+  linear-gradient(160deg,#eefaf7,#e9f7fa)
+}
+.fm-placeholder-icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.45rem;
+  background:rgba(255,255,255,.72);border:1px solid rgba(19,124,114,.14);box-shadow:0 7px 18px rgba(6,59,69,.06)}
+.fm-placeholder b{font-size:.65rem;color:#3e6b70}.fm-placeholder small{font-size:.55rem;color:#8aa0a2}
+.fm-gallery{display:flex;flex-direction:column;height:100%}
+.fm-gallery-main{position:relative;flex:1;min-height:300px;overflow:hidden;background:#edf7f6}
+.fm-gallery-main .fm-image-wrap{height:100%;min-height:300px}
+.fm-gallery-counter{position:absolute;right:10px;top:10px;z-index:3;background:rgba(6,59,69,.72);color:#fff;
+  border-radius:999px;font-size:.57rem;padding:4px 7px}
+.fm-gallery-nav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none;z-index:2}
+.fm-gallery-nav button{pointer-events:auto;width:31px;height:31px;border-radius:50%;border:1px solid rgba(255,255,255,.58);
+  background:rgba(6,59,69,.55);color:#fff;cursor:pointer}
+.fm-gallery-thumbs{display:flex;gap:6px;padding:7px;background:#f8fbfa;border-top:1px solid #e1ece9;overflow:auto}
+.fm-gallery-thumb{width:54px;height:42px;flex:0 0 auto;border-radius:7px;overflow:hidden;border:1px solid #d9e7e4;background:#eef6f4;padding:0}
+.fm-gallery-thumb.active{border-color:#0d7c72;box-shadow:0 0 0 1px #0d7c72}
+.fm-gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.card-media-box .fm-image-wrap,.card-media-box .fm-placeholder{height:100%;min-height:100%}
+@media(max-width:760px){.fm-gallery-main,.fm-gallery-main .fm-image-wrap{min-height:240px}}
+
+
+/* =========================================================
+   MY TANK v3 — zone balance & stocking guidance
+   ========================================================= */
+.tank-v3-zone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}
+.tank-v3-zone{border:1px solid #dfeae7;background:#fbfdfc;border-radius:10px;padding:8px}
+.tank-v3-zone-head{display:flex;justify-content:space-between;gap:6px;align-items:center}
+.tank-v3-zone-head b{font-size:.65rem;color:#315d62}.tank-v3-zone-head span{font-size:.58rem;color:#7d9395}
+.tank-v3-bar{height:5px;background:#e8f0ee;border-radius:999px;overflow:hidden;margin-top:6px}
+.tank-v3-bar i{display:block;height:100%;background:#19a996;border-radius:999px}
+.tank-v3-zone small{display:block;font-size:.54rem;color:#87999b;margin-top:5px;line-height:1.4}
+.tank-v3-guidance{display:grid;gap:6px;margin-top:9px}
+.tank-v3-tip{display:flex;gap:7px;align-items:flex-start;border:1px solid #e0ebe8;background:#fff;border-radius:9px;padding:7px 8px}
+.tank-v3-tip i{font-style:normal}.tank-v3-tip div{font-size:.59rem;line-height:1.45;color:#617d80}
+.tank-v3-tip b{color:#315d62}
+.tank-v3-recommend{margin-top:9px;border:1px solid #dce9e6;background:#f5fbf9;border-radius:10px;padding:9px}
+.tank-v3-recommend h5{margin:0 0 5px;font-size:.66rem;color:#28565c}
+.tank-v3-recommend p{margin:0;font-size:.57rem;line-height:1.5;color:#71888a}
+@media(max-width:600px){.tank-v3-zone-grid{grid-template-columns:1fr}}
+
+
+/* =========================================================
+   MOBILE + PERFORMANCE POLISH v1
+   ========================================================= */
+:root{--tap:44px}
+button,select,input{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{
+  outline:3px solid rgba(25,199,177,.25);outline-offset:2px
+}
+.card{content-visibility:auto;contain-intrinsic-size:320px 360px}
+.section,.controls-container{contain:layout style}
+.catalog-more-btn,.social-btn,.view-btn,.finder-v3-option,.finder-v3-actions button{
+  min-height:var(--tap)
+}
+.modal-overlay{overscroll-behavior:contain}
+.modal-body{overscroll-behavior:contain}
+.fm-image{background:#eef7f5}
+.mobile-sticky-tools{display:none}
+@media(max-width:760px){
+  body{padding-bottom:72px}
+  header{padding:16px 10px 16px}
+  .hero{padding:24px 18px;border-radius:22px}
+  .hero h1{font-size:clamp(2.25rem,12vw,3rem)}
+  .hero p{font-size:.96rem;line-height:1.6}
+  .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hero-actions .social-btn{justify-content:center;text-align:center;padding:10px 9px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));padding:0 10px}
+  .controls-container,.section,.finder,.discover-panel{padding-left:10px;padding-right:10px}
+  .filter-panel{border-radius:18px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .card-body{padding:10px}
+  .card-title{font-size:.92rem;line-height:1.35}
+  .card-subtitle{font-size:.65rem}
+  .card-cta{gap:5px}
+  .view-btn{padding:7px 9px}
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal-container{max-height:94dvh;border-radius:22px 22px 0 0}
+  .modal-body{max-height:94dvh;display:block}
+  .modal-media-col{min-height:0;height:auto}
+  .fm-gallery-main,.fm-gallery-main .fm-image-wrap{min-height:220px;height:34dvh;max-height:310px}
+  .modal-info-col{padding:20px 16px 28px}
+  .close-modal-btn{top:10px;right:10px;width:42px;height:42px}
+  .profile-v3-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .finder-v3-shell{grid-template-columns:1fr}
+  .finder-v3-stepnav{display:flex;overflow-x:auto;scroll-snap-type:x proximity}
+  .finder-v3-step{scroll-snap-align:start}
+  .my-tank-v2-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mobile-sticky-tools{
+    display:grid;grid-template-columns:1fr 1fr 1fr;position:fixed;left:10px;right:10px;bottom:10px;
+    z-index:800;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
+    border:1px solid var(--line);border-radius:16px;padding:6px;box-shadow:0 12px 35px rgba(6,59,69,.16)
+  }
+  .mobile-sticky-tools button{
+    border:0;background:transparent;border-radius:11px;min-height:44px;font-family:inherit;
+    font-size:.68rem;font-weight:700;color:#315d62
+  }
+}
+@media(max-width:430px){
+  .grid{grid-template-columns:1fr}
+  .hero-actions{grid-template-columns:1fr}
+  .stats{gap:7px}
+  .stat{padding:10px}
+  .stat strong{font-size:1.25rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+
+/* =========================================================
+   SUBTLE SHOP LINKS v1
+   ========================================================= */
+.shop-links-subtle{
+  margin-top:10px;padding-top:9px;border-top:1px solid #e8efed;
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px
+}
+.shop-links-label{
+  font-size:.56rem;color:#8a9b9d;display:inline-flex;align-items:center;gap:5px
+}
+.shop-link-subtle{
+  display:inline-flex;align-items:center;gap:5px;
+  color:#56777b;text-decoration:none;font-size:.58rem;font-weight:600;
+  padding:3px 0;border-bottom:1px solid transparent
+}
+.shop-link-subtle:hover{color:#0d7c72;border-bottom-color:#a9d7cf}
+.shop-link-subtle i{font-size:.55rem;opacity:.72}
+.shop-link-note{
+  width:100%;font-size:.5rem;color:#9aa8aa;line-height:1.45;margin-top:1px
+}
+
+
+.profile-v3 > .shop-links-subtle,
+.modal-info-col > .shop-links-subtle{
+  margin:8px 0 2px;padding:7px 9px;
+  border:1px solid #e1ece9;border-radius:9px;background:#f8fbfa
+}
+.profile-v3 > .shop-links-subtle .shop-link-note,
+.modal-info-col > .shop-links-subtle .shop-link-note{display:none}
+
+
+.shop-support-box{align-items:flex-start!important}
+.shop-support-copy{flex:1 1 240px;min-width:0}
+.shop-support-copy b{display:block;font-size:.61rem;color:#3d686d;margin-bottom:2px}
+.shop-support-copy span{display:block;font-size:.53rem;color:#829698;line-height:1.45}
+.shop-support-box .shop-link-subtle{white-space:nowrap;align-self:center}
+
+
+/* =========================================================
+   FINAL UI POLISH / PRODUCTION READY v1
+   ========================================================= */
+html{scroll-behavior:smooth}
+body{font-feature-settings:"kern" 1,"liga" 1}
+.hero,.filter-panel,.home-group,.section{scroll-margin-top:18px}
+button,a,.card{ -webkit-tap-highlight-color:transparent }
+button:disabled{cursor:not-allowed}
+.card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+@media(hover:hover){.card:hover{transform:translateY(-2px)}}
+.profile-v3-stat,.my-tank-v2-stat{min-width:0}
+.profile-v3-stat b,.my-tank-v2-stat b{overflow-wrap:anywhere}
+.empty-state-fm{
+  grid-column:1/-1;text-align:center;padding:30px 18px;border:1px dashed #d8e7e4;
+  border-radius:16px;background:#fbfdfc;color:#71898b
+}
+.empty-state-fm .icon{font-size:2rem;margin-bottom:7px}
+.empty-state-fm b{display:block;color:#365f64;font-size:.82rem}
+.empty-state-fm span{display:block;font-size:.62rem;line-height:1.55;margin-top:4px}
+.fm-backtop{
+  position:fixed;right:16px;bottom:18px;width:42px;height:42px;border:1px solid #dce8e5;
+  border-radius:50%;background:rgba(255,255,255,.92);color:#416c71;box-shadow:0 8px 24px rgba(6,59,69,.12);
+  display:grid;place-items:center;z-index:750;opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:.18s;backdrop-filter:blur(8px)
+}
+.fm-backtop.show{opacity:1;pointer-events:auto;transform:none}
+.fm-db-status{
+  display:inline-flex;align-items:center;gap:5px;font-size:.53rem;color:#829698;
+  margin-top:5px
+}
+.fm-db-status i{width:6px;height:6px;border-radius:50%;background:#52b788;display:inline-block}
+@media(max-width:760px){
+  .fm-backtop{bottom:78px;right:13px}
+  .shop-support-box{display:block}
+  .shop-support-box .shop-link-subtle{display:inline-flex;margin-top:7px}
+}
+
+
+/* FishMepedia × FishMe Brand Identity */
+.fm-brand-name{font-weight:900;letter-spacing:-.035em}
+.fm-brand-by{display:inline-flex;align-items:center;margin-left:7px;padding:3px 7px;border-radius:999px;background:rgba(25,199,177,.10);border:1px solid rgba(25,199,177,.20);color:#278c80;font-size:.46em;font-weight:800;letter-spacing:.01em;vertical-align:middle;white-space:nowrap}
+.hero .fm-brand-by{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.24);color:inherit}
+.fm-brand-signature{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:8px;font-size:.58rem;color:#83999b}
+.fm-brand-signature b{color:#477176}
+@media(max-width:600px){.fm-brand-by{margin-left:5px;padding:2px 6px;font-size:.42em}}
+
+/* FishMe social follow */
+.fishme-follow{max-width:1180px;margin:26px auto 14px;padding:0 18px}
+.fishme-follow-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:22px;
+  padding:20px 22px;border:1px solid #dcebe8;border-radius:18px;
+  background:linear-gradient(135deg,#f8fcfb,#f1faf8);box-shadow:0 8px 28px rgba(6,59,69,.055)
+}
+.fishme-follow-kicker{display:block;font-size:.57rem;font-weight:800;color:#29998b;margin-bottom:3px}
+.fishme-follow h2{margin:0;color:#164f57;font-size:1.05rem;letter-spacing:-.02em}
+.fishme-follow p{margin:4px 0 0;color:#789092;font-size:.62rem;line-height:1.5}
+.fishme-follow-actions{display:flex;gap:8px;flex:0 0 auto}
+.fishme-social-btn{
+  display:flex;align-items:center;gap:8px;min-width:132px;padding:9px 11px;border:1px solid #d7e8e4;
+  border-radius:11px;background:#fff;color:#365f64;text-decoration:none;transition:.18s
+}
+.fishme-social-btn>i:first-child{font-size:1rem;color:#257f77}
+.fishme-social-btn>i:last-child{margin-left:auto;font-size:.52rem;color:#9aadae}
+.fishme-social-btn span{display:flex;flex-direction:column;font-size:.66rem;font-weight:800;line-height:1.15}
+.fishme-social-btn small{font-size:.46rem;font-weight:600;color:#94a5a6;margin-bottom:2px}
+@media(hover:hover){.fishme-social-btn:hover{transform:translateY(-1px);border-color:#a9d8cf;box-shadow:0 5px 16px rgba(6,59,69,.07)}}
+@media(max-width:680px){
+  .fishme-follow-inner{display:block;padding:17px}
+  .fishme-follow-actions{margin-top:13px}
+  .fishme-social-btn{flex:1;min-width:0}
+}
+
 </style>
+<meta name="description" content="FishMepedia by FishMe ฐานความรู้ปลา พรรณไม้น้ำ และเครื่องมือช่วยวางแผนตู้ปลา — รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ">
+<meta name="theme-color" content="#063B45">
+<meta property="og:title" content="FishMepedia by FishMe">
+<meta property="og:description" content="รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ">
+<meta property="og:type" content="website">
 </head>
 <body>
-<div class="bubbles-container" id="bubblesContainer"></div>
+<div class="bubbles-container" id="bubblesContainer"></div><div class="clean-fish">🐟</div><div class="clean-fish f2">🐠</div>
 <header>
   <div class="hero">
-    <div class="welcome-badge">✨ ยินดีต้อนรับสู่โลกใต้น้ำ</div>
-    <h1>FishMepedia</h1>
-    <p>สารานุกรมปลาสวยงามและตู้ไม้น้ำ อ่านง่าย ค้นง่าย และสนุกกับการเลือกสายพันธุ์ที่เหมาะกับตู้ของคุณ</p>
+    <div class="hero-inner">
+    <div class="welcome-badge"><span>✦</span> FISHMEPEDIA · AQUASCAPE DATABASE</div>
+    <div class="hero-kicker" id="heroKicker"></div>
+    <h1><span class="fm-brand-name">FishMepedia</span><span class="fm-brand-by">by FishMe</span></h1>
+    <p id="heroQuote">สารานุกรมปลาสวยงามและตู้ไม้น้ำ ที่ชวนคุณรู้จักเจ้าตัวเล็กใต้ผิวน้ำให้มากขึ้น</p>
     <div class="hero-actions">
-      <a href="https://www.youtube.com/@fishme2022" target="_blank" rel="noopener" class="social-btn"><i class="fa-brands fa-youtube"></i> YouTube</a>
-      <a href="https://www.tiktok.com/@fishme22" target="_blank" rel="noopener" class="social-btn"><i class="fa-brands fa-tiktok"></i> TikTok</a>
-      <button class="social-btn lucky-fish" onclick="openRandomFishModal()"><i class="fa-solid fa-dice"></i> วันนี้เลี้ยงอะไรดี?</button>
-      <button class="social-btn lucky-plant" onclick="openRandomPlantModal()"><i class="fa-solid fa-seedling"></i> สุ่มพรรณไม้น้ำ</button>
+      
+      
+      <button class="social-btn lucky-fish" onclick="openRandomFishModal()"><i class="fa-solid fa-dice"></i> วันนี้เลี้ยงอะไรดี?</button><button class="social-btn lucky-plant" onclick="openRandomPlantModal()"><i class="fa-solid fa-seedling"></i> สุ่มพรรณไม้น้ำ</button>
     </div>
+    </div><div class="hero-decor"><span>🫧</span><span>🌿</span><span>🐟</span></div>
   </div>
 </header>
 <section class="stats" id="statsSection">
@@ -49,6 +1273,8 @@ footer{position:relative;z-index:1;text-align:center;padding:25px 20px 45px;colo
   <div class="stat"><strong id="statEasy">0</strong><span>สายพันธุ์มือใหม่</span></div>
   <div class="stat"><strong id="statGroups">0</strong><span>กลุ่มสายพันธุ์</span></div>
 </section>
+
+
 <div class="controls-container" id="catalog">
   <div class="search-wrap"><input type="text" id="searchInput" class="search-bar" placeholder="🔍 ค้นหาชื่อไทย ชื่อวิทยาศาสตร์ กลุ่มปลา หรือคำในคำแนะนำ..."><button id="clearSearch" class="clear-search" title="ล้างการค้นหา" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button></div>
   <div class="filter-panel">
@@ -57,61 +1283,473 @@ footer{position:relative;z-index:1;text-align:center;padding:25px 20px 45px;colo
       <select id="subCatSelect" class="filter-select" disabled><option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option></select>
       <select id="typeSelect" class="filter-select" disabled><option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option></select>
     </div>
+    <button class="advanced-toggle" id="advancedToggle" onclick="toggleAdvancedFilters()">⚙️ ตัวกรองขั้นสูง</button>
+    <div class="advanced-filters" id="advancedFilters">
+      <div class="filter-field"><label class="filter-label">ตำแหน่งในตู้</label><select id="placementSelect" class="filter-select"><option value="">ทั้งหมด</option></select></div>
+      <div class="filter-field"><label class="filter-label">ขนาดตู้</label><select id="tankSelect" class="filter-select"><option value="">ทุกขนาด</option><option value="nano">นาโน / เล็ก</option><option value="medium">กลาง</option><option value="large">ใหญ่</option></select></div>
+      <div class="filter-field"><label class="filter-label">อุณหภูมิ</label><select id="tempSelect" class="filter-select"><option value="">ทุกช่วง</option><option value="cool">≤ 24°C</option><option value="tropical">24–28°C</option><option value="warm">≥ 27°C</option></select></div>
+      <div class="filter-field"><label class="filter-label">pH</label><select id="phSelect" class="filter-select"><option value="">ทุกช่วง</option><option value="acidic">กรด / อ่อน</option><option value="neutral">ใกล้กลาง</option><option value="alkaline">ด่าง</option></select></div>
+    </div>
     <div class="quick-filters" id="difficultyFilters">
       <button class="quick-btn active" data-difficulty="">ทั้งหมด</button><button class="quick-btn" data-difficulty="ง่าย">🌱 เลี้ยงง่าย</button><button class="quick-btn" data-difficulty="ปานกลาง">☀️ ปานกลาง</button><button class="quick-btn" data-difficulty="ยาก">🔥 สำหรับผู้มีประสบการณ์</button><button class="quick-btn" data-favorite="true">❤️ รายการโปรด</button>
+    </div>
+    <div class="setup-utils">
+      <span class="setup-utils-label">ก่อนจัดตู้ ลองคำนวณคร่าว ๆ</span>
+      <div class="setup-utils-actions">
+        <button class="setup-util-btn water" type="button" onclick="openCalcModal()"><i class="fa-solid fa-droplet"></i> คำนวณน้ำ</button>
+        <button class="setup-util-btn electric" type="button" onclick="openElecModal()"><i class="fa-solid fa-bolt"></i> คำนวณค่าไฟ</button>
+      </div>
     </div>
     <div class="results-row"><span id="resultCount">กำลังเตรียมข้อมูล...</span><button class="reset-btn" onclick="resetFilters()">รีเซ็ตตัวกรอง</button></div>
   </div>
 </div>
+
+
 <section class="section" id="featuredSection"><div class="section-head"><div><h2>✨ สายพันธุ์น่าสนใจ</h2><p>เลือกดูตัวอย่างจากฐานข้อมูลได้ทันที</p></div><a class="mini-link" href="#catalog">ดูทั้งหมด ↓</a></div><div class="grid" id="featuredGrid"></div></section>
 <section class="section" id="beginnerSection"><div class="section-head"><div><h2>🌱 เริ่มต้นเลี้ยงปลา</h2><p>รวมสายพันธุ์ที่มีระดับการดูแล “ง่าย” จากข้อมูลของคุณ</p></div></div><div class="grid" id="beginnerGrid"></div></section>
-<section class="section" id="resultsSection"><div class="section-head"><div><h2>🐟 ฐานข้อมูล FishMepedia</h2><p>ค้นหาและกรองข้อมูลได้จาก Google Sheets โดยตรง</p></div></div><div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดฐานข้อมูล...</div><div class="grid" id="dataContainer"></div></section>
-<section class="section"><div class="tool-section"><div class="section-head"><div><h2>🧰 เครื่องมือสำหรับคนเลี้ยงตู้</h2><p>เครื่องมือเล็ก ๆ ที่ช่วยวางแผนตู้ได้ง่ายขึ้น</p></div></div><div class="tool-grid"><div class="tool-card"><div><h3>💧 ปริมาณน้ำในตู้</h3><p>คำนวณจากกว้าง × ยาว × สูง</p></div><button class="tool-btn" onclick="openCalcModal()">เปิดเครื่องมือ</button></div><div class="tool-card"><div><h3>⚡ ค่าไฟตู้ปลา</h3><p>ประเมินค่าไฟจากอุปกรณ์และชั่วโมงใช้งาน</p></div><button class="tool-btn" onclick="openElecModal()">เปิดเครื่องมือ</button></div></div></div></section>
-<div class="float-toolbar"><button class="calc-float-btn elec-btn" onclick="openElecModal()"><i class="fa-solid fa-bolt"></i> ค่าไฟ</button><button class="calc-float-btn" onclick="openCalcModal()"><i class="fa-solid fa-droplet"></i> ปริมาณน้ำ</button></div>
-<footer>FishMepedia · ฐานความรู้สำหรับคนรักปลาสวยงามและตู้ไม้น้ำ<br><span>ข้อมูลเชื่อมต่อจาก Google Sheets</span></footer>
+<section class="section" id="resultsSection"><div class="section-head"><div><h2>🐟 สำรวจโลกใต้น้ำ</h2><p>ค้นหาปลาที่ใช่ แล้วค่อย ๆ ทำความรู้จักพวกเขาทีละสายพันธุ์</p></div><span class="mini-link">FISH · PLANT · DISCOVER</span></div><div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดฐานข้อมูล...</div><div class="grid" id="dataContainer"></div></section>
+
+
+
+
+
+
+
+
+
+<section class="home-group" id="planningGroup">
+  <div class="home-group-head">
+    <div>
+      <h2>วางแผนตู้ของคุณ</h2>
+      <p>เก็บปลาที่สนใจและทดลองจัดสมาชิกในตู้ โดยเปิดใช้เฉพาะเวลาที่ต้องการ</p>
+    </div>
+  </div>
+  <div class="home-group-stack">
+    <section class="my-tank-wrap">
+  <div class="my-tank-card fm-collapsible is-collapsed" id="myTankCard">
+    <div class="my-tank-head">
+      <div class="my-tank-title">
+        <div><h2>🐟 ตู้ของฉัน</h2><div class="my-tank-summary" id="myTankSummary">เก็บปลาที่สนใจไว้ แล้วค่อยดูภาพรวมทั้งตู้</div></div>
+        <span class="my-tank-count" id="myTankCount">0</span>
+      </div>
+      <button class="fm-collapse-toggle" type="button" onclick="togglePanel('myTankCard',this)" aria-expanded="false">เปิดดู <span class="chev">▼</span></button>
+    </div>
+    <div class="fm-collapse-body"><div class="fm-collapse-inner">
+      <div class="my-tank-body" id="myTankBody"></div>
+    </div></div>
+  </div>
+</section>
+    <section class="team-builder" id="teamBuilder"><div class="team-card fm-collapsible is-collapsed" id="teamCard"><div class="fm-section-top"><div><h2>🧩 จัดทีมสมาชิกในตู้ของฉัน</h2><p>บอกเงื่อนไขคร่าว ๆ แล้ว FishMepedia จะคัดปลาและไม้น้ำจากฐานข้อมูลที่เหมาะกับตู้ของคุณ</p><div class="fm-summary" style="color:rgba(255,255,255,.68)">Tank Planner · ใช้เมื่ออยากวางแผนสมาชิกทั้งตู้</div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('teamCard',this)" aria-expanded="false" style="color:#d8fffa">เปิดใช้ <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner"><div class="team-form"><div class="team-field"><label>ขนาดตู้</label><select id="teamTank"><option value="nano">นาโน / เล็ก</option><option value="medium" selected>กลาง</option><option value="large">ใหญ่</option></select></div><div class="team-field"><label>ประสบการณ์</label><select id="teamLevel"><option value="easy" selected>มือใหม่</option><option value="medium">มีประสบการณ์บ้าง</option><option value="any">ไม่จำกัด</option></select></div><div class="team-field"><label>ตำแหน่งที่อยากเติม</label><select id="teamPlacement"><option value="any">ทุกระดับ</option><option value="Bottom">พื้นตู้</option><option value="Mid">กลางตู้</option><option value="Top">ผิวน้ำ</option><option value="Foreground">ไม้หน้า</option><option value="Midground">ไม้กลาง</option><option value="Background">ไม้หลัง</option></select></div><div class="team-field"><label>สไตล์</label><select id="teamStyle"><option value="community">ตู้เลี้ยงรวมสงบ</option><option value="aquascape">ตู้ไม้น้ำ / Aquascape</option><option value="color">เน้นสีสัน</option><option value="cleanup">ทีมช่วยดูแลตู้</option></select></div><button class="team-build-btn" onclick="buildTankTeam()">จัดทีมให้ฉัน ✨</button></div><div class="team-results" id="teamResults"><div class="team-result-title" id="teamResultTitle"></div><div class="team-chips" id="teamChips"></div><div class="team-note">คำแนะนำนี้เป็นการคัดจากข้อมูลในฐาน FishMepedia ควรตรวจสอบจำนวนปลา ความเข้ากันได้จริง และพื้นที่ว่ายน้ำก่อนนำมาเลี้ยงร่วมกัน</div></div></div></div></div></section>
+  </div>
+</section>
+
+
+<section class="home-group explore-more" id="exploreMoreGroup">
+  <div class="home-group-head">
+    <div>
+      <h2>สำรวจเพิ่มเติม</h2>
+      <p>ฟังก์ชันเสริมสำหรับวันที่อยากค้นหาไอเดียใหม่หรือสำรวจฐาน FishMepedia ให้ลึกขึ้น</p>
+    </div>
+  </div>
+  <div class="home-group-stack">
+    <section class="discover-panel"><div class="discover-card fm-collapsible is-collapsed" id="discoverCard"><div class="fm-section-top"><div class="discover-top" style="flex:1"><div><h2>🧭 เส้นทางนักสำรวจ FishMepedia</h2><p>เปิดดูปลาไปเรื่อย ๆ แล้วค่อย ๆ สะสมสายพันธุ์ที่คุณค้นพบ</p><div class="fm-summary">ติดตามปลาที่เคยเปิดดูและค้นหาตัวใหม่</div></div><div class="discover-progress"><strong id="discoverCount">0 / 0</strong><div class="progress-track"><div class="progress-fill" id="discoverFill"></div></div></div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('discoverCard',this)" aria-expanded="false">เปิดดู <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner"><div class="discover-actions"><button class="discover-btn" onclick="showUnseenFish()">✨ ดูปลาที่ยังไม่เคยเปิด</button></div></div></div></div></section>
+    <section class="finder" id="finderSection"><div class="finder-card fm-collapsible is-collapsed" id="finderCard"><div class="fm-section-top"><div class="finder-head"><div><h2>🐠 ช่วยเลือกปลาให้หน่อย</h2><p>เลือกสิ่งที่ตรงกับตู้ของคุณ แล้ว FishMepedia จะช่วยคัดรายการจากข้อมูลที่มี</p><div class="fm-summary">Smart Finder · มือใหม่ · ตู้นาโน · สีสัน · ตู้ไม้น้ำ</div></div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('finderCard',this)" aria-expanded="false">เปิดใช้ <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner">
+<div class="finder-v2" id="finderV2">
+  <div class="finder-progress-v2" id="finderProgressV2"><span class="finder-progress-dot active"></span><span class="finder-progress-dot"></span><span class="finder-progress-dot"></span></div>
+
+  <div class="finder-step active" data-step="0">
+    <div class="finder-question">1. ตู้ของคุณประมาณขนาดไหน?</div>
+    <div class="finder-help">ไม่ต้องเป๊ะ เลือกขนาดใกล้เคียงที่สุด</div>
+    <div class="finder-choice-grid">
+      <button class="finder-choice" onclick="finderV2Choose('tank','nano',this)"><b>🏠 ตู้เล็ก / Nano</b><span>พื้นที่จำกัด เน้นปลาตัวเล็ก</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('tank','medium',this)"><b>🌿 ตู้ขนาดกลาง</b><span>เหมาะกับตู้ชุมชนทั่วไป</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('tank','large',this)"><b>🌊 ตู้ขนาดใหญ่</b><span>มีพื้นที่ว่ายน้ำมากขึ้น</span></button>
+    </div>
+  </div>
+
+  <div class="finder-step" data-step="1">
+    <div class="finder-question">2. ประสบการณ์เลี้ยงปลาของคุณ?</div>
+    <div class="finder-help">เพื่อช่วยคัดระดับการดูแลให้เหมาะสม</div>
+    <div class="finder-choice-grid">
+      <button class="finder-choice" onclick="finderV2Choose('level','easy',this)"><b>🌱 เพิ่งเริ่ม</b><span>อยากได้ชนิดที่ดูแลง่าย</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('level','medium',this)"><b>☀️ พอมีประสบการณ์</b><span>รับการดูแลระดับกลางได้</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('level','any',this)"><b>🔥 เลี้ยงมาสักพักแล้ว</b><span>เปิดรับทุกระดับ</span></button>
+    </div>
+  </div>
+
+  <div class="finder-step" data-step="2">
+    <div class="finder-question">3. อยากได้ปลาแบบไหน?</div>
+    <div class="finder-help">เลือกสไตล์ที่ตรงกับตู้หรือสิ่งที่คุณชอบที่สุด</div>
+    <div class="finder-choice-grid">
+      <button class="finder-choice" onclick="finderV2Choose('style','community',this)"><b>🤝 เลี้ยงรวมง่าย</b><span>นิสัยสงบและเข้ากับตู้ชุมชน</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('style','aquascape',this)"><b>🌿 เข้ากับตู้ไม้น้ำ</b><span>เหมาะกับ Aquascape</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('style','color',this)"><b>✨ สีสันโดดเด่น</b><span>เพิ่มจุดเด่นให้ตู้</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('style','bottom',this)"><b>🐡 ปลาหน้าดิน</b><span>เติมชีวิตบริเวณพื้นตู้</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('style','cleanup',this)"><b>🧹 ตัวช่วยดูแลตู้</b><span>กลุ่มกินตะไคร่หรือหากินพื้นตู้</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('style','any',this)"><b>🎲 ขอแนะนำให้หน่อย</b><span>เปิดรับหลายสไตล์</span></button>
+    </div>
+  </div>
+
+  <div class="finder-nav">
+    <button id="finderV2Back" onclick="finderV2Back()" style="visibility:hidden">← ย้อนกลับ</button>
+    <button onclick="finderV2Reset()">เริ่มใหม่</button>
+  </div>
+  <div class="finder-v2-results" id="finderV2Results"></div>
+</div>
+</div></div></div></section>
+  </div>
+</section>
+
+
+<div class="mobile-sticky-tools" aria-label="เครื่องมือด่วนบนมือถือ">
+  <button onclick="document.getElementById('searchInput').focus();document.getElementById('searchInput').scrollIntoView({behavior:'smooth',block:'center'})">🔎 ค้นหา</button>
+  <button onclick="document.getElementById('myTankCard')?.scrollIntoView({behavior:'smooth',block:'start'})">🐟 ตู้ของฉัน</button>
+  <button onclick="document.getElementById('finderCard')?.scrollIntoView({behavior:'smooth',block:'start'})">🧭 Finder</button>
+</div>
+
+
+<section class="fishme-follow" aria-labelledby="fishmeFollowTitle">
+  <div class="fishme-follow-inner">
+    <div class="fishme-follow-copy">
+      <span class="fishme-follow-kicker">🐠 FishMe Community</span>
+      <h2 id="fishmeFollowTitle">ติดตาม FishMe</h2>
+      <p>เรื่องราวปลา ตู้ไม้น้ำ และคอนเทนต์ใหม่ ๆ จาก FishMe</p>
+    </div>
+    <div class="fishme-follow-actions">
+      <a class="fishme-social-btn" href="https://youtube.com/@fishme2022?si=PyXP_4t2jPbvt6b1" target="_blank" rel="noopener noreferrer" aria-label="ติดตาม FishMe บน YouTube">
+        <i class="fa-brands fa-youtube"></i><span><small>ติดตามบน</small>YouTube</span><i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+      <a class="fishme-social-btn" href="https://www.tiktok.com/@fishme22?_r=1&_t=ZS-99ONcJLtdXs" target="_blank" rel="noopener noreferrer" aria-label="ติดตาม FishMe บน TikTok">
+        <i class="fa-brands fa-tiktok"></i><span><small>ติดตามบน</small>TikTok</span><i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer><strong style="color:#075763">FishMepedia</strong> · ฐานความรู้สำหรับคนรักปลาสวยงามและตู้ไม้น้ำ<br><span>Explore · Learn · Build your underwater world · ข้อมูลเชื่อมต่อจาก Google Sheets</span><div class="fm-brand-signature"><span>FishMepedia</span><span>•</span><b>by FishMe</b></div>
+</footer>
+<div class="modal-overlay" id="tipModal"><div class="modal-container" style="max-width:520px"><button class="close-modal-btn" onclick="closeModal('tipModal')"><i class="fa-solid fa-xmark"></i></button><div class="random-stage" id="tipContent"></div></div></div>
 <div class="modal-overlay" id="detailModal"><div class="modal-container"><button class="close-modal-btn" onclick="closeModal('detailModal')"><i class="fa-solid fa-xmark"></i></button><div class="modal-body" id="modalContent"></div></div></div>
 <div class="modal-overlay" id="randomModal"><div class="modal-container" style="max-width:560px"><button class="close-modal-btn" onclick="closeModal('randomModal')"><i class="fa-solid fa-xmark"></i></button><div id="randomContent"></div></div></div>
 <div class="modal-overlay" id="calcModal"><div class="modal-container" style="max-width:500px"><button class="close-modal-btn" onclick="closeModal('calcModal')"><i class="fa-solid fa-xmark"></i></button><div style="padding:30px"><h2 style="color:var(--green2);font-size:1.5rem">💧 คำนวณปริมาณน้ำในตู้ปลา</h2><p style="color:var(--muted);font-size:.88rem">กรอกขนาดตู้เป็นเซนติเมตร</p><div class="calc-box"><div class="calc-input-group"><div class="calc-field"><label>กว้าง</label><input type="number" id="calcW" value="30" min="0" oninput="calculateWaterVolume()"></div><div class="calc-field"><label>ยาว</label><input type="number" id="calcL" value="60" min="0" oninput="calculateWaterVolume()"></div><div class="calc-field"><label>สูง</label><input type="number" id="calcH" value="35" min="0" oninput="calculateWaterVolume()"></div></div><div class="calc-result-card"><div style="font-size:.8rem;color:var(--muted)">ปริมาณน้ำโดยประมาณ</div><div class="calc-result-val" id="calcLiters">63.0 ลิตร</div><div style="font-size:.78rem;color:var(--green2)" id="calcGallons">(~ 16.6 แกลลอน)</div></div></div></div></div></div>
 <div class="modal-overlay" id="elecModal"><div class="modal-container" style="max-width:650px"><button class="close-modal-btn" onclick="closeModal('elecModal')"><i class="fa-solid fa-xmark"></i></button><div style="padding:30px;max-height:88vh;overflow:auto"><h2 style="color:#d97706;font-size:1.5rem">⚡ คำนวณค่าไฟอุปกรณ์ตู้ปลา</h2><p style="color:var(--muted);font-size:.86rem">ปรับอุปกรณ์และอัตราค่าไฟได้ตามจริง</p><div style="background:#fffbeb;border:1px solid #fde68a;padding:13px;border-radius:15px;margin:14px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><label style="font-weight:600;color:#92400e">อัตราค่าไฟต่อยูนิต (บาท)</label><div><button class="rate-preset-btn" onclick="setRatePreset(4.5)">บ้าน ~4.5฿</button> <button class="rate-preset-btn" onclick="setRatePreset(8)">หอ ~8฿</button></div></div><input type="number" id="elecRate" value="4.5" step=".1" oninput="calculateElectricityTotal()" style="width:100%;padding:10px;margin-top:7px;border:1px solid #fcd34d;border-radius:10px"></div><div style="display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;font-size:.75rem;color:var(--muted);padding:0 4px 6px"><span>ชื่ออุปกรณ์</span><span>Watt</span><span>ชม./วัน</span><span></span></div><div id="elecDeviceList"></div><button class="add-device-btn" onclick="addElecDevice()">＋ เพิ่มอุปกรณ์</button><div style="background:#fffbeb;border:1px dashed #fcd34d;border-radius:16px;padding:17px;margin-top:15px;text-align:center"><div style="font-size:.8rem;color:#b45309">ค่าไฟโดยประมาณ</div><div style="font-size:2rem;font-weight:800;color:#d97706" id="totalCostVal">0.00 บาท/เดือน</div><div style="font-size:.78rem;color:#92400e"><span id="totalUnitsVal">0 ยูนิต/เดือน</span> · <span id="dailyCostVal">~0.00 บาท/วัน</span></div></div></div></div></div>
 <script>
-const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRGP8PdtAvHLh4juRR0vVCefGyxM-tsqDyU50uhymqnuQUN_cJJHb0CVOcmkGE-yefzqS7uMli7jVPk/pub?output=csv';
-let allData=[], currentFiltered=[], selectedDifficulty='', showFavoritesOnly=false;
+const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vTWxUW784nzuxIfHDkvIoTBwA87HtsxqP7fKTlub6qe8PqcadKIEacIRFRlfuyNhw/pub?gid=1236070672&single=true&output=csv';
+let allData=[], currentFiltered=[], selectedDifficulty='', showFavoritesOnly=false, randomContext=null;
 let favorites=JSON.parse(localStorage.getItem('fishmepedia_favorites')||'[]');
 let elecDevices=[{name:'โคมไฟ LED',watt:20,hours:8},{name:'ปั๊มกรองน้ำ',watt:15,hours:24}];
 const $=id=>document.getElementById(id);
 function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
-function normalizeItem(r){return {Category:(r.Category||'').trim(),SubCategory:(r.SubCategory||'').trim(),SpecificType:(r['Specific Type']||r.SpecificType||'').trim(),NameTH:(r['Name TH']||r.NameTH||'').trim(),NameEN:(r.NameEN||'').trim(),CareInfo:(r.CareInfo||'').trim(),Difficulty:(r.Difficulty||'').trim(),MediaURLs:(r.MediaURLs||'').trim(),ShopeeLink:(r.ShopeeLink||'').trim()};}
-async function init(){generateBubbles();setupEvents();$('loading').style.display='block';Papa.parse(CSV_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allData=r.data.map(normalizeItem).filter(x=>x.NameTH);updateStats();setupCategoryDropdowns();renderFeatured();renderBeginner();applyFilters();$('loading').style.display='none';},error:e=>{$('loading').innerHTML='❌ ไม่สามารถโหลดข้อมูลจาก Google Sheets ได้ กรุณาตรวจสอบการเผยแพร่ชีตเป็น CSV';}})}
-function setupEvents(){ $('searchInput').addEventListener('input',applyFilters);$('catSelect').addEventListener('change',()=>{updateSubCategoryDropdown();updateSpecificTypeDropdown();applyFilters()});$('subCatSelect').addEventListener('change',()=>{updateSpecificTypeDropdown();applyFilters()});$('typeSelect').addEventListener('change',applyFilters);document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>{selectedDifficulty=b.dataset.difficulty;document.querySelectorAll('[data-difficulty]').forEach(x=>x.classList.remove('active'));b.classList.add('active');applyFilters()}));document.querySelector('[data-favorite]').addEventListener('click',e=>{showFavoritesOnly=!showFavoritesOnly;e.currentTarget.classList.toggle('active',showFavoritesOnly);applyFilters()});document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.active').forEach(m=>closeModal(m.id))});}
-function updateStats(){const fish=allData.filter(x=>!isPlant(x));const plants=allData.filter(isPlant);$('statFish').textContent=fish.length;$('statPlants').textContent=plants.length;$('statEasy').textContent=allData.filter(x=>x.Difficulty.includes('ง่าย')).length;$('statGroups').textContent=new Set(allData.map(x=>x.SpecificType).filter(Boolean)).size;}
-function isPlant(x){const c=x.Category.toLowerCase();return c.includes('ไม้น้ำ')||c.includes('พืช');}
+function normalizeItem(r){
+  const v=(...keys)=>{for(const k of keys){const x=r[k];if(x!==undefined&&x!==null&&String(x).trim()!=='')return String(x).trim()}return ''};
+  return {
+    ID:v('ID'),Category:v('Category'),SubCategory:v('SubCategory'),SpecificType:v('SpecificType','Specific Type'),
+    NameTH:v('NameTH','Name TH'),NameEN:v('NameEN'),ScientificName:v('ScientificName','Scientific Name'),Synonyms:v('Synonyms'),
+    Description:v('Description'),Appearance:v('Appearance'),Behavior:v('Behavior'),Size:v('Size'),Temperature:v('Temperature'),pH:v('pH','PH'),
+    Lighting:v('Lighting'),CO2:v('CO2','CO₂'),Substrate:v('Substrate'),Placement:v('Placement'),Difficulty:v('Difficulty'),CareInfo:v('CareInfo'),
+    Feeding:v('Feeding'),Fertilization:v('Fertilization'),TankSize:v('TankSize','Tank Size'),Purpose:v('Purpose'),MediaURLs:v('MediaURLs'),
+    ShopeeLink:v('ShopeeLink'),LazadaLink:v('LazadaLink'),ShopLinks:v('ShopLinks','Shop Links'),OtherShopLink:v('OtherShopLink','Other Shop Link'),ReferenceURL:v('ReferenceURL','Reference URL'),Source:v('Source'),LastUpdated:v('LastUpdated','Last Updated')
+  };
+}
+
+const heroMessages=[['','รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ']];
+function setHeroMessage(){const m=heroMessages[0];$('heroKicker').textContent='';$('heroQuote').textContent=m[1]}
+function seenKeys(){try{return JSON.parse(localStorage.getItem('fishmepedia_seen')||'[]')}catch{return[]}}
+function isSeen(x){return seenKeys().includes(favKey(x))}
+function markSeen(x){const a=seenKeys(),k=favKey(x);if(!a.includes(k)){a.push(k);localStorage.setItem('fishmepedia_seen',JSON.stringify(a))}updateDiscovery()}
+function updateDiscovery(){const seen=seenKeys(),total=allData.length,found=allData.filter(x=>seen.includes(favKey(x))).length;$('discoverCount').textContent=`${found.toLocaleString()} / ${total.toLocaleString()}`;$('discoverFill').style.width=(total?Math.min(100,found/total*100):0)+'%'}
+function showUnseenFish(){const list=allData.filter(x=>!isSeen(x));if(!list.length){openTip('🏆 คุณค้นพบครบทุกสายพันธุ์แล้ว!','ยอดเยี่ยมมาก ตอนนี้ลองสุ่มปลาเพื่อสำรวจข้อมูลอีกครั้งได้เลย');return}openRandomResult(list,'✨','ตัวที่คุณยังไม่เคยเปิด')}
+function showDiscoveryTips(){const tips=['ลองกดดูปลาในกลุ่มเดียวกัน เพราะปลาแพะหรือเตตร้าอาจมีหลายสปีชีส์ให้รู้จัก','รายการโปรดจะถูกเก็บไว้ในเครื่องนี้ ไม่ต้องสมัครสมาชิก','ยิ่งเปิดดูมากขึ้น แถบการค้นพบของคุณก็จะค่อย ๆ เต็ม','ถ้าค้นไม่เจอ ลองใช้ชื่อไทย ชื่อวิทยาศาสตร์ หรือ Specific Type'];openTip('💡 เกร็ดสำหรับนักสำรวจ',tips[Math.floor(Math.random()*tips.length)])}
+function openTip(title,text){$('tipContent').innerHTML=`<div class="random-icon">💡</div><h2>${esc(title)}</h2><p>${esc(text)}</p><div class="random-actions" style="margin-top:18px"><button class="random-primary" onclick="closeModal('tipModal')">ได้เลย!</button></div>`;$('tipModal').classList.add('active');document.body.style.overflow='hidden'}
+function openSmartFinder(){const fc=$('finderCard');if(fc&&fc.classList.contains('is-collapsed'))togglePanel('finderCard',fc.querySelector('.fm-collapse-toggle'));finderV2ShowStep(finderV2State.step);if(fc)fc.scrollIntoView({behavior:'smooth',block:'center'});}
+function finderChoose(mode,btn){
+  document.querySelectorAll('.finder-option').forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+  const easy=x=>/ง่าย|beginner|easy/i.test(x.Difficulty), purpose=(x,q)=>new RegExp(q,'i').test(x.Purpose||''); let list=[];
+  if(mode==='ง่าย')list=allData.filter(easy);
+  else if(mode==='นาโน')list=allData.filter(x=>!isPlant(x)&&(purpose(x,'nano|small')||/นาโน|แคระ|rasbora|tetra|pseudomugil|boraras/i.test([x.NameTH,x.NameEN,x.SpecificType,x.SubCategory,x.Size,x.TankSize].join(' '))));
+  else if(mode==='ชุมชน')list=allData.filter(x=>!isPlant(x)&&(purpose(x,'community|peaceful')||(/สงบ|community|peaceful/i.test([x.Behavior,x.CareInfo].join(' '))&&easy(x))));
+  else if(mode==='สี')list=allData.filter(x=>purpose(x,'color')||/(แดง|ฟ้า|เขียว|ทอง|นีออน|blue|red|green|gold|neon)/i.test([x.NameTH,x.NameEN,x.Appearance].join(' ')));
+  else if(mode==='ไม้น้ำ')list=allData.filter(x=>!isPlant(x)&&(purpose(x,'aquascape|planted')||/ไม้น้ำ|aquascape|planted/i.test([x.Purpose,x.CareInfo].join(' '))));
+  else if(mode==='ตะไคร่')list=allData.filter(x=>purpose(x,'algae')||/ตะไคร่|ออตโต้|ดูด|algae/i.test([x.NameTH,x.NameEN,x.SpecificType,x.CareInfo,x.Purpose,x.Feeding].join(' ')));
+  list=[...new Map(list.map(x=>[favKey(x),x])).values()].slice(0,8);
+  $('finderResultTitle').textContent=list.length?`เราเจอ ${list.length} ตัวที่น่าลองสำรวจ`:'ยังไม่มีข้อมูลที่ตรงแบบพอดี ลองค้นจากช่องด้านบนดูนะ';
+  $('finderChips').innerHTML=list.map(x=>`<button class="finder-chip" onclick="openModalByIndex(${allData.indexOf(x)})">${isPlant(x)?'🌿':'🐟'} ${esc(x.NameTH)}</button>`).join('');$('finderResult').classList.add('active')
+}
+function keyboardSearch(){document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('searchInput').focus();$('searchInput').select()}})}
+
+
+function togglePanel(id,btn){
+  const el=$(id); if(!el)return;
+  const collapsed=el.classList.toggle('is-collapsed');
+  const b=btn||el.querySelector('.fm-collapse-toggle');
+  if(b){
+    b.setAttribute('aria-expanded',String(!collapsed));
+    const base=id==='toolsCard'?'เครื่องมือ':'ดู';
+    const labels={
+      discoverCard:collapsed?'เปิดดู':'ย่อ',
+      finderCard:collapsed?'เปิดใช้':'ย่อ',
+      teamCard:collapsed?'เปิดใช้':'ย่อ',
+      myTankCard:collapsed?'เปิดดู':'ย่อ',
+      toolsCard:collapsed?'เปิดเครื่องมือ':'ย่อ'
+    };
+    const chev=b.querySelector('.chev');
+    const label=labels[id]|| (collapsed?'เปิด':'ย่อ');
+    b.childNodes[0].nodeValue=label+' ';
+  }
+  try{localStorage.setItem('fishmepedia_panel_'+id,collapsed?'closed':'open')}catch{}
+}
+function restorePanelState(){
+  ['discoverCard','finderCard','myTankCard','teamCard','toolsCard'].forEach(id=>{
+    const el=$(id); if(!el)return;
+    let state='closed';
+    try{state=localStorage.getItem('fishmepedia_panel_'+id)||'closed'}catch{}
+    if(state==='open'){
+      el.classList.remove('is-collapsed');
+      const b=el.querySelector('.fm-collapse-toggle');
+      if(b){b.setAttribute('aria-expanded','true');b.childNodes[0].nodeValue='ย่อ ';}
+    }
+  });
+}
+
+
+/* ===== Performance Polish v1 ===== */
+let filterRaf=0;
+function scheduleApplyFilters(){
+  cancelAnimationFrame(filterRaf);
+  filterRaf=requestAnimationFrame(()=>applyFilters());
+}
+function enhanceImagesForPerformance(){
+  document.querySelectorAll('img').forEach(img=>{
+    if(!img.hasAttribute('loading'))img.loading='lazy';
+    if(!img.hasAttribute('decoding'))img.decoding='async';
+  });
+}
+const perfObserver=('MutationObserver' in window)?new MutationObserver(muts=>{
+  let hasNew=false;
+  muts.forEach(m=>{if(m.addedNodes&&m.addedNodes.length)hasNew=true});
+  if(hasNew)requestAnimationFrame(enhanceImagesForPerformance);
+}):null;
+
+
+/* ===== Final Production Polish v1 ===== */
+function renderCatalogEmptyState(){
+  const c=$('dataContainer');if(!c)return;
+  if(currentFiltered&&currentFiltered.length===0){
+    c.innerHTML=`<div class="empty-state-fm"><div class="icon">🐟</div><b>ยังไม่พบข้อมูลที่ตรงกับการค้นหา</b><span>ลองเปลี่ยนคำค้นหา หรือเลือกตัวกรองให้น้อยลงอีกนิด</span></div>`;
+    const more=$('catalogMoreWrap');if(more)more.remove();
+  }
+}
+function setupBackToTop(){
+  const b=$('fmBackTop');if(!b)return;
+  const sync=()=>b.classList.toggle('show',window.scrollY>650);
+  window.addEventListener('scroll',sync,{passive:true});sync();
+}
+function productionSanityCheck(){
+  const required=['searchInput','dataContainer','loading'];
+  const missing=required.filter(id=>!$(id));
+  if(missing.length)console.warn('FishMepedia: missing UI nodes',missing);
+  if(typeof allData==='undefined')console.warn('FishMepedia: database state unavailable');
+}
+
+async function init(){
+  restorePanelState();generateBubbles();setHeroMessage();keyboardSearch();setupEvents();setupBackToTop();productionSanityCheck();
+  const loading=$('loading');loading.style.display='block';
+  if(typeof Papa==='undefined'){
+    loading.innerHTML='❌ ไม่สามารถเริ่มระบบอ่านฐานข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วเปิดหน้าใหม่';
+    return;
+  }
+  Papa.parse(CSV_URL,{
+    download:true,header:true,skipEmptyLines:true,
+    complete:r=>{
+      try{
+        allData=r.data.map(normalizeItem).filter(x=>x.NameTH);
+        updateStats();updateDiscovery();setupCategoryDropdowns();setupAdvancedFilters();
+        renderFeatured();renderBeginner();applyFilters();renderMyTankV2();enhanceImagesForPerformance();if(perfObserver)perfObserver.observe(document.body,{childList:true,subtree:true});
+        loading.style.display='none';
+      }catch(err){
+        console.error('FishMepedia render error:',err);
+        loading.style.display='block';
+        loading.innerHTML='❌ โหลดข้อมูลสำเร็จ แต่เกิดข้อผิดพลาดระหว่างแสดงผล กรุณาเปิด Console เพื่อตรวจสอบรายละเอียด';
+      }
+    },
+    error:e=>{
+      console.error('FishMepedia CSV error:',e);
+      loading.style.display='block';
+      loading.innerHTML='❌ ไม่สามารถโหลดข้อมูลจาก Google Sheets ได้ กรุณาตรวจสอบการเผยแพร่ชีตเป็น CSV';
+    }
+  });
+}
+function setupEvents(){ $('searchInput').addEventListener('input',scheduleApplyFilters);$('catSelect').addEventListener('change',()=>{updateSubCategoryDropdown();updateSpecificTypeDropdown();applyFilters()});$('subCatSelect').addEventListener('change',()=>{updateSpecificTypeDropdown();applyFilters()});$('typeSelect').addEventListener('change',applyFilters);['placementSelect','tankSelect','tempSelect','phSelect'].forEach(id=>$(id).addEventListener('change',applyFilters));document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>{selectedDifficulty=b.dataset.difficulty;document.querySelectorAll('[data-difficulty]').forEach(x=>x.classList.remove('active'));b.classList.add('active');applyFilters()}));document.querySelector('[data-favorite]').addEventListener('click',e=>{showFavoritesOnly=!showFavoritesOnly;e.currentTarget.classList.toggle('active',showFavoritesOnly);applyFilters()});document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.active').forEach(m=>closeModal(m.id))});}
+function difficultyTier(v){v=(v||'').toLowerCase();if(/ง่าย|beginner|easy/.test(v))return 'easy';if(/ปานกลาง|medium/.test(v))return 'medium';if(/ยาก|advanced|hard/.test(v))return 'hard';return ''}
+function updateStats(){const fish=allData.filter(x=>!isPlant(x));const plants=allData.filter(isPlant);$('statFish').textContent=fish.length;$('statPlants').textContent=plants.length;$('statEasy').textContent=allData.filter(x=>difficultyTier(x.Difficulty)==='easy').length;$('statGroups').textContent=new Set(allData.map(x=>x.SpecificType).filter(Boolean)).size;}
+function isPlant(x){const c=(x.Category||'').toLowerCase();return c==='plant'||c.includes('plant')||c.includes('ไม้น้ำ')||c.includes('พืช');}
 function generateBubbles(){const c=$('bubblesContainer');for(let i=0;i<12;i++){const b=document.createElement('div');b.className='bubble';const z=Math.random()*22+8;b.style.width=z+'px';b.style.height=z+'px';b.style.left=Math.random()*100+'%';b.style.animationDuration=(Math.random()*8+8)+'s';b.style.animationDelay=(Math.random()*6)+'s';c.appendChild(b)}}
-function parseMediaUrls(raw){return raw?raw.split(/[\r\n,]+/).map(x=>x.trim().replace(/^['"]|['"]$/g,'')).filter(x=>/^https?:\/\//i.test(x)):[]}
+function parseMediaUrls(raw){
+  if(!raw)return [];
+  return String(raw)
+    .split(/\s*(?:\r?\n|\||;|,\s*(?=https?:\/\/))\s*/g)
+    .map(x=>x.trim().replace(/^['"]|['"]$/g,''))
+    .filter(x=>/^https?:\/\//i.test(x))
+    .filter((x,i,a)=>a.indexOf(x)===i);
+}
 function getYouTubeEmbedUrl(u){const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&#/]+)/i);return m?`https://www.youtube.com/embed/${m[1]}?autoplay=0&mute=1&rel=0`:null}
-function fixMediaUrl(u){const m=u.match(/drive\.google\.com.*(?:file\/d\/|id=|\/d\/)([\w-]+)/);return m?`https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200`:u}
+function fixMediaUrl(u){
+  u=String(u||'').trim();
+  let m=u.match(/drive\.google\.com\/file\/d\/([\w-]+)/i);
+  if(!m)m=u.match(/[?&]id=([\w-]+)/i);
+  return m?`https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200`:u;
+}
 function mediaHtml(u,cover=false){u=fixMediaUrl(u);const yt=getYouTubeEmbedUrl(u);if(yt)return `<iframe class="media-item" src="${esc(yt)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;if(/\.(mp4|webm|ogg)(\?|$)/i.test(u))return `<video class="media-item" src="${esc(u)}" ${cover?'muted autoplay loop':''} playsinline controls></video>`;return `<img class="media-item" src="${esc(u)}" alt="${esc('ภาพ '+(cover?'ตัวอย่าง':'ปลา'))}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=&quot;placeholder-art&quot;>🐟</div>'">`;}
+
+function fmPlaceholder(label){
+  return `<div class="fm-placeholder"><div class="fm-placeholder-icon">🐠</div><b>${esc(label||'FishMepedia')}</b><small>ยังไม่มีภาพในฐานข้อมูล</small></div>`;
+}
+function fmImg(url,label){
+  return `<img class="fm-image fm-loading" src="${esc(fixMediaUrl(url))}" alt="${esc(label||'FishMepedia')}" loading="lazy" decoding="async"
+    onload="this.classList.remove('fm-loading');this.classList.add('fm-loaded')"
+    onerror="this.onerror=null;this.closest('.fm-image-wrap').innerHTML=fmPlaceholder(this.alt)">`;
+}
+function cardImageHtml(x){
+  const urls=parseMediaUrls(x.MediaURLs),u=urls[0],label=x.NameTH||x.NameEN||'FishMepedia';
+  return `<div class="fm-image-wrap">${u?fmImg(u,label):fmPlaceholder(label)}</div>`;
+}
+function galleryHtml(x){
+  const urls=parseMediaUrls(x.MediaURLs),label=x.NameTH||x.NameEN||'FishMepedia';
+  if(!urls.length)return `<div class="fm-gallery"><div class="fm-gallery-main"><div class="fm-image-wrap">${fmPlaceholder(label)}</div></div></div>`;
+  const id='fmGallery_'+Math.random().toString(36).slice(2,8);
+  return `<div class="fm-gallery" id="${id}" data-index="0" data-label="${esc(label)}">
+    <div class="fm-gallery-main">
+      <div class="fm-image-wrap">${fmImg(urls[0],label)}</div>
+      ${urls.length>1?`<div class="fm-gallery-counter"><span>1</span> / ${urls.length}</div>
+      <div class="fm-gallery-nav"><button onclick="galleryMove('${id}',-1)">‹</button><button onclick="galleryMove('${id}',1)">›</button></div>`:''}
+    </div>
+    ${urls.length>1?`<div class="fm-gallery-thumbs">${urls.map((u,i)=>`<button class="fm-gallery-thumb ${i===0?'active':''}" data-url="${esc(fixMediaUrl(u))}" onclick="galleryGo('${id}',${i})"><img src="${esc(fixMediaUrl(u))}" alt="" loading="lazy"></button>`).join('')}</div>`:''}
+  </div>`;
+}
+function galleryGo(id,index){
+  const root=$(id);if(!root)return;
+  const thumbs=[...root.querySelectorAll('.fm-gallery-thumb')];if(!thumbs.length)return;
+  index=(index+thumbs.length)%thumbs.length;root.dataset.index=index;
+  const url=thumbs[index].dataset.url,label=root.dataset.label||'FishMepedia';
+  root.querySelector('.fm-gallery-main .fm-image-wrap').innerHTML=fmImg(url,label);
+  thumbs.forEach((t,i)=>t.classList.toggle('active',i===index));
+  const c=root.querySelector('.fm-gallery-counter span');if(c)c.textContent=index+1;
+}
+function galleryMove(id,delta){const root=$(id);if(root)galleryGo(id,(parseInt(root.dataset.index||'0',10)+delta))}
+
 function setupCategoryDropdowns(){const s=$('catSelect');s.innerHTML='<option value="">🐟 หมวดหมู่หลักทั้งหมด</option>';[...new Set(allData.map(x=>x.Category).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));updateSubCategoryDropdown()}
 function updateSubCategoryDropdown(){const cat=$('catSelect').value,s=$('subCatSelect');s.innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';if(!cat){s.disabled=true;updateSpecificTypeDropdown();return} [...new Set(allData.filter(x=>x.Category===cat).map(x=>x.SubCategory).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));s.disabled=false}
 function updateSpecificTypeDropdown(){const cat=$('catSelect').value,sub=$('subCatSelect').value,s=$('typeSelect');s.innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';if(!sub){s.disabled=true;return}[...new Set(allData.filter(x=>x.Category===cat&&x.SubCategory===sub).map(x=>x.SpecificType).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));s.disabled=false}
-function applyFilters(){const cat=$('catSelect').value,sub=$('subCatSelect').value,type=$('typeSelect').value,k=$('searchInput').value.toLowerCase().trim();currentFiltered=allData.filter(x=>{const hay=[x.NameTH,x.NameEN,x.Category,x.SubCategory,x.SpecificType,x.CareInfo].join(' ').toLowerCase();return(!cat||x.Category===cat)&&(!sub||x.SubCategory===sub)&&(!type||x.SpecificType===type)&&(!selectedDifficulty||x.Difficulty.includes(selectedDifficulty))&&(!showFavoritesOnly||favorites.includes(favKey(x)))&&(!k||hay.includes(k))});$('resultCount').textContent=`พบ ${currentFiltered.length.toLocaleString()} รายการ`;renderCards(currentFiltered,$('dataContainer'));$('featuredSection').style.display=(k||cat||sub||type||selectedDifficulty||showFavoritesOnly)?'none':'block';$('beginnerSection').style.display=(k||cat||sub||type||selectedDifficulty||showFavoritesOnly)?'none':'block'}
-function resetFilters(){$('searchInput').value='';$('catSelect').value='';$('subCatSelect').innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';$('subCatSelect').disabled=true;$('typeSelect').innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';$('typeSelect').disabled=true;selectedDifficulty='';showFavoritesOnly=false;document.querySelectorAll('.quick-btn').forEach(x=>x.classList.remove('active'));document.querySelector('[data-difficulty=""]').classList.add('active');document.querySelector('[data-favorite]').classList.remove('active');applyFilters()}
+function toggleAdvancedFilters(){const box=$('advancedFilters');box.classList.toggle('active');$('advancedToggle').textContent=box.classList.contains('active')?'✕ ปิดตัวกรองขั้นสูง':'⚙️ ตัวกรองขั้นสูง'}
+function setupAdvancedFilters(){const p=$('placementSelect');p.innerHTML='<option value="">ทั้งหมด</option>';[...new Set(allData.map(x=>x.Placement).filter(Boolean))].sort().forEach(v=>p.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`))}
+function firstNum(v){const m=String(v||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/);return m?parseFloat(m[0]):null}
+function nums(v){return (String(v||'').match(/\d+(?:\.\d+)?/g)||[]).map(Number)}
+function tankBucket(x){const t=(x.TankSize||'').toLowerCase(),n=firstNum(t);if(/nano|นาโน|เล็ก/.test(t))return'nano';if(/ใหญ่|large/.test(t))return'large';if(n!==null){if(/ลิตร|liter|litre|l\b/.test(t)){if(n<=40)return'nano';if(n>=100)return'large'}if(/ซม|cm|นิ้ว|inch/.test(t)){if(n<=45)return'nano';if(n>=90)return'large'}}return'medium'}
+function tempMatch(x,mode){if(!mode)return true;const a=nums(x.Temperature);if(!a.length)return false;const lo=Math.min(...a),hi=Math.max(...a);if(mode==='cool')return lo<=24;if(mode==='tropical')return lo<=28&&hi>=24;if(mode==='warm')return hi>=27;return true}
+function phMatch(x,mode){if(!mode)return true;const a=nums(x.pH);if(!a.length)return false;const lo=Math.min(...a),hi=Math.max(...a);if(mode==='acidic')return lo<7;if(mode==='neutral')return lo<=7.4&&hi>=6.6;if(mode==='alkaline')return hi>7.4;return true}
+function teamStyleMatch(x,style){const h=[x.Purpose,x.Behavior,x.CareInfo,x.Appearance,x.Feeding,x.SpecificType].join(' ');if(style==='community')return /community|peaceful|สงบ|เลี้ยงรวม/i.test(h);if(style==='aquascape')return isPlant(x)||/aquascape|planted|ไม้น้ำ/i.test(h);if(style==='color')return /color|สี|แดง|ฟ้า|เขียว|ทอง|นีออน|red|blue|green|gold|neon/i.test(h);if(style==='cleanup')return /algae|ตะไคร่|clean|เก็บเศษ|bottom dweller|หน้าดิน/i.test(h);return true}
+function buildTankTeam(){const tank=$('teamTank').value,level=$('teamLevel').value,place=$('teamPlacement').value,style=$('teamStyle').value;let list=allData.filter(x=>tankBucket(x)===tank||tank==='large').filter(x=>level==='any'||(level==='easy'?difficultyTier(x.Difficulty)==='easy':difficultyTier(x.Difficulty)!=='hard')).filter(x=>place==='any'||String(x.Placement||'').toLowerCase().includes(place.toLowerCase())).filter(x=>teamStyleMatch(x,style));list=[...new Map(list.map(x=>[favKey(x),x])).values()];const fish=list.filter(x=>!isPlant(x)).slice(0,5),plants=list.filter(isPlant).slice(0,4),picked=[...fish,...plants].slice(0,8);$('teamResultTitle').textContent=picked.length?`คัดมาให้ ${picked.length} รายการ — ปลา ${fish.length} · ไม้น้ำ ${plants.length}`:'ยังไม่มีรายการที่ตรงเงื่อนไขนี้ในฐานข้อมูล';$('teamChips').innerHTML=picked.map(x=>`<button class="team-chip" onclick="openModalByIndex(${allData.indexOf(x)})">${isPlant(x)?'🌿':'🐟'} ${esc(x.NameTH)}</button>`).join('');$('teamResults').classList.add('active')}
+function applyFilters(){resetCatalogLimit();const cat=$('catSelect').value,sub=$('subCatSelect').value,type=$('typeSelect').value,k=$('searchInput').value.toLowerCase().trim(),placement=$('placementSelect').value,tank=$('tankSelect').value,temp=$('tempSelect').value,ph=$('phSelect').value;currentFiltered=allData.filter(x=>{const hay=[x.NameTH,x.NameEN,x.ScientificName,x.Synonyms,x.Category,x.SubCategory,x.SpecificType,x.Description,x.Appearance,x.Behavior,x.CareInfo,x.Purpose,x.Feeding,x.TankSize,x.Placement].join(' ').toLowerCase();return(!cat||x.Category===cat)&&(!sub||x.SubCategory===sub)&&(!type||x.SpecificType===type)&&(!placement||x.Placement===placement)&&(!tank||tankBucket(x)===tank)&&tempMatch(x,temp)&&phMatch(x,ph)&&(!selectedDifficulty||difficultyTier(x.Difficulty)===({'ง่าย':'easy','ปานกลาง':'medium','ยาก':'hard'}[selectedDifficulty]||selectedDifficulty))&&(!showFavoritesOnly||favorites.includes(favKey(x)))&&(!k||hay.includes(k))});$('resultCount').textContent=`พบ ${currentFiltered.length.toLocaleString()} รายการ`;renderCatalogCompact(currentFiltered);const active=k||cat||sub||type||placement||tank||temp||ph||selectedDifficulty||showFavoritesOnly;$('featuredSection').style.display=active?'none':'block';$('beginnerSection').style.display=active?'none':'block'}
+function resetFilters(){$('searchInput').value='';$('catSelect').value='';$('subCatSelect').innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';$('subCatSelect').disabled=true;$('typeSelect').innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';$('typeSelect').disabled=true;selectedDifficulty='';showFavoritesOnly=false;['placementSelect','tankSelect','tempSelect','phSelect'].forEach(id=>$(id).value='');document.querySelectorAll('.quick-btn').forEach(x=>x.classList.remove('active'));document.querySelector('[data-difficulty=""]').classList.add('active');document.querySelector('[data-favorite]').classList.remove('active');applyFilters()}
 function clearSearch(){$('searchInput').value='';applyFilters();$('searchInput').focus()}
-function getCareBadgesHtml(x){if(!x.Difficulty)return '';let h='';if(x.Difficulty.includes('ง่าย'))h+='<span class="feature-badge badge-easy">🌱 เลี้ยงง่าย</span>';else if(x.Difficulty.includes('ปานกลาง'))h+='<span class="feature-badge badge-medium">☀️ ปานกลาง</span>';else if(x.Difficulty.includes('ยาก'))h+='<span class="feature-badge badge-hard">🔥 ยาก</span>';if(isPlant(x))h+='<span class="feature-badge" style="background:#e0f2fe;color:#0369a1">🌿 ไม้น้ำ</span>';return h}
-function favKey(x){return x.NameEN||x.NameTH}
+function getCareBadgesHtml(x){if(!x.Difficulty)return '';let h='';if(/ง่าย|beginner|easy/i.test(x.Difficulty))h+='<span class="feature-badge badge-easy">🌱 เลี้ยงง่าย</span>';else if(/ปานกลาง|medium/i.test(x.Difficulty))h+='<span class="feature-badge badge-medium">☀️ ปานกลาง</span>';else if(/ยาก|advanced|hard/i.test(x.Difficulty))h+='<span class="feature-badge badge-hard">🔥 ยาก</span>';if(isPlant(x))h+='<span class="feature-badge" style="background:#e0f2fe;color:#0369a1">🌿 ไม้น้ำ</span>';return h}
+function favKey(x){return x.ID||x.ScientificName||x.NameEN||x.NameTH}
 function toggleFavorite(x,e){e.stopPropagation();const k=favKey(x);favorites=favorites.includes(k)?favorites.filter(v=>v!==k):[...favorites,k];localStorage.setItem('fishmepedia_favorites',JSON.stringify(favorites));renderCards(currentFiltered,$('dataContainer'));if(!($('featuredSection').style.display==='none')){renderFeatured();renderBeginner()}}
-function cardHtml(x){const urls=parseMediaUrls(x.MediaURLs),u=urls[0];return `<article class="card" onclick='openModalByIndex(${allData.indexOf(x)})'><button class="favorite-btn ${favorites.includes(favKey(x))?'active':''}" title="${favorites.includes(favKey(x))?'นำออกจากรายการโปรด':'เพิ่มในรายการโปรด'}" onclick='toggleFavoriteByIndex(${allData.indexOf(x)},event)'><i class="fa-${favorites.includes(favKey(x))?'solid':'regular'} fa-heart"></i></button><div class="card-media-box">${urls.length>1?`<span class="media-count-badge"><i class="fa-solid fa-images"></i> ${urls.length}</span>`:''}${u?mediaHtml(u,true):'<div class="placeholder-art">🐟</div>'}</div><div class="card-body"><span class="category-badge">${esc([x.Category,x.SubCategory].filter(Boolean).join(' • '))}</span><div class="feature-badges-group">${getCareBadgesHtml(x)}</div><h3 class="card-title">${esc(x.NameTH)}</h3><div class="card-subtitle">${esc(x.NameEN)}</div><button class="view-btn" onclick='openModalByIndex(${allData.indexOf(x)});event.stopPropagation()'><i class="fa-solid fa-book-open"></i> อ่านรายละเอียด</button></div></article>`}
-function renderCards(data,container){container.innerHTML='';if(!data.length){container.innerHTML='<div class="empty-state" style="grid-column:1/-1">🐠 ไม่พบข้อมูลที่ตรงกับการค้นหา<br><small>ลองเปลี่ยนคำค้นหาหรือรีเซ็ตตัวกรองดูนะครับ</small></div>';return}data.forEach(x=>container.insertAdjacentHTML('beforeend',cardHtml(x)))}
+function cardHtml(x){const urls=parseMediaUrls(x.MediaURLs),u=urls[0],idx=allData.indexOf(x),seen=isSeen(x);return `<article class="card" onclick='openModalByIndex(${idx})'><button class="favorite-btn ${favorites.includes(favKey(x))?'active':''}" title="${favorites.includes(favKey(x))?'นำออกจากรายการโปรด':'เพิ่มในรายการโปรด'}" onclick='toggleFavoriteByIndex(${idx},event)'><i class="fa-${favorites.includes(favKey(x))?'solid':'regular'} fa-heart"></i></button><div class="card-media-box">${urls.length>1?`<span class="media-count-badge"><i class="fa-solid fa-images"></i> ${urls.length}</span>`:''}${cardImageHtml(x)}</div><div class="card-body"><span class="category-badge">${esc([x.Category,x.SubCategory].filter(Boolean).join(' • '))}</span><div class="feature-badges-group">${getCareBadgesHtml(x)}</div><h3 class="card-title">${esc(x.NameTH)}</h3><div class="card-subtitle">${esc(x.NameEN)}${x.ScientificName?` · <i>${esc(x.ScientificName)}</i>`:''}</div><div class="card-discovery"><span>${seen?'<span class="seen-dot"></span>ค้นพบแล้ว':'✨ ยังไม่เคยเปิด'}</span><span>${esc(x.SpecificType||'')}</span></div><div class="card-cta"><button class="view-btn" onclick='openModalByIndex(${idx});event.stopPropagation()'><i class="fa-solid fa-book-open"></i> รู้จักเจ้าตัวนี้</button>${!isPlant(x)?`<button class="card-tank-add ${isInMyTank(x)?'added':''}" title="${isInMyTank(x)?'อยู่ในตู้ของฉันแล้ว':'เพิ่มเข้าตู้ของฉัน'}" onclick='addToMyTankByIndex(${idx},event);event.stopPropagation()'>${isInMyTank(x)?'✓':'+'}</button>`:''}</div></div></article>`}
+function renderCards(data,container){container.innerHTML='';if(!data.length){container.innerHTML='<div class="empty-state" style="grid-column:1/-1"><strong>🐠 เจ้าตัวนี้ยังว่ายมาไม่ถึงฐานข้อมูลของเรา</strong><small>ลองเปลี่ยนคำค้น หรือกดรีเซ็ตตัวกรองแล้วสำรวจสายพันธุ์อื่นดูนะครับ</small></div>';return}data.forEach(x=>container.insertAdjacentHTML('beforeend',cardHtml(x)))}
 function renderFeatured(){const pool=allData.filter(x=>!isPlant(x));const picks=[...pool].sort(()=>Math.random()-.5).slice(0,6);renderCards(picks,$('featuredGrid'))}
-function renderBeginner(){const picks=allData.filter(x=>x.Difficulty.includes('ง่าย')).slice(0,6);renderCards(picks,$('beginnerGrid'))}
+function renderBeginner(){const picks=allData.filter(x=>/ง่าย|beginner|easy/i.test(x.Difficulty)).slice(0,6);renderCards(picks,$('beginnerGrid'))}
 function openModalByIndex(i){openModal(allData[i])}
 function toggleFavoriteByIndex(i,e){toggleFavorite(allData[i],e)}
 function parseCareInfo(raw){if(!raw)return {intro:'ยังไม่มีคำอธิบายเพิ่มเติม'};const parts=raw.split('|').map(x=>x.trim()).filter(Boolean);let intro='',blocks=[];parts.forEach((p,i)=>{const m=p.match(/^([^:：]+)[:：]\s*(.*)$/);if(m&&i>0)blocks.push({label:m[1].trim(),text:m[2].trim()});else if(i===0)intro=p;else blocks.push({label:'เกร็ดน่ารู้',text:p})});return {intro:intro||'ข้อมูลการเลี้ยงสำหรับสายพันธุ์นี้',blocks}}
 function relatedHtml(x){const rel=allData.filter(y=>y!==x&&x.SpecificType&&y.SpecificType===x.SpecificType).slice(0,8);if(!rel.length)return '';return `<div class="related"><h3>🐟 สายพันธุ์อื่นในกลุ่ม “${esc(x.SpecificType)}”</h3><div class="related-grid">${rel.map(y=>`<button class="related-chip" onclick='openModalByIndex(${allData.indexOf(y)})'><b>${esc(y.NameTH)}</b><span>${esc(y.NameEN)}</span></button>`).join('')}</div></div>`}
-function openModal(x){const urls=parseMediaUrls(x.MediaURLs),media=urls.length?urls.map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>';const care=parseCareInfo(x.CareInfo);const shopee=x.ShopeeLink?`<a class="shopee-btn" href="${esc(x.ShopeeLink)}" target="_blank" rel="noopener"><i class="fa-solid fa-bag-shopping"></i> ดูสินค้าที่เกี่ยวข้อง</a>`:'';$('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(care.intro)}</p>${care.blocks.map(b=>`<div class="care-block"><div class="care-label">${labelIcon(b.label)} ${esc(b.label)}</div><div class="care-text">${esc(b.text)}</div></div>`).join('')}</div>${shopee}${relatedHtml(x)}</div>`;$('detailModal').classList.add('active');document.body.style.overflow='hidden'}
+function valueOrDash(v){return v&&v!=='N/A'?esc(v):'—'}
+function profileHtml(x){const rows=[['📏','ขนาด',x.Size],['🌡️','อุณหภูมิ',x.Temperature],['💧','pH',x.pH],['💡','แสง',x.Lighting],['🫧','CO₂',x.CO2],['🏝️','พื้นตู้ / วัสดุปลูก',x.Substrate],['📍','ตำแหน่งในตู้',x.Placement],['🏠','ขนาดตู้',x.TankSize]].filter(r=>r[2]&&r[2]!=='N/A');if(!rows.length)return '';return `<div class="profile-grid">${rows.map(r=>`<div class="profile-item"><small>${r[0]} ${r[1]}</small><b>${valueOrDash(r[2])}</b></div>`).join('')}</div>`}
+function textSection(title,text){return text&&text!=='N/A'?`<div class="detail-section"><h3>${title}</h3><div class="detail-note">${esc(text)}</div></div>`:''}
+function purposeHtml(x){const tags=(x.Purpose||'').split(';').map(v=>v.trim()).filter(Boolean);return tags.length?`<div class="tag-row">${tags.map(t=>`<span class="detail-tag">${esc(t)}</span>`).join('')}</div>`:''}
+
+function splitShopLinks(raw){
+  if(!raw)return [];
+  return String(raw).split(/\s*(?:\r?\n|\||;|,\s*(?=https?:\/\/))\s*/g)
+    .map(s=>s.trim()).filter(s=>/^https?:\/\//i.test(s));
+}
+function shopPlatformLabel(url){
+  const u=String(url||'').toLowerCase();
+  if(u.includes('shopee.'))return 'Shopee';
+  if(u.includes('lazada.'))return 'Lazada';
+  if(u.includes('facebook.com')||u.includes('fb.com'))return 'Facebook Shop';
+  if(u.includes('instagram.com'))return 'Instagram';
+  try{
+    const host=new URL(url).hostname.replace(/^www\./,'');
+    return host.length<28?host:'ร้านค้า';
+  }catch(e){return 'ร้านค้า'}
+}
+function shopLinksHtml(x){
+  const links=[];
+  splitShopLinks(x.ShopeeLink).forEach(url=>links.push({url,label:'Shopee'}));
+  splitShopLinks(x.LazadaLink).forEach(url=>links.push({url,label:'Lazada'}));
+  splitShopLinks(x.OtherShopLink).forEach(url=>links.push({url,label:shopPlatformLabel(url)}));
+  splitShopLinks(x.ShopLinks).forEach(url=>links.push({url,label:shopPlatformLabel(url)}));
+  const uniq=links.filter((v,i,a)=>a.findIndex(z=>z.url===v.url)===i);
+  if(!uniq.length)return '';
+  return `<div class="shop-links-subtle shop-support-box">
+    <div class="shop-support-copy">
+      <b>🐠💚 ชอบ FishMepedia? ช่วยซัพพอร์ตเราได้นะ</b>
+      <span>ทุกการสั่งซื้อผ่านลิงก์ของเรา เป็นแรงสนับสนุนเล็ก ๆ ให้ FishMepedia เติบโตต่อไป</span>
+    </div>
+    ${uniq.map((v,i)=>`<a class="shop-link-subtle" href="${esc(v.url)}" target="_blank" rel="noopener noreferrer">🛍 ดูสินค้าที่เกี่ยวข้อง${uniq.length>1?` ${i+1}`:''} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`).join('')}
+  </div>`;
+}
+
+function sourceHtml(x){if(!x.Source&&!x.ReferenceURL&&!x.LastUpdated)return '';const link=x.ReferenceURL?` · <a href="${esc(x.ReferenceURL)}" target="_blank" rel="noopener noreferrer">เปิดแหล่งอ้างอิง</a>`:'';return `<div class="source-box">แหล่งข้อมูล: ${esc(x.Source||'ไม่ระบุ')}${link}${x.LastUpdated?` · อัปเดต ${esc(x.LastUpdated)}`:''}</div>`}
+
+
+function rangeVals(v){const a=nums(v);if(!a.length)return null;return [Math.min(...a),Math.max(...a)]}
+function rangeOverlapScore(a,b){if(!a||!b)return null;const overlap=Math.max(0,Math.min(a[1],b[1])-Math.max(a[0],b[0]));const span=Math.max(a[1]-a[0],b[1]-b[0],0.5);if(overlap>0)return Math.min(100,70+(overlap/span)*30);const gap=Math.max(a[0],b[0])-Math.min(a[1],b[1]);return Math.max(0,65-gap*25)}
+function tankRank(x){return ({nano:1,medium:2,large:3})[tankBucket(x)]||2}
+function compatibilityBetween(a,b){
+  let weighted=0,total=0,reasons=[];
+  const add=(score,w,label)=>{if(score===null||Number.isNaN(score))return;weighted+=score*w;total+=w;if(label)reasons.push(label)};
+  const ts=rangeOverlapScore(rangeVals(a.Temperature),rangeVals(b.Temperature));add(ts,30,ts===null?'':ts>=80?'อุณหภูมิเข้ากันดี':ts>=60?'อุณหภูมิพอทับซ้อน':'ช่วงอุณหภูมิต่างกัน');
+  const ps=rangeOverlapScore(rangeVals(a.pH),rangeVals(b.pH));add(ps,25,ps===null?'':ps>=80?'pH ใกล้เคียงกัน':ps>=60?'pH พอใช้ร่วมกันได้':'ช่วง pH ต่างกัน');
+  const trA=tankRank(a),trB=tankRank(b),td=Math.abs(trA-trB);add(td===0?100:td===1?75:45,15,td===0?'ความต้องการขนาดตู้ใกล้กัน':td===1?'ขนาดตู้ควรเผื่อ':'ต้องการขนาดตู้ต่างกันมาก');
+  const h=[a.Behavior,a.Purpose,a.CareInfo,b.Behavior,b.Purpose,b.CareInfo].join(' ').toLowerCase();
+  const peacefulA=/peaceful|community|สงบ|เลี้ยงรวม/.test([a.Behavior,a.Purpose,a.CareInfo].join(' ').toLowerCase());
+  const peacefulB=/peaceful|community|สงบ|เลี้ยงรวม/.test([b.Behavior,b.Purpose,b.CareInfo].join(' ').toLowerCase());
+  const riskyA=/predatory|aggressive|territorial|ก้าวร้าว|นักล่า|หวงถิ่น|species tank/.test([a.Behavior,a.Purpose,a.CareInfo].join(' ').toLowerCase());
+  const riskyB=/predatory|aggressive|territorial|ก้าวร้าว|นักล่า|หวงถิ่น|species tank/.test([b.Behavior,b.Purpose,b.CareInfo].join(' ').toLowerCase());
+  let bs=75;if(peacefulA&&peacefulB)bs=100;if(riskyA||riskyB)bs=45;if((riskyA&&peacefulB)||(riskyB&&peacefulA))bs=25;
+  add(bs,20,bs>=90?'นิสัยโดยรวมเข้ากันได้':bs>=60?'ควรสังเกตพฤติกรรม':'มีสัญญาณพฤติกรรมที่ควรระวัง');
+  const sa=firstNum(a.Size),sb=firstNum(b.Size);if(sa&&sb){const ratio=Math.max(sa,sb)/Math.max(1,Math.min(sa,sb));const ss=ratio<=1.8?100:ratio<=3?70:35;add(ss,10,ss>=90?'ขนาดตัวใกล้เคียงกัน':ss>=60?'ขนาดต่างกันพอสมควร':'ขนาดตัวต่างกันมาก')}
+  const score=total?Math.round(weighted/total):50;
+  const label=score>=80?'เข้ากันได้ดี':score>=60?'ควรระวัง':'ไม่แนะนำ';
+  const cls=score>=80?'compat-good':score>=60?'compat-warn':'compat-bad';
+  return {score,label,cls,reasons:reasons.filter(Boolean)};
+}
+function compatibilityHtml(x){
+  if(isPlant(x))return '';
+  const candidates=allData.filter(y=>y!==x&&!isPlant(y)).map(y=>({y,...compatibilityBetween(x,y)})).sort((a,b)=>b.score-a.score).slice(0,6);
+  if(!candidates.length)return '';
+  return `<div class="compat-section"><div class="compat-head"><div><h3>🤝 Compatibility Score</h3><p>คัดคู่ที่มีแนวโน้มเข้ากันได้จากข้อมูลในฐาน</p></div></div><div class="compat-list">${candidates.map(c=>`<button class="compat-row" onclick="openModalByIndex(${allData.indexOf(c.y)})"><span class="compat-icon ${c.cls}">${c.score}</span><span class="compat-name"><b>${esc(c.y.NameTH)}</b><span>${esc(c.y.NameEN||c.y.ScientificName||'')}</span></span><span class="compat-score"><strong>${c.label}</strong><small>${c.score}/100</small></span></button>`).join('')}</div><div class="compat-reasons">คะแนนประเมินจากช่วงอุณหภูมิ, pH, ขนาดตู้, พฤติกรรม และขนาดตัวเท่าที่ข้อมูลมี</div><div class="compat-note">เป็นตัวช่วยคัดกรองเบื้องต้น ไม่ใช่การรับรองว่าสามารถเลี้ยงร่วมกันได้เสมอ ควรตรวจสอบจำนวนปลา สัดส่วนเพศ นิสัยเฉพาะตัว และพื้นที่หลบซ่อนก่อนจัดตู้จริง</div></div>`;
+}
+
+function openModal(x){
+  markSeen(x);
+  const urls=parseMediaUrls(x.MediaURLs),media=urls.length?urls.map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>';
+  const care=parseCareInfo(x.CareInfo);
+  const intro=x.Description||care.intro;
+  const scientific=x.ScientificName?`<div class="scientific-name">${esc(x.ScientificName)}</div>`:'';
+  const synonyms=x.Synonyms?`<div class="detail-section"><h3>🏷️ ชื่อเรียกอื่น</h3><div class="detail-note">${esc(x.Synonyms.split(';').join(' · '))}</div></div>`:'';
+  const shopee=shopLinksHtml(x);
+  const careBlocks=care.blocks.map(b=>`<div class="care-block"><div class="care-label">${labelIcon(b.label)} ${esc(b.label)}</div><div class="care-text">${esc(b.text)}</div></div>`).join('');
+  $('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${scientific}${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(intro||'ยังไม่มีคำอธิบายเพิ่มเติม')}</p></div>${profileHtml(x)}${purposeHtml(x)}${textSection('✨ ลักษณะเด่น',x.Appearance)}${textSection(isPlant(x)?'🌿 ลักษณะการเติบโต':'🐟 พฤติกรรม',x.Behavior)}${textSection('🍽️ อาหาร',x.Feeding)}${textSection('🧪 การให้ปุ๋ย',x.Fertilization)}${careBlocks?`<div class="detail-section"><h3>💚 วิธีดูแล</h3><div class="rich-content">${careBlocks}</div></div>`:''}${synonyms}${shopee}${compatibilityHtml(x)}${sourceHtml(x)}${relatedHtml(x)}</div>`;
+  $('detailModal').classList.add('active');document.body.style.overflow='hidden';
+}
 function labelIcon(l){if(/อุณหภูมิ|น้ำ/.test(l))return '🌡️';if(/นิสัย|พฤติกรรม/.test(l))return '🐟';if(/อาหาร/.test(l))return '🍽️';if(/ตู้|พื้น|สภาพ/.test(l))return '🏝️';if(/ดูแล/.test(l))return '💚';return '💡'}
 function openRandomFishModal(){const list=allData.filter(x=>!isPlant(x));openRandomResult(list,'🐟','วันนี้ปลาอะไรดี?')}
 function openRandomPlantModal(){const list=allData.filter(isPlant);openRandomResult(list,'🌿','วันนี้ปลูกอะไรดี?')}
-function openRandomResult(list,icon,title){if(!list.length){alert('ยังไม่มีข้อมูลในหมวดนี้ครับ');return}const x=list[Math.floor(Math.random()*list.length)];$('randomContent').innerHTML=`<div class="random-stage"><div class="random-icon">${icon}</div><h2>${title}</h2><p>กำลังเลือกจากฐานข้อมูลให้คุณ...</p></div>`;$('randomModal').classList.add('active');document.body.style.overflow='hidden';setTimeout(()=>{$('randomContent').innerHTML=`<div class="random-stage"><div style="font-size:4rem">${icon}</div><h2>${esc(x.NameTH)}</h2><p><i>${esc(x.NameEN)}</i></p><p>${getCareBadgesHtml(x)}</p><button class="tool-btn" style="margin-top:16px" onclick='closeModal("randomModal");openModalByIndex(${allData.indexOf(x)})'>ดูรายละเอียด</button></div>`},650)}
+function openRandomResult(list,icon,title){if(!list.length){openTip('🐠 ยังไม่มีข้อมูล','ลองเพิ่มข้อมูลใน Google Sheets แล้วกลับมาใหม่ได้เลย');return}randomContext={list,icon,title};const x=list[Math.floor(Math.random()*list.length)];$('randomContent').innerHTML=`<div class="random-stage"><div class="random-icon">${icon}</div><h2>${esc(title)}</h2><p class="random-subtitle">วันนี้เราอยากชวนคุณไปรู้จัก...</p><div style="margin-top:15px"><div style="font-size:1.6rem;font-weight:700;color:var(--green2)">${esc(x.NameTH)}</div><div class="random-subtitle">${esc(x.NameEN)}</div></div><div class="random-pills"><span class="random-pill">${esc(x.SpecificType||(isPlant(x)?'ไม้น้ำ':'ปลาสวยงาม'))}</span>${x.Difficulty?`<span class="random-pill">🌱 ${esc(x.Difficulty)}</span>`:''}</div><p style="max-width:430px;margin:auto;color:#475569">${esc((x.Description||parseCareInfo(x.CareInfo).intro||'รายการนี้กำลังรอให้คุณเปิดดูรายละเอียด')).slice(0,220)}</p><div class="random-actions" style="margin-top:18px"><button class="random-primary" onclick="closeModal('randomModal');openModalByIndex(${allData.indexOf(x)})">รู้จักเจ้าตัวนี้ →</button><button class="random-secondary lucky-again" onclick="randomAgain()">🎲 ขออีกตัว</button></div></div>`;$('randomModal').classList.add('active');document.body.style.overflow='hidden'}
+function randomAgain(){if(randomContext)openRandomResult(randomContext.list,randomContext.icon,randomContext.title)}
 function closeModal(id){$(id).classList.remove('active');if(!document.querySelector('.modal-overlay.active'))document.body.style.overflow='auto'}
 function openCalcModal(){$('calcModal').classList.add('active');document.body.style.overflow='hidden';calculateWaterVolume()}
 function calculateWaterVolume(){const w=parseFloat($('calcW').value)||0,l=parseFloat($('calcL').value)||0,h=parseFloat($('calcH').value)||0,liters=w*l*h/1000;$('calcLiters').textContent=`${liters.toFixed(1)} ลิตร`;$('calcGallons').textContent=`(~ ${(liters*.264172).toFixed(1)} แกลลอน)`}
@@ -122,7 +1760,829 @@ function updateDevVal(i,f,v){elecDevices[i][f]=f==='name'?v:(parseFloat(v)||0);c
 function addElecDevice(){elecDevices.push({name:'อุปกรณ์ใหม่',watt:10,hours:12});renderElecDevices();calculateElectricityTotal()}
 function removeElecDevice(i){elecDevices.splice(i,1);renderElecDevices();calculateElectricityTotal()}
 function calculateElectricityTotal(){const rate=parseFloat($('elecRate').value)||0;let units=0;elecDevices.forEach(d=>units+=(d.watt*d.hours/1000)*30);const cost=units*rate;$('totalCostVal').textContent=`${cost.toFixed(2)} บาท/เดือน`;$('totalUnitsVal').textContent=`${units.toFixed(2)} ยูนิต/เดือน`;$('dailyCostVal').textContent=`~${(cost/30).toFixed(2)} บาท/วัน`}
+
+function showModalById(id){
+  const m=document.getElementById(id);
+  if(!m)return false;
+  m.classList.add('active');
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+  return true;
+}
+
+/* ===== Compact catalogue ===== */
+let catalogDisplayLimit=24;
+function renderCatalogCompact(items){
+  const container=$('dataContainer'); if(!container)return;
+  const slice=items.slice(0,catalogDisplayLimit);
+  renderCards(slice,container);
+  const old=$('catalogMoreWrap'); if(old)old.remove();
+  if(items.length>catalogDisplayLimit){
+    const wrap=document.createElement('div');
+    wrap.id='catalogMoreWrap';wrap.className='catalog-more-wrap';
+    const remaining=items.length-catalogDisplayLimit;
+    wrap.innerHTML=`<div class="catalog-more-card">
+      <div class="catalog-more-copy">
+        <b>ยังมีปลาให้สำรวจอีก</b>
+        <span>เหลือ ${remaining} รายการในฐานข้อมูล</span>
+      </div>
+      <button class="catalog-more-btn" onclick="showMoreCatalog()"><i class="fa-solid fa-chevron-down"></i> ดูเพิ่ม 24 รายการ</button>
+    </div>`;
+    container.parentElement.appendChild(wrap);
+  }
+}
+function showMoreCatalog(){
+  catalogDisplayLimit+=24;
+  renderCatalogCompact(currentFiltered);
+}
+function resetCatalogLimit(){catalogDisplayLimit=24}
+
+
+
+
+/* ===== My Tank v3 helpers ===== */
+function tankZoneV3(x){
+  const s=[x.Placement,x.Behavior,x.Description].join(' ').toLowerCase();
+  if(/bottom|พื้น|ก้น|ล่าง|substrate/.test(s))return 'bottom';
+  if(/top|surface|ผิวน้ำ|ด้านบน|บนตู้/.test(s))return 'top';
+  if(/mid|middle|กลางน้ำ|กลางตู้|กลาง/.test(s))return 'mid';
+  return 'mid';
+}
+function tankZoneStatsV3(items){
+  const z={top:0,mid:0,bottom:0};
+  items.forEach(x=>{z[tankZoneV3(x)]+=getTankQty(x)});
+  return z;
+}
+function tankGuidanceV3(items,totalFish,liters,avgCompat,density){
+  const tips=[],z=tankZoneStatsV3(items);
+  if(!items.length)return tips;
+  const occupied=Object.values(z).filter(v=>v>0).length;
+  if(occupied===1)tips.push(['🌊','สมาชิกกระจุกอยู่โซนเดียว','ลองพิจารณาปลาจากโซนอื่นเพื่อให้ตู้ดูมีมิติขึ้น']);
+  else if(occupied===2)tips.push(['🧭','การกระจายโซนค่อนข้างดี','ยังมีอีก 1 โซนที่สามารถเติมสมาชิกได้ หากความหนาแน่นของตู้เอื้อ']);
+  else tips.push(['✓','โซนว่ายน้ำสมดุล','มีสมาชิกครอบคลุมทั้งบน กลาง และพื้นตู้แล้ว']);
+  if(avgCompat!=null&&avgCompat<60)tips.push(['⚠️','Compatibility ค่อนข้างต่ำ','ควรตรวจคู่ปลาที่ระบบแจ้งเตือนก่อนเพิ่มสมาชิกใหม่']);
+  else if(avgCompat!=null&&avgCompat>=80)tips.push(['🤝','Compatibility โดยรวมดี','สมาชิกที่เลือกมีแนวโน้มอยู่ร่วมกันได้ดีตามข้อมูลในฐาน']);
+  if(density.cls==='bad')tips.push(['📦','ไม่แนะนำให้เพิ่มปลา','ความหนาแน่นโดยประมาณสูงแล้ว ควรลดจำนวนหรือเพิ่มขนาดตู้']);
+  else if(density.cls==='warn')tips.push(['📏','ควรเพิ่มอย่างระมัดระวัง','ตรวจระบบกรอง พฤติกรรม และขนาดโตเต็มวัยก่อนเพิ่มสมาชิก']);
+  else tips.push(['🐟','ยังมีพื้นที่เชิงประมาณ','หากค่าน้ำและพฤติกรรมเข้ากัน สามารถพิจารณาสมาชิกเพิ่มได้']);
+  return tips;
+}
+function tankZoneHtmlV3(items){
+  const z=tankZoneStatsV3(items),total=Math.max(1,z.top+z.mid+z.bottom);
+  const rows=[['top','ด้านบน','ผิวน้ำ / โซนบน'],['mid','กลางตู้','โซนกลางน้ำ'],['bottom','พื้นตู้','โซนล่าง / พื้นตู้']];
+  return `<div class="tank-v3-zone-grid">${rows.map(([k,label,sub])=>{
+    const pct=Math.round(z[k]/total*100);
+    return `<div class="tank-v3-zone"><div class="tank-v3-zone-head"><b>${label}</b><span>${z[k]} ตัว · ${pct}%</span></div><div class="tank-v3-bar"><i style="width:${pct}%"></i></div><small>${sub}</small></div>`
+  }).join('')}</div>`;
+}
+
+/* ===== Smart Finder v3 ===== */
+const finderV3Questions=[
+  {
+    key:'tank',
+    title:'ตู้ของคุณมีขนาดประมาณเท่าไร?',
+    desc:'ใช้ช่วยตัดปลาที่ต้องการพื้นที่มากเกินไปออกก่อน',
+    options:[
+      {value:'nano',label:'Nano / เล็ก',sub:'ต่ำกว่า 30 ลิตร'},
+      {value:'small',label:'ขนาดเล็ก',sub:'30–60 ลิตร'},
+      {value:'medium',label:'ขนาดกลาง',sub:'60–120 ลิตร'},
+      {value:'large',label:'ขนาดใหญ่',sub:'มากกว่า 120 ลิตร'}
+    ]
+  },
+  {
+    key:'experience',
+    title:'ประสบการณ์เลี้ยงปลาของคุณ',
+    desc:'ระบบจะให้น้ำหนักกับปลาที่ดูแลง่ายมากขึ้นสำหรับมือใหม่',
+    options:[
+      {value:'beginner',label:'เพิ่งเริ่ม',sub:'อยากได้ตัวที่เลี้ยงไม่ยาก'},
+      {value:'some',label:'มีประสบการณ์บ้าง',sub:'รับมือการดูแลระดับกลางได้'},
+      {value:'advanced',label:'มีประสบการณ์',sub:'เปิดรับปลาที่ต้องดูแลเฉพาะทาง'}
+    ]
+  },
+  {
+    key:'behavior',
+    title:'อยากได้บรรยากาศแบบไหนในตู้?',
+    desc:'เลือกจากนิสัยและรูปแบบการเคลื่อนไหวที่คุณชอบ',
+    options:[
+      {value:'peaceful',label:'สงบ อยู่ร่วมง่าย',sub:'เหมาะกับ community tank'},
+      {value:'active',label:'ว่ายคึกคัก',sub:'เพิ่มการเคลื่อนไหวให้ตู้'},
+      {value:'bottom',label:'ชอบอยู่พื้นตู้',sub:'ช่วยเติมชีวิตในโซนล่าง'},
+      {value:'show',label:'เด่นสะดุดตา',sub:'อยากมีปลาตัวชูโรง'}
+    ]
+  },
+  {
+    key:'zone',
+    title:'อยากเติมปลาในโซนไหน?',
+    desc:'ช่วยให้ตู้มีการกระจายตัวของสมาชิกสมดุลขึ้น',
+    options:[
+      {value:'top',label:'ผิวน้ำ / ด้านบน',sub:'ปลาที่มักใช้พื้นที่ด้านบน'},
+      {value:'mid',label:'กลางตู้',sub:'ปลาฝูงและปลาว่ายกลางน้ำ'},
+      {value:'bottom',label:'พื้นตู้',sub:'ปลาก้นตู้และปลาหากินด้านล่าง'},
+      {value:'any',label:'ไม่จำกัด',sub:'ให้ระบบเลือกจากภาพรวม'}
+    ]
+  },
+  {
+    key:'style',
+    title:'สไตล์ที่คุณอยากได้',
+    desc:'ใช้เป็นตัวช่วยจัดอันดับเพิ่มเติม ไม่ใช่เงื่อนไขตายตัว',
+    options:[
+      {value:'colorful',label:'สีสันเด่น',sub:'มองเห็นง่ายและมีสี'},
+      {value:'natural',label:'ธรรมชาติ',sub:'เข้ากับตู้ไม้น้ำและ aquascape'},
+      {value:'school',label:'ปลาฝูง',sub:'เน้นภาพรวมเวลาว่ายพร้อมกัน'},
+      {value:'unique',label:'รูปลักษณ์แปลกตา',sub:'อยากได้ตัวที่มีคาแรกเตอร์'}
+    ]
+  }
+];
+
+let finderV3State={step:0,answers:{}};
+
+function finderV3TankLitersBucket(x){
+  const n=parseFirstNumber(x.TankSize);
+  if(n==null)return null;
+  if(n<30)return 'nano';
+  if(n<=60)return 'small';
+  if(n<=120)return 'medium';
+  return 'large';
+}
+function finderV3DifficultyScore(x,exp){
+  const d=String(x.Difficulty||'').toLowerCase();
+  if(exp==='advanced')return 10;
+  if(exp==='some'){
+    if(/ง่าย|easy|beginner/.test(d))return 14;
+    if(/กลาง|medium|moderate/.test(d))return 10;
+    return 5;
+  }
+  if(/ง่าย|easy|beginner/.test(d))return 18;
+  if(/กลาง|medium|moderate/.test(d))return 8;
+  return -5;
+}
+function finderV3BehaviorScore(x,want){
+  const hay=[x.Behavior,x.Description,x.Purpose,x.Placement].join(' ').toLowerCase();
+  if(want==='peaceful')return /สงบ|peaceful|community|ไม่ก้าวร้าว/.test(hay)?16:0;
+  if(want==='active')return /active|คึกคัก|ว่าย|ฝูง|school/.test(hay)?14:0;
+  if(want==='bottom')return /bottom|พื้น|ก้นตู้|substrate/.test(hay)?18:0;
+  if(want==='show')return /เด่น|สีสัน|show|centerpiece|สวย|หาง/.test(hay)?14:0;
+  return 0;
+}
+function finderV3ZoneScore(x,want){
+  if(want==='any')return 6;
+  const p=String(x.Placement||'').toLowerCase();
+  if(want==='top')return /top|surface|บน|ผิวน้ำ/.test(p)?16:0;
+  if(want==='mid')return /mid|middle|กลาง/.test(p)?16:0;
+  if(want==='bottom')return /bottom|พื้น|ล่าง|ก้น/.test(p)?16:0;
+  return 0;
+}
+function finderV3StyleScore(x,want){
+  const hay=[x.Appearance,x.Description,x.Behavior,x.Purpose,x.SpecificType].join(' ').toLowerCase();
+  const rules={
+    colorful:/สี|แดง|ฟ้า|น้ำเงิน|ส้ม|เหลือง|color|bright|metallic/,
+    natural:/ธรรมชาติ|natural|ลาย|earth|brown|green|aquascape/,
+    school:/ฝูง|school|shoal|group/,
+    unique:/แปลก|unique|ลวดลาย|หนวด|ทรง|ครีบ|pattern/
+  };
+  return rules[want]&&rules[want].test(hay)?12:0;
+}
+function finderV3TankScore(x,want){
+  const b=finderV3TankLitersBucket(x);
+  if(!b)return 3;
+  const rank={nano:1,small:2,medium:3,large:4};
+  if(rank[b]<=rank[want])return 20;
+  if(rank[b]===rank[want]+1)return 3;
+  return -20;
+}
+function finderV3Reasons(x,a){
+  const out=[];
+  if(finderV3TankScore(x,a.tank)>=20)out.push('ขนาดตู้เหมาะ');
+  if(finderV3DifficultyScore(x,a.experience)>=14)out.push('ระดับการดูแลเหมาะ');
+  if(finderV3BehaviorScore(x,a.behavior)>=14)out.push('นิสัยตรงที่ต้องการ');
+  if(finderV3ZoneScore(x,a.zone)>=16)out.push('ตรงโซนที่เลือก');
+  if(finderV3StyleScore(x,a.style)>=12)out.push('สไตล์ใกล้เคียง');
+  if(!out.length)out.push('คะแนนรวมเหมาะกับเงื่อนไข');
+  return out;
+}
+function rankFinderV3(){
+  const a=finderV3State.answers;
+  return allData
+    .filter(x=>!isPlant(x))
+    .map(x=>{
+      let score=20;
+      score+=finderV3TankScore(x,a.tank);
+      score+=finderV3DifficultyScore(x,a.experience);
+      score+=finderV3BehaviorScore(x,a.behavior);
+      score+=finderV3ZoneScore(x,a.zone);
+      score+=finderV3StyleScore(x,a.style);
+      if(isInMyTank(x))score+=3;
+      return {x,score:Math.max(0,Math.min(100,score)),reasons:finderV3Reasons(x,a)};
+    })
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,6);
+}
+function selectFinderV3(value){
+  const q=finderV3Questions[finderV3State.step];
+  finderV3State.answers[q.key]=value;
+  renderFinderV3();
+}
+function nextFinderV3(){
+  const q=finderV3Questions[finderV3State.step];
+  if(!finderV3State.answers[q.key])return;
+  if(finderV3State.step<finderV3Questions.length-1)finderV3State.step++;
+  else finderV3State.step=finderV3Questions.length;
+  renderFinderV3();
+}
+function prevFinderV3(){
+  finderV3State.step=Math.max(0,finderV3State.step-1);
+  renderFinderV3();
+}
+function resetFinderV3(){
+  finderV3State={step:0,answers:{}};
+  renderFinderV3();
+}
+function addFinderV3ToTank(key){
+  const x=allData.find(i=>favKey(i)===key);
+  if(!x)return;
+  if(!isInMyTank(x)){
+    const keys=getMyTankKeys(); keys.push(key); saveMyTankKeys(keys);
+  }
+  renderFinderV3();
+  if(typeof renderMyTankV2==='function')renderMyTankV2();
+  if(typeof currentFiltered!=='undefined'&&$('dataContainer'))renderCatalogCompact(currentFiltered);
+}
+function renderFinderV3(){
+  const root=$('finderContent')||document.querySelector('#finderCard .finder-content')||document.querySelector('#finderSection .finder-content');
+  if(!root)return;
+  const finished=finderV3State.step>=finderV3Questions.length;
+  const steps=finderV3Questions.map((q,i)=>{
+    const cls=i===finderV3State.step?'active':(i<finderV3State.step||finderV3State.answers[q.key]?'done':'');
+    return `<div class="finder-v3-step ${cls}"><span class="dot">${i+1}</span><span>${esc(q.title.replace(/\?$/,''))}</span></div>`;
+  }).join('');
+
+  if(finished){
+    const rows=rankFinderV3();
+    root.innerHTML=`<div class="finder-v3-shell">
+      <div class="finder-v3-stepnav">${steps}</div>
+      <div class="finder-v3-main">
+        <div class="finder-v3-head"><h4>ปลาที่เหมาะกับคุณมากที่สุด</h4><p>ผลลัพธ์เรียงจากความเหมาะสมตามคำตอบของคุณ โดยยังควรเปิด Fish Profile ตรวจรายละเอียดก่อนจัดตู้จริง</p></div>
+        <div class="finder-v3-results">
+          ${rows.length?rows.map(({x,score,reasons})=>{
+            const key=favKey(x);
+            const idx=allData.indexOf(x);
+            const inTank=isInMyTank(x);
+            return `<div class="finder-v3-result">
+              <div class="finder-v3-result-top">
+                <div><h5>${esc(x.NameTH||x.NameEN)}</h5><div class="scientific">${esc(x.ScientificName||x.NameEN||'')}</div></div>
+                <div class="finder-v3-score">${score}%</div>
+              </div>
+              <div class="finder-v3-reasons">${reasons.map(r=>`<span class="finder-v3-reason">✓ ${esc(r)}</span>`).join('')}</div>
+              <div class="finder-v3-result-actions">
+                <button onclick="openModalByIndex(${idx})">ดูรายละเอียด</button>
+                <button class="add" onclick="addFinderV3ToTank('${key.replace(/'/g,"\\'")}')">${inTank?'✓ อยู่ในตู้ของฉัน':'+ เพิ่มเข้าตู้'}</button>
+              </div>
+            </div>`
+          }).join(''):`<div class="finder-v3-empty">ยังไม่พบข้อมูลที่ตรงเงื่อนไข</div>`}
+        </div>
+        <div class="finder-v3-actions"><button onclick="prevFinderV3()">ย้อนกลับ</button><button class="primary" onclick="resetFinderV3()">เริ่มใหม่</button></div>
+      </div>
+    </div>`;
+    return;
+  }
+
+  const q=finderV3Questions[finderV3State.step];
+  const selected=finderV3State.answers[q.key];
+  root.innerHTML=`<div class="finder-v3-shell">
+    <div class="finder-v3-stepnav">${steps}</div>
+    <div class="finder-v3-main">
+      <div class="finder-v3-head"><h4>${esc(q.title)}</h4><p>${esc(q.desc)}</p></div>
+      <div class="finder-v3-options">
+        ${q.options.map(o=>`<button class="finder-v3-option ${selected===o.value?'active':''}" onclick="selectFinderV3('${o.value}')"><b>${esc(o.label)}</b><small>${esc(o.sub)}</small></button>`).join('')}
+      </div>
+      <div class="finder-v3-actions">
+        <button onclick="prevFinderV3()" ${finderV3State.step===0?'disabled style="opacity:.4"':''}>ย้อนกลับ</button>
+        <button class="primary" onclick="nextFinderV3()" ${selected?'':'disabled style="opacity:.45"'}>${finderV3State.step===finderV3Questions.length-1?'ดูผลลัพธ์':'ถัดไป'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ===== Smart Finder v2 ===== */
+let finderV2State={step:0,tank:'',level:'',style:''};
+function finderV2ShowStep(step){
+  finderV2State.step=Math.max(0,Math.min(2,step));
+  document.querySelectorAll('#finderV2 .finder-step').forEach((el,i)=>el.classList.toggle('active',i===finderV2State.step));
+  document.querySelectorAll('#finderProgressV2 .finder-progress-dot').forEach((el,i)=>{
+    el.classList.toggle('active',i===finderV2State.step);
+    el.classList.toggle('done',i<finderV2State.step);
+  });
+  const back=$('finderV2Back');if(back)back.style.visibility=finderV2State.step?'visible':'hidden';
+}
+function finderV2Choose(field,value,btn){
+  finderV2State[field]=value;
+  const step=btn.closest('.finder-step');
+  step.querySelectorAll('.finder-choice').forEach(x=>x.classList.remove('selected'));
+  btn.classList.add('selected');
+  if(finderV2State.step<2){
+    setTimeout(()=>finderV2ShowStep(finderV2State.step+1),120);
+  }else{
+    renderFinderV2Results();
+  }
+}
+function finderV2Back(){finderV2ShowStep(finderV2State.step-1)}
+function finderV2Reset(){
+  finderV2State={step:0,tank:'',level:'',style:''};
+  document.querySelectorAll('#finderV2 .finder-choice').forEach(x=>x.classList.remove('selected'));
+  const r=$('finderV2Results');if(r)r.innerHTML='';
+  finderV2ShowStep(0);
+}
+function finderV2Score(x){
+  if(isPlant(x))return -999;
+  let score=0;
+  if(finderV2State.tank){
+    const b=tankBucket(x);
+    if(b===finderV2State.tank)score+=35;
+    else if(finderV2State.tank==='large')score+=18;
+    else if(finderV2State.tank==='medium'&&b==='nano')score+=22;
+    else score-=18;
+  }
+  const d=String(x.Difficulty||'').toLowerCase();
+  if(finderV2State.level==='easy')score+=/beginner|easy|ง่าย/.test(d)?30:-15;
+  else if(finderV2State.level==='medium')score+=/beginner|easy|ง่าย|medium|ปานกลาง/.test(d)?25:0;
+  else score+=12;
+
+  const blob=[x.Purpose,x.Behavior,x.Description,x.SpecificType,x.Placement,x.Appearance].filter(Boolean).join(' ').toLowerCase();
+  const style=finderV2State.style;
+  if(style==='community')score+=/community|peaceful|สงบ|เลี้ยงรวม/.test(blob)?35:-8;
+  else if(style==='aquascape')score+=/aquascape|planted|ไม้น้ำ/.test(blob)?35:8;
+  else if(style==='color')score+=/color|colour|สี|แดง|ฟ้า|น้ำเงิน|ส้ม|เหลือง/.test(blob)?35:5;
+  else if(style==='bottom')score+=/bottom|หน้าดิน|cory|loach|pleco/.test(blob)?35:-5;
+  else if(style==='cleanup')score+=/algae|clean|cleanup|ตะไคร่|เก็บเศษ|bottom/.test(blob)?35:-5;
+  else score+=15;
+  return score;
+}
+function renderFinderV2Results(){
+  const ranked=allData.filter(x=>!isPlant(x))
+    .map(x=>({x,score:finderV2Score(x)}))
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,6);
+  const r=$('finderV2Results');if(!r)return;
+  r.innerHTML=`<div class="finder-question">✨ ปลา 6 ชนิดที่น่าจะเหมาะกับคุณ</div>
+    <div class="finder-help">เป็นการคัดจากข้อมูลในฐาน FishMepedia ควรเปิดรายละเอียดเพื่อตรวจเงื่อนไขก่อนเลี้ยงจริง</div>
+    <div class="finder-result-grid">${ranked.map(o=>`
+      <button class="finder-result-card" onclick="openModalByIndex(${allData.indexOf(o.x)})">
+        <b>${esc(o.x.NameTH||o.x.NameEN)}</b>
+        <small>${esc(o.x.ScientificName||o.x.SpecificType||'')}</small>
+        <span class="finder-match">เหมาะกับคำตอบ ${Math.max(1,Math.min(99,o.score))}%</span>
+      </button>`).join('')}</div>`;
+}
+
+
+/* ===== My Tank v2 ===== */
+const MY_TANK_V2_SETTINGS_KEY='fishmepedia_my_tank_v2_settings';
+function getMyTankSettings(){
+  try{return JSON.parse(localStorage.getItem(MY_TANK_V2_SETTINGS_KEY))||{tankLiters:60}}catch(e){return {tankLiters:60}}
+}
+function saveMyTankSettings(v){localStorage.setItem(MY_TANK_V2_SETTINGS_KEY,JSON.stringify(v))}
+function getMyTankQtyMap(){
+  try{return JSON.parse(localStorage.getItem('fishmepedia_my_tank_qty'))||{}}catch(e){return {}}
+}
+function saveMyTankQtyMap(v){localStorage.setItem('fishmepedia_my_tank_qty',JSON.stringify(v))}
+function getTankQty(x){
+  const q=getMyTankQtyMap();
+  const k=favKey(x);
+  return Math.max(1,parseInt(q[k]||1,10));
+}
+function setTankQty(x,n){
+  const q=getMyTankQtyMap();
+  const k=favKey(x);
+  q[k]=Math.max(1,parseInt(n||1,10));
+  saveMyTankQtyMap(q);
+  renderMyTankV2();
+}
+function changeTankQtyByKey(key,delta){
+  const item=allData.find(x=>favKey(x)===key); if(!item)return;
+  setTankQty(item,getTankQty(item)+delta);
+}
+function parseFirstNumber(v){
+  const m=String(v||'').match(/-?\d+(?:\.\d+)?/);
+  return m?parseFloat(m[0]):null;
+}
+function parseRange(v){
+  const nums=(String(v||'').match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
+  if(nums.length>=2)return [Math.min(nums[0],nums[1]),Math.max(nums[0],nums[1])];
+  if(nums.length===1)return [nums[0],nums[0]];
+  return null;
+}
+function overlapRange(items,field){
+  const ranges=items.map(x=>parseRange(x[field])).filter(Boolean);
+  if(!ranges.length)return null;
+  const lo=Math.max(...ranges.map(r=>r[0]));
+  const hi=Math.min(...ranges.map(r=>r[1]));
+  return lo<=hi?[lo,hi]:null;
+}
+function getCompatResult(a,b){
+  if(typeof compatibilityBetween!=='function')return null;
+  const r=compatibilityBetween(a,b);
+  if(typeof r==='number')return {score:r};
+  return r&&typeof r.score==='number'?r:null;
+}
+function estimateStocking(items){
+  let score=0;
+  items.forEach(x=>{
+    const qty=getTankQty(x);
+    const size=parseFirstNumber(x.Size);
+    score+=qty*(size||4);
+  });
+  return score;
+}
+function tankDensityStatus(totalCm,liters){
+  if(!liters||liters<=0)return {cls:'warn',text:'กรุณาระบุขนาดตู้'};
+  const ratio=totalCm/liters;
+  if(ratio<=0.7)return {cls:'',text:'ความหนาแน่นโดยรวมค่อนข้างสบาย'};
+  if(ratio<=1.0)return {cls:'warn',text:'ความหนาแน่นเริ่มสูง ควรตรวจระบบกรองและพฤติกรรมร่วม'};
+  return {cls:'bad',text:'ความหนาแน่นค่อนข้างสูง ควรลดจำนวนหรือเพิ่มขนาดตู้'};
+}
+function removeMyTankByKey(key){
+  const keys=getMyTankKeys().filter(k=>k!==key);
+  saveMyTankKeys(keys);
+  const q=getMyTankQtyMap(); delete q[key]; saveMyTankQtyMap(q);
+  renderMyTankV2();
+  if(typeof currentFiltered!=='undefined'&&$('dataContainer'))renderCatalogCompact(currentFiltered);
+}
+function renderMyTankV2(){
+  const root=$('myTankContent')||$('myTankBody')||$('myTankList');
+  if(!root)return;
+  const items=getMyTankItems().filter(x=>!isPlant(x));
+  if(!items.length){
+    root.innerHTML='<div class="my-tank-v2-empty">ยังไม่มีปลาในตู้ของฉัน<br>กด + บนการ์ดปลาเพื่อเริ่มวางแผนตู้</div>';
+    return;
+  }
+  const settings=getMyTankSettings();
+  const liters=Math.max(1,parseFloat(settings.tankLiters||60));
+  const totalFish=items.reduce((s,x)=>s+getTankQty(x),0);
+  const temp=overlapRange(items,'Temperature');
+  const ph=overlapRange(items,'pH');
+  const pairResults=[];
+  for(let i=0;i<items.length;i++){
+    for(let j=i+1;j<items.length;j++){
+      const r=getCompatResult(items[i],items[j]);
+      if(r)pairResults.push({a:items[i],b:items[j],score:r.score});
+    }
+  }
+  const avg=pairResults.length?Math.round(pairResults.reduce((s,p)=>s+p.score,0)/pairResults.length):100;
+  const density=tankDensityStatus(estimateStocking(items),liters);
+  const worst=[...pairResults].sort((a,b)=>a.score-b.score).slice(0,5);
+
+  root.innerHTML=`
+    <div class="my-tank-v2-shell">
+      <div class="my-tank-v2-panel">
+        <h4>ตั้งค่าตู้</h4>
+        <div class="my-tank-v2-field">
+          <label>ขนาดตู้โดยประมาณ</label>
+          <input type="number" min="1" value="${liters}" onchange="saveMyTankSettings({tankLiters:Math.max(1,parseFloat(this.value)||60)});renderMyTankV2()">
+        </div>
+        <div class="my-tank-v2-field"><label>หน่วย</label><span style="font-size:.65rem;color:#6f8588">ลิตร</span></div>
+        <div class="my-tank-v2-alert ${density.cls}" style="margin-top:9px">${density.text}</div>
+        <div style="font-size:.58rem;color:#8a9a9c;line-height:1.5">หมายเหตุ: การประเมินความหนาแน่นเป็นเพียงค่าคร่าว ๆ จากขนาดปลา ไม่แทนคำแนะนำเฉพาะสายพันธุ์หรือคุณภาพระบบกรอง</div>
+      </div>
+
+      <div>
+        <div class="my-tank-v2-summary">
+          <div class="my-tank-v2-stat"><small>จำนวนทั้งหมด</small><b>${totalFish} ตัว</b></div>
+          <div class="my-tank-v2-stat"><small>อุณหภูมิร่วม</small><b>${temp?`${temp[0]}–${temp[1]}°C`:'ไม่มีช่วงร่วม'}</b></div>
+          <div class="my-tank-v2-stat"><small>pH ร่วม</small><b>${ph?`${ph[0]}–${ph[1]}`:'ไม่มีช่วงร่วม'}</b></div>
+          <div class="my-tank-v2-stat"><small>Compatibility เฉลี่ย</small><b>${avg}%</b></div>
+        </div>
+
+        ${(!temp||!ph)?'<div class="my-tank-v2-alert bad">มีเงื่อนไขน้ำบางส่วนที่ไม่ทับซ้อนกัน ควรตรวจรายละเอียดแต่ละชนิดก่อนจัดตู้จริง</div>':''}
+
+        ${tankZoneHtmlV3(items)}
+      <div class="tank-v3-guidance">${tankGuidanceV3(items,totalFish,liters,avgCompat,density).map(t=>`<div class="tank-v3-tip"><i>${t[0]}</i><div><b>${t[1]}</b><br>${t[2]}</div></div>`).join('')}</div>
+      <div class="tank-v3-recommend"><h5>คำแนะนำก่อนเพิ่มสมาชิกใหม่</h5><p>ตัวเลขความหนาแน่นเป็นเพียงค่าประมาณสำหรับช่วยวางแผน ควรพิจารณาขนาดโตเต็มวัย นิสัย จำนวนขั้นต่ำของปลาฝูง ระบบกรอง และพื้นที่ว่ายน้ำของแต่ละชนิดร่วมด้วย</p></div>
+      <div class="my-tank-v2-list">
+          ${items.map(x=>{
+            const key=favKey(x);
+            return `<div class="my-tank-v2-item">
+              <div class="my-tank-v2-name">
+                <b>${esc(x.NameTH||x.NameEN)}</b>
+                <small>${esc(x.ScientificName||x.NameEN||'')}</small>
+              </div>
+              <div class="my-tank-v2-qty">
+                <button onclick="changeTankQtyByKey('${key.replace(/'/g,"\\'")}',-1)">−</button>
+                <span>${getTankQty(x)}</span>
+                <button onclick="changeTankQtyByKey('${key.replace(/'/g,"\\'")}',1)">+</button>
+              </div>
+              <button class="my-tank-v2-remove" onclick="removeMyTankByKey('${key.replace(/'/g,"\\'")}')">นำออก</button>
+            </div>`
+          }).join('')}
+        </div>
+
+        ${worst.length?`<div class="my-tank-v2-pairs">
+          <div style="font-size:.63rem;font-weight:700;color:#315b61;margin-bottom:1px">คู่ที่ควรตรวจเป็นพิเศษ</div>
+          ${worst.map(p=>`<div class="my-tank-v2-pair">
+            <span>${esc(p.a.NameTH||p.a.NameEN)} × ${esc(p.b.NameTH||p.b.NameEN)}</span>
+            <b>${p.score}%</b>
+          </div>`).join('')}
+        </div>`:''}
+      </div>
+    </div>`;
+}
+
+/* ===== My Tank ===== */
+function getMyTankKeys(){
+  try{return JSON.parse(localStorage.getItem('fishmepedia_my_tank')||'[]')}catch{return[]}
+}
+function saveMyTankKeys(keys){
+  try{localStorage.setItem('fishmepedia_my_tank',JSON.stringify(keys))}catch{}
+}
+function getMyTankItems(){
+  const keys=getMyTankKeys();
+  return keys.map(k=>allData.find(x=>favKey(x)===k)).filter(Boolean);
+}
+function isInMyTank(x){return getMyTankKeys().includes(favKey(x))}
+function addToMyTankByIndex(i,e){
+  const x=allData[i]; if(!x||isPlant(x))return;
+  let keys=getMyTankKeys(),k=favKey(x);
+  if(keys.includes(k)) keys=keys.filter(v=>v!==k); else keys.push(k);
+  saveMyTankKeys(keys);
+  renderMyTankV2();
+  if(typeof currentFiltered!=='undefined'&&$('dataContainer'))renderCatalogCompact(currentFiltered);
+  const btn=e&&e.currentTarget;
+  if(btn){
+    const added=keys.includes(k);
+    btn.classList.toggle('added',added);
+    btn.textContent=added?'✓ อยู่ในตู้ของฉัน':'+ เพิ่มเข้าตู้ของฉัน';
+  }
+}
+function openMyTank(){
+  const el=$('myTankCard'); if(!el)return;
+  if(el.classList.contains('is-collapsed')) togglePanel('myTankCard',el.querySelector('.fm-collapse-toggle'));
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function removeFromMyTank(k){
+  saveMyTankKeys(getMyTankKeys().filter(v=>v!==k));
+  renderMyTankV2();
+}
+function overlapRange(items,field){
+  const ranges=items.map(x=>nums(x[field])).filter(a=>a.length>=1).map(a=>[Math.min(...a),Math.max(...a)]);
+  if(!ranges.length)return null;
+  const lo=Math.max(...ranges.map(r=>r[0])), hi=Math.min(...ranges.map(r=>r[1]));
+  if(lo<=hi)return [lo,hi];
+  return null;
+}
+function tankCompatibilityPairs(items){
+  const pairs=[];
+  if(typeof compatibilityBetween!=='function')return pairs;
+  for(let i=0;i<items.length;i++){
+    for(let j=i+1;j<items.length;j++){
+      try{
+        const r=compatibilityBetween(items[i],items[j]);
+        const score=typeof r==='number'?r:(r&&typeof r.score==='number'?r.score:null);
+        if(score!==null)pairs.push({a:items[i],b:items[j],score});
+      }catch(e){}
+    }
+  }
+  return pairs.sort((a,b)=>a.score-b.score);
+}
+function renderMyTank(){renderMyTankV2();}
+
+/* ===== Fish Profile v2 override ===== */
+
+function toggleFavoriteByIndex(i,e){
+  const x=allData[i]; if(!x)return;
+  toggleFavorite(x,e);
+  const b=e&&e.currentTarget;
+  if(b)b.classList.toggle('active',favorites.includes(favKey(x)));
+}
+
+function profileVal(v,fallback='—'){return String(v||'').trim()||fallback}
+function splitTags(v){return String(v||'').split(';').map(s=>s.trim()).filter(Boolean)}
+function scoreClass(score){return score>=80?'compat-good':score>=60?'compat-mid':'compat-low'}
+function scoreLabel(score){return score>=80?'เข้ากันได้ดี':score>=60?'มีแนวโน้มเข้ากันได้':score>=40?'ควรตรวจสอบเพิ่ม':'เงื่อนไขต่างกันมาก'}
+function getCompatibilityCandidates(x){
+  if(typeof compatibilityBetween!=='function') return [];
+  return allData
+    .filter(y=>!isPlant(y)&&favKey(y)!==favKey(x))
+    .map(y=>{
+      try{
+        const r=compatibilityBetween(x,y);
+        if(typeof r==='number') return {item:y,score:r};
+        if(r&&typeof r.score==='number') return {item:y,score:r.score,details:r};
+      }catch(e){}
+      return null;
+    })
+    .filter(Boolean)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,6);
+}
+function renderCompatibilityHTML(x){
+  if(isPlant(x)) return '';
+  const list=getCompatibilityCandidates(x);
+  if(!list.length) return `<div class="compatibility-box"><h4>🤝 เพื่อนร่วมตู้ที่น่าสนใจ</h4><div class="compat-note">ยังมีข้อมูลไม่พอสำหรับคำนวณ Compatibility จากฐานข้อมูลชุดนี้</div></div>`;
+  return `<div class="compatibility-box">
+    <h4>🤝 เพื่อนร่วมตู้ที่น่าสนใจ</h4>
+    <div class="compat-list">${list.map(r=>{
+      const y=r.item;
+      return `<button class="compat-row" onclick="openModalByIndex(${allData.indexOf(y)})">
+        <span class="compat-name"><b>${esc(y.NameTH||y.NameEN)}</b><span>${esc(y.ScientificName||y.SpecificType||'')}</span></span>
+        <span class="compat-score ${scoreClass(r.score)}">${Math.round(r.score)} · ${scoreLabel(r.score)}</span>
+      </button>`;
+    }).join('')}</div>
+    <div class="compat-note">คะแนนนี้เป็นการประเมินเบื้องต้นจากข้อมูลใน FishMepedia เช่น อุณหภูมิ pH ขนาดตู้ พฤติกรรม และเงื่อนไขการเลี้ยง ควรตรวจสอบจำนวนปลา เพศ พื้นที่หลบซ่อน และนิสัยเฉพาะชนิดก่อนเลี้ยงร่วมกันจริง</div>
+  </div>`;
+}
+function profilePaneButton(id,label,active=false){
+  return `<button class="profile-tab ${active?'active':''}" onclick="switchProfileTab('${id}',this)">${label}</button>`;
+}
+function switchProfileTab(id,btn){
+  const root=btn.closest('.modal-info-col');
+  if(!root)return;
+  root.querySelectorAll('.profile-tab').forEach(x=>x.classList.remove('active'));
+  root.querySelectorAll('.profile-pane').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  const pane=root.querySelector('[data-profile-pane="'+id+'"]');
+  if(pane)pane.classList.add('active');
+}
+function buildProfileV2(x){
+  const tags=splitTags(x.Purpose);
+  const sourceBits=[];
+  if(x.Source) sourceBits.push(`แหล่งข้อมูล: ${esc(x.Source)}`);
+  if(x.LastUpdated) sourceBits.push(`อัปเดตล่าสุด: ${esc(x.LastUpdated)}`);
+  const sourceLink=x.ReferenceURL?` · <a href="${esc(x.ReferenceURL)}" target="_blank" rel="noopener noreferrer">ดูแหล่งอ้างอิง</a>`:'';
+  const quick = [
+    ['ขนาด',x.Size],
+    ['อุณหภูมิ',x.Temperature],
+    ['pH',x.pH],
+    ['ขนาดตู้',x.TankSize]
+  ];
+  return `
+    <div class="modal-media-col">${galleryHtml(x)}</div>
+    <div class="modal-info-col">
+      <div class="profile-hero">
+        <div class="profile-eyebrow">${esc(x.Category||'Fish')} ${x.SubCategory?'· '+esc(x.SubCategory):''} ${x.SpecificType?'· '+esc(x.SpecificType):''}</div>
+        <div class="profile-name-row">
+          <div class="profile-title-wrap">
+            <h2 class="modal-title">${esc(x.NameTH||x.NameEN||'ไม่ระบุชื่อ')}</h2>
+            ${x.NameEN?`<div class="profile-subtitle-main">${esc(x.NameEN)}</div>`:''}
+            ${x.ScientificName?`<div class="scientific-name">${esc(x.ScientificName)}</div>`:''}
+          </div>
+          <button class="favorite-header-btn ${favorites.includes(favKey(x))?'active':''}" onclick="toggleFavoriteByIndex(${allData.indexOf(x)},event)">❤</button>
+        </div>
+        ${x.Description?`<div class="profile-intro">${esc(x.Description)}</div>`:''}
+        <div class="profile-quick">
+          ${quick.map(([a,b])=>`<div class="profile-quick-item"><small>${a}</small><b>${esc(profileVal(b))}</b></div>`).join('')}
+        </div>
+        ${!isPlant(x)?`<div class="profile-tank-action">
+          <button class="add-tank-btn ${isInMyTank(x)?'added':''}" onclick="addToMyTankByIndex(${allData.indexOf(x)},event)">${isInMyTank(x)?'✓ อยู่ในตู้ของฉัน':'+ เพิ่มเข้าตู้ของฉัน'}</button>
+          <button class="view-tank-btn" onclick="closeModal('detailModal');openMyTank()">ดูตู้ของฉัน</button>
+        </div>`:''}
+      </div>
+
+      <div class="profile-tabs">
+        ${profilePaneButton('about','รู้จักฉัน',true)}
+        ${profilePaneButton('water','สภาพน้ำ')}
+        ${profilePaneButton('care','การเลี้ยง')}
+        ${profilePaneButton('friends','เพื่อนร่วมตู้')}
+      </div>
+
+      <div class="profile-pane active" data-profile-pane="about">
+        ${x.Appearance?`<div class="profile-section-card"><h4>✨ ลักษณะเด่น</h4><p>${esc(x.Appearance)}</p></div>`:''}
+        ${x.Behavior?`<div class="profile-section-card"><h4>🐠 นิสัยและพฤติกรรม</h4><p>${esc(x.Behavior)}</p></div>`:''}
+        ${tags.length?`<div class="profile-section-card"><h4>🏷️ เหมาะกับ</h4><div class="profile-tag-list">${tags.map(t=>`<span class="profile-tag">${esc(t)}</span>`).join('')}</div></div>`:''}
+        ${x.Synonyms?`<div class="profile-section-card"><h4>🔎 ชื่ออื่น</h4><p>${esc(x.Synonyms)}</p></div>`:''}
+      </div>
+
+      <div class="profile-pane" data-profile-pane="water">
+        <div class="profile-section-card"><h4>🌡️ อุณหภูมิ</h4><p>${esc(profileVal(x.Temperature))}</p></div>
+        <div class="profile-section-card"><h4>💧 pH</h4><p>${esc(profileVal(x.pH))}</p></div>
+        ${x.Lighting?`<div class="profile-section-card"><h4>💡 แสง</h4><p>${esc(x.Lighting)}</p></div>`:''}
+        ${x.CO2?`<div class="profile-section-card"><h4>🫧 CO₂</h4><p>${esc(x.CO2)}</p></div>`:''}
+        ${x.Substrate?`<div class="profile-section-card"><h4>🪨 พื้นตู้</h4><p>${esc(x.Substrate)}</p></div>`:''}
+        ${x.Placement?`<div class="profile-section-card"><h4>📍 ตำแหน่งในตู้</h4><p>${esc(x.Placement)}</p></div>`:''}
+      </div>
+
+      <div class="profile-pane" data-profile-pane="care">
+        ${x.Difficulty?`<div class="profile-section-card"><h4>🌱 ระดับการดูแล</h4><p>${esc(x.Difficulty)}</p></div>`:''}
+        ${x.CareInfo?`<div class="profile-section-card"><h4>🧰 วิธีดูแล</h4><p>${esc(x.CareInfo)}</p></div>`:''}
+        ${x.Feeding && x.Feeding!=='N/A'?`<div class="profile-section-card"><h4>🍽️ อาหาร</h4><p>${esc(x.Feeding)}</p></div>`:''}
+        ${x.Fertilization && x.Fertilization!=='N/A'?`<div class="profile-section-card"><h4>🌿 ปุ๋ย</h4><p>${esc(x.Fertilization)}</p></div>`:''}
+        ${shopLinksHtml(x)}
+      </div>
+
+      <div class="profile-pane" data-profile-pane="friends">
+        ${renderCompatibilityHTML(x)}
+      </div>
+
+      ${(sourceBits.length||sourceLink)?`<div class="profile-source">${sourceBits.join(' · ')}${sourceLink}</div>`:''}
+    </div>
+  `;
+}
+
+function profileDifficultyChip(x){
+  const d=String(x.Difficulty||'').toLowerCase();
+  if(!d)return '';
+  const easy=/ง่าย|easy|beginner/.test(d);
+  return `<span class="profile-v3-chip ${easy?'':'warn'}">${easy?'🌱':'☀️'} ${esc(x.Difficulty)}</span>`;
+}
+function buildProfileV3(x){
+  const tags=splitTags(x.Purpose);
+  const sourceBits=[];
+  if(x.Source)sourceBits.push(`แหล่งข้อมูล: ${esc(x.Source)}`);
+  if(x.LastUpdated)sourceBits.push(`อัปเดตล่าสุด: ${esc(x.LastUpdated)}`);
+  const sourceLink=x.ReferenceURL?` · <a href="${esc(x.ReferenceURL)}" target="_blank" rel="noopener noreferrer">ดูแหล่งอ้างอิง</a>`:'';
+  const summary=[
+    ['ขนาด',x.Size],
+    ['อุณหภูมิ',x.Temperature],
+    ['pH',x.pH],
+    ['ขนาดตู้',x.TankSize],
+    ['ตำแหน่ง',x.Placement]
+  ];
+  const idx=allData.indexOf(x);
+  return `
+    <div class="modal-media-col">${typeof renderMediaSlider==='function'?renderMediaSlider(x):`<div class="media-slider">${parseMediaUrls(x.MediaURLs).length?parseMediaUrls(x.MediaURLs).map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>'}</div>`}</div>
+    <div class="modal-info-col profile-v3">
+      <div class="profile-hero">
+        <div class="profile-eyebrow">${esc(x.Category||'Fish')}${x.SubCategory?' · '+esc(x.SubCategory):''}${x.SpecificType?' · '+esc(x.SpecificType):''}</div>
+        <div class="profile-name-row">
+          <div class="profile-title-wrap">
+            <h2 class="modal-title">${esc(x.NameTH||x.NameEN||'ไม่ระบุชื่อ')}</h2>
+            ${x.NameEN?`<div class="profile-subtitle-main">${esc(x.NameEN)}</div>`:''}
+            ${x.ScientificName?`<div class="scientific-name"><i>${esc(x.ScientificName)}</i></div>`:''}
+          </div>
+          <button class="favorite-header-btn ${favorites.includes(favKey(x))?'active':''}" onclick="toggleFavoriteByIndex(${idx},event)">❤</button>
+        </div>
+
+        ${x.Description?`<div class="profile-intro">${esc(x.Description)}</div>`:''}
+
+        <div class="profile-v3-summary">
+          ${summary.map(([a,b])=>`<div class="profile-v3-stat"><small>${a}</small><b title="${esc(profileVal(b))}">${esc(profileVal(b))}</b></div>`).join('')}
+        </div>
+
+        <div class="profile-v3-status">
+          ${profileDifficultyChip(x)}
+          ${!isPlant(x)&&isInMyTank(x)?'<span class="profile-v3-chip">✓ อยู่ในตู้ของฉัน</span>':''}
+          ${tags.slice(0,2).map(t=>`<span class="profile-v3-chip">${esc(t)}</span>`).join('')}
+        </div>
+
+        ${!isPlant(x)?`<div class="profile-tank-action">
+          <button class="add-tank-btn ${isInMyTank(x)?'added':''}" onclick="addToMyTankByIndex(${idx},event)">${isInMyTank(x)?'✓ อยู่ในตู้ของฉัน':'+ เพิ่มเข้าตู้ของฉัน'}</button>
+          <button class="view-tank-btn" onclick="closeModal('detailModal');openMyTank()">ดูตู้ของฉัน</button>
+        </div>`:''}
+      </div>
+
+      ${shopLinksHtml(x)}
+      <div class="profile-tabs">
+        ${profilePaneButton('about','รู้จักฉัน',true)}
+        ${profilePaneButton('water','สภาพน้ำ')}
+        ${profilePaneButton('care','การเลี้ยง')}
+        ${!isPlant(x)?profilePaneButton('friends','เพื่อนร่วมตู้'):''}
+      </div>
+
+      <div class="profile-pane active" data-profile-pane="about">
+        <div class="profile-section-grid">
+          ${x.Appearance?`<div class="profile-section-card"><h4>✨ ลักษณะเด่น</h4><p>${esc(x.Appearance)}</p></div>`:''}
+          ${x.Behavior?`<div class="profile-section-card"><h4>🐠 นิสัยและพฤติกรรม</h4><p>${esc(x.Behavior)}</p></div>`:''}
+          ${tags.length?`<div class="profile-section-card full"><h4>🏷️ เหมาะกับ</h4><div class="profile-tag-list">${tags.map(t=>`<span class="profile-tag">${esc(t)}</span>`).join('')}</div></div>`:''}
+          ${x.Synonyms?`<div class="profile-section-card full"><h4>🔎 ชื่ออื่น</h4><p>${esc(x.Synonyms)}</p></div>`:''}
+        </div>
+      </div>
+
+      <div class="profile-pane" data-profile-pane="water">
+        <div class="profile-section-grid">
+          <div class="profile-section-card"><h4>🌡️ อุณหภูมิ</h4><p>${esc(profileVal(x.Temperature))}</p></div>
+          <div class="profile-section-card"><h4>💧 pH</h4><p>${esc(profileVal(x.pH))}</p></div>
+          ${x.Lighting?`<div class="profile-section-card"><h4>💡 แสง</h4><p>${esc(x.Lighting)}</p></div>`:''}
+          ${x.CO2?`<div class="profile-section-card"><h4>🫧 CO₂</h4><p>${esc(x.CO2)}</p></div>`:''}
+          ${x.Substrate?`<div class="profile-section-card"><h4>🪨 พื้นตู้</h4><p>${esc(x.Substrate)}</p></div>`:''}
+          ${x.Placement?`<div class="profile-section-card"><h4>📍 ตำแหน่งในตู้</h4><p>${esc(x.Placement)}</p></div>`:''}
+        </div>
+      </div>
+
+      <div class="profile-pane" data-profile-pane="care">
+        <div class="profile-section-grid">
+          ${x.Difficulty?`<div class="profile-section-card"><h4>🌱 ระดับการดูแล</h4><p>${esc(x.Difficulty)}</p></div>`:''}
+          ${x.Feeding&&x.Feeding!=='N/A'?`<div class="profile-section-card"><h4>🍽️ อาหาร</h4><p>${esc(x.Feeding)}</p></div>`:''}
+          ${x.CareInfo?`<div class="profile-section-card full"><h4>🧰 วิธีดูแล</h4><p>${esc(x.CareInfo)}</p></div>`:''}
+          ${x.Fertilization&&x.Fertilization!=='N/A'?`<div class="profile-section-card"><h4>🌿 ปุ๋ย</h4><p>${esc(x.Fertilization)}</p></div>`:''}
+        </div>
+        
+      </div>
+
+      ${!isPlant(x)?`<div class="profile-pane" data-profile-pane="friends">${renderCompatibilityHTML(x)}</div>`:''}
+
+      ${(sourceBits.length||sourceLink)?`<div class="profile-source">${sourceBits.join(' · ')}${sourceLink}</div>`:''}
+    </div>
+  `;
+}
+
+const __oldOpenModalByIndex = typeof openModalByIndex==='function' ? openModalByIndex : null;
+openModalByIndex = function(i){
+  const x=allData[i]; if(!x)return;
+  markSeen(x); updateDiscovery();
+  const modal=$('detailModal');
+  $('modalContent').innerHTML=buildProfileV3(x);
+  modal.classList.add('active');
+  document.body.style.overflow='hidden';
+};
 window.addEventListener('DOMContentLoaded',init);
 </script>
+<button class="fm-backtop" id="fmBackTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="กลับขึ้นด้านบน"><i class="fa-solid fa-arrow-up"></i></button>
 </body>
 </html>
