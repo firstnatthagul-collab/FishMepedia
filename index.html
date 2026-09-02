@@ -1701,7 +1701,24 @@ function shopLinksHtml(x){
   </div>`;
 }
 
-function sourceHtml(x){if(!x.Source&&!x.ReferenceURL&&!x.LastUpdated)return '';const link=x.ReferenceURL?` · <a href="${esc(x.ReferenceURL)}" target="_blank" rel="noopener noreferrer">เปิดแหล่งอ้างอิง</a>`:'';return `<div class="source-box">แหล่งข้อมูล: ${esc(x.Source||'ไม่ระบุ')}${link}${x.LastUpdated?` · อัปเดต ${esc(x.LastUpdated)}`:''}</div>`}
+
+function parseReferenceUrls(raw){
+  if(!raw)return [];
+  return String(raw)
+    .split(/\s*(?:\r?\n|\||;|,\s*(?=https?:\/\/))\s*/g)
+    .map(s=>s.trim())
+    .filter(s=>/^https?:\/\//i.test(s));
+}
+function referenceLinksHtml(raw,label='ดูแหล่งอ้างอิง'){
+  const urls=[...new Set(parseReferenceUrls(raw))];
+  if(!urls.length)return '';
+  if(urls.length===1){
+    return ` · <a href="${esc(urls[0])}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+  }
+  return ` · ${urls.map((u,i)=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${label} ${i+1}</a>`).join(' · ')}`;
+}
+
+function sourceHtml(x){if(!x.Source&&!x.ReferenceURL&&!x.LastUpdated)return '';const link=referenceLinksHtml(x.ReferenceURL,'เปิดแหล่งอ้างอิง');return `<div class="source-box">แหล่งข้อมูล: ${esc(x.Source||'ไม่ระบุ')}${link}${x.LastUpdated?` · อัปเดต ${esc(x.LastUpdated)}`:''}</div>`}
 
 
 function rangeVals(v){const a=nums(v);if(!a.length)return null;return [Math.min(...a),Math.max(...a)]}
@@ -2405,7 +2422,7 @@ function buildProfileV2(x){
   const sourceBits=[];
   if(x.Source) sourceBits.push(`แหล่งข้อมูล: ${esc(x.Source)}`);
   if(x.LastUpdated) sourceBits.push(`อัปเดตล่าสุด: ${esc(x.LastUpdated)}`);
-  const sourceLink=x.ReferenceURL?` · <a href="${esc(x.ReferenceURL)}" target="_blank" rel="noopener noreferrer">ดูแหล่งอ้างอิง</a>`:'';
+  const sourceLink=referenceLinksHtml(x.ReferenceURL,'ดูแหล่งอ้างอิง');
   const quick = [
     ['ขนาด',x.Size],
     ['อุณหภูมิ',x.Temperature],
@@ -2486,7 +2503,7 @@ function buildProfileV3(x){
   const sourceBits=[];
   if(x.Source)sourceBits.push(`แหล่งข้อมูล: ${esc(x.Source)}`);
   if(x.LastUpdated)sourceBits.push(`อัปเดตล่าสุด: ${esc(x.LastUpdated)}`);
-  const sourceLink=x.ReferenceURL?` · <a href="${esc(x.ReferenceURL)}" target="_blank" rel="noopener noreferrer">ดูแหล่งอ้างอิง</a>`:'';
+  const sourceLink=referenceLinksHtml(x.ReferenceURL,'ดูแหล่งอ้างอิง');
   const summary=[
     ['ขนาด',x.Size],
     ['อุณหภูมิ',x.Temperature],
