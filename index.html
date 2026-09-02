@@ -1655,7 +1655,73 @@ function tankBucket(x){const t=(x.TankSize||'').toLowerCase(),n=firstNum(t);if(/
 function tempMatch(x,mode){if(!mode)return true;const a=nums(x.Temperature);if(!a.length)return false;const lo=Math.min(...a),hi=Math.max(...a);if(mode==='cool')return lo<=24;if(mode==='tropical')return lo<=28&&hi>=24;if(mode==='warm')return hi>=27;return true}
 function phMatch(x,mode){if(!mode)return true;const a=nums(x.pH);if(!a.length)return false;const lo=Math.min(...a),hi=Math.max(...a);if(mode==='acidic')return lo<7;if(mode==='neutral')return lo<=7.4&&hi>=6.6;if(mode==='alkaline')return hi>7.4;return true}
 function teamStyleMatch(x,style){const h=[x.Purpose,x.Behavior,x.CareInfo,x.Appearance,x.Feeding,x.SpecificType].join(' ');if(style==='community')return /community|peaceful|สงบ|เลี้ยงรวม/i.test(h);if(style==='aquascape')return isPlant(x)||/aquascape|planted|ไม้น้ำ/i.test(h);if(style==='color')return /color|สี|แดง|ฟ้า|เขียว|ทอง|นีออน|red|blue|green|gold|neon/i.test(h);if(style==='cleanup')return /algae|ตะไคร่|clean|เก็บเศษ|bottom dweller|หน้าดิน/i.test(h);return true}
-function buildTankTeam(){const tank=$('teamTank').value,level=$('teamLevel').value,place=$('teamPlacement').value,style=$('teamStyle').value;let list=allData.filter(x=>tankBucket(x)===tank||tank==='large').filter(x=>level==='any'||(level==='easy'?difficultyTier(x.Difficulty)==='easy':difficultyTier(x.Difficulty)!=='hard')).filter(x=>place==='any'||String(x.Placement||'').toLowerCase().includes(place.toLowerCase())).filter(x=>teamStyleMatch(x,style));list=[...new Map(list.map(x=>[favKey(x),x])).values()];const fish=list.filter(x=>!isPlant(x)).slice(0,5),plants=list.filter(isPlant).slice(0,4),picked=[...fish,...plants].slice(0,8);$('teamResultTitle').textContent=picked.length?`คัดมาให้ ${picked.length} รายการ — ปลา ${fish.length} · ไม้น้ำ ${plants.length}`:'ยังไม่มีรายการที่ตรงเงื่อนไขนี้ในฐานข้อมูล';$('teamChips').innerHTML=picked.map(x=>`<button class="team-chip" onclick="openModalByIndex(${allData.indexOf(x)})">${isPlant(x)?'🌿':'🐟'} ${esc(x.NameTH)}</button>`).join('');$('teamResults').classList.add('active')}
+function teamPlacementMatch(x,place){
+  if(place==='any')return true;
+  const p=String(x.Placement||'').toLowerCase();
+  const map={
+    Bottom:['bottom','ล่าง','พื้นตู้','หน้าดิน'],
+    Mid:['mid','middle','กลาง','กลางตู้'],
+    Top:['top','surface','บน','ผิวน้ำ'],
+    Foreground:['foreground','ไม้หน้า','ด้านหน้า'],
+    Midground:['midground','ไม้กลาง','กลางตู้'],
+    Background:['background','ไม้หลัง','ด้านหลัง']
+  };
+  return (map[place]||[String(place).toLowerCase()]).some(v=>p.includes(String(v).toLowerCase()));
+}
+function teamTankMatch(x,tank){
+  const b=tankBucket(x);
+  if(tank==='large')return true;
+  if(tank==='medium')return b==='nano'||b==='medium';
+  return b==='nano';
+}
+function buildTankTeam(){
+  const result=$('teamResults'),title=$('teamResultTitle'),chips=$('teamChips');
+  if(!result||!title||!chips)return;
+  if(!Array.isArray(allData)||!allData.length){
+    title.textContent='ฐานข้อมูลยังโหลดไม่เสร็จ กรุณารอสักครู่แล้วลองอีกครั้ง';
+    chips.innerHTML='';
+    result.classList.add('active');
+    return;
+  }
+  const tank=$('teamTank')?.value||'medium',
+        level=$('teamLevel')?.value||'easy',
+        place=$('teamPlacement')?.value||'any',
+        style=$('teamStyle')?.value||'community';
+
+  let list=allData
+    .filter(x=>teamTankMatch(x,tank))
+    .filter(x=>level==='any'||(level==='easy'?difficultyTier(x.Difficulty)==='easy':difficultyTier(x.Difficulty)!=='hard'))
+    .filter(x=>teamPlacementMatch(x,place))
+    .filter(x=>teamStyleMatch(x,style));
+
+  list=[...new Map(list.map(x=>[favKey(x),x])).values()];
+
+  // If the style text is too strict for newly added data, keep the core tank/level/placement
+  // constraints and provide candidates instead of showing an empty/blank result.
+  if(!list.length){
+    list=allData
+      .filter(x=>teamTankMatch(x,tank))
+      .filter(x=>level==='any'||(level==='easy'?difficultyTier(x.Difficulty)==='easy':difficultyTier(x.Difficulty)!=='hard'))
+      .filter(x=>teamPlacementMatch(x,place));
+    list=[...new Map(list.map(x=>[favKey(x),x])).values()];
+  }
+
+  const fish=list.filter(x=>!isPlant(x)).slice(0,6),
+        plants=list.filter(isPlant).slice(0,3),
+        picked=[...fish,...plants].slice(0,8);
+
+  title.textContent=picked.length
+    ?`คัดมาให้ ${picked.length} รายการ — ปลา ${fish.length} · ไม้น้ำ ${plants.length}`
+    :'ยังไม่มีรายการที่ตรงเงื่อนไขนี้ ลองเปลี่ยนขนาดตู้หรือระดับประสบการณ์';
+
+  chips.innerHTML=picked.map(x=>{
+    const idx=allData.indexOf(x);
+    return `<button class="team-chip" type="button" onclick="openModalByIndex(${idx})">${isPlant(x)?'🌿':'🐟'} ${esc(x.NameTH||x.NameEN||'ไม่ระบุชื่อ')}</button>`;
+  }).join('');
+
+  result.classList.add('active');
+  result.style.display='block';
+}
 function applyFilters(){resetCatalogLimit();const cat=$('catSelect').value,sub=$('subCatSelect').value,type=$('typeSelect').value,k=$('searchInput').value.toLowerCase().trim(),placement=$('placementSelect').value,tank=$('tankSelect').value,temp=$('tempSelect').value,ph=$('phSelect').value;currentFiltered=allData.filter(x=>{const hay=[x.NameTH,x.NameEN,x.ScientificName,x.Synonyms,x.Category,x.SubCategory,x.SpecificType,x.Description,x.Appearance,x.Behavior,x.CareInfo,x.Purpose,x.Feeding,x.TankSize,x.Placement].join(' ').toLowerCase();return(!cat||x.Category===cat)&&(!sub||x.SubCategory===sub)&&(!type||x.SpecificType===type)&&(!placement||x.Placement===placement)&&(!tank||tankBucket(x)===tank)&&tempMatch(x,temp)&&phMatch(x,ph)&&(!selectedDifficulty||difficultyTier(x.Difficulty)===({'ง่าย':'easy','ปานกลาง':'medium','ยาก':'hard'}[selectedDifficulty]||selectedDifficulty))&&(!showFavoritesOnly||favorites.includes(favKey(x)))&&(!k||hay.includes(k))});$('resultCount').textContent=`พบ ${currentFiltered.length.toLocaleString()} รายการ`;renderCatalogCompact(currentFiltered);const active=k||cat||sub||type||placement||tank||temp||ph||selectedDifficulty||showFavoritesOnly;$('featuredSection').style.display=active?'none':'block';$('beginnerSection').style.display=active?'none':'block'}
 function resetFilters(){$('searchInput').value='';$('catSelect').value='';$('subCatSelect').innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';$('subCatSelect').disabled=true;$('typeSelect').innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';$('typeSelect').disabled=true;selectedDifficulty='';showFavoritesOnly=false;['placementSelect','tankSelect','tempSelect','phSelect'].forEach(id=>$(id).value='');document.querySelectorAll('.quick-btn').forEach(x=>x.classList.remove('active'));document.querySelector('[data-difficulty=""]').classList.add('active');document.querySelector('[data-favorite]').classList.remove('active');applyFilters()}
 function clearSearch(){$('searchInput').value='';applyFilters();$('searchInput').focus()}
@@ -2278,7 +2344,7 @@ function renderMyTankV2(){
         ${(!temp||!ph)?'<div class="my-tank-v2-alert bad">มีเงื่อนไขน้ำบางส่วนที่ไม่ทับซ้อนกัน ควรตรวจรายละเอียดแต่ละชนิดก่อนจัดตู้จริง</div>':''}
 
         ${tankZoneHtmlV3(items)}
-      <div class="tank-v3-guidance">${tankGuidanceV3(items,totalFish,liters,avgCompat,density).map(t=>`<div class="tank-v3-tip"><i>${t[0]}</i><div><b>${t[1]}</b><br>${t[2]}</div></div>`).join('')}</div>
+      <div class="tank-v3-guidance">${tankGuidanceV3(items,totalFish,liters,avg,density).map(t=>`<div class="tank-v3-tip"><i>${t[0]}</i><div><b>${t[1]}</b><br>${t[2]}</div></div>`).join('')}</div>
       <div class="tank-v3-recommend"><h5>คำแนะนำก่อนเพิ่มสมาชิกใหม่</h5><p>ตัวเลขความหนาแน่นเป็นเพียงค่าประมาณสำหรับช่วยวางแผน ควรพิจารณาขนาดโตเต็มวัย นิสัย จำนวนขั้นต่ำของปลาฝูง ระบบกรอง และพื้นที่ว่ายน้ำของแต่ละชนิดร่วมด้วย</p></div>
       <div class="my-tank-v2-list">
           ${items.map(x=>{
