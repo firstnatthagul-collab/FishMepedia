@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4fbf8">
+<title>FishMepedia — คลังความรู้</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+:root{
+ --bg:#f4fbf8;--surface:#fff;--surface2:#f8fcfa;--ink:#102a2a;--muted:#64748b;--line:#dceee8;
+ --green:#10b981;--green2:#047857;--mint:#dff8ed;--blue:#0ea5e9;--blue2:#0369a1;--gold:#f59e0b;
+ --danger:#ef4444;--shadow:0 16px 45px rgba(15,118,110,.10);--shadow2:0 24px 70px rgba(15,118,110,.15);
+ --radius:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Kanit',sans-serif}
+html{scroll-behavior:smooth}
+body{
+ background:
+ radial-gradient(circle at 8% 3%,rgba(16,185,129,.12),transparent 28%),
+ radial-gradient(circle at 92% 10%,rgba(14,165,233,.10),transparent 25%),
+ var(--bg);
+ color:var(--ink);line-height:1.72;min-height:100vh;overflow-x:hidden;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:auto;padding:0 20px}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(244,251,248,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(220,238,232,.92)}
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-size:1.35rem;font-weight:700;background:linear-gradient(120deg,#047857,#10b981,#0ea5e9);-webkit-background-clip:text;color:transparent;white-space:nowrap}
+.navlinks{display:flex;gap:6px;flex-wrap:wrap}
+.navlinks button{border:0;background:transparent;color:var(--muted);padding:8px 12px;border-radius:999px;transition:.22s}
+.navlinks button:hover,.navlinks .active{background:#fff;color:var(--green2);box-shadow:0 6px 18px rgba(15,118,110,.08)}
+.hero{margin:28px auto 22px;border:1px solid rgba(255,255,255,.82);border-radius:34px;padding:44px 40px;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(235,255,247,.90));box-shadow:var(--shadow);position:relative;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.13),transparent 65%);right:-80px;top:-120px;z-index:-1}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid #bdebd8;color:var(--green2);font-size:.82rem;font-weight:600}
+.hero h1{font-size:clamp(2.5rem,5.8vw,4.6rem);line-height:1.02;margin:17px 0 12px;max-width:780px;letter-spacing:-1px}
+.grad{background:linear-gradient(120deg,#047857,#10b981,#0ea5e9);-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:720px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.search{display:flex;gap:10px;max-width:720px;flex:1;min-width:min(100%,480px)}
+.search input{flex:1;border:1.5px solid #c7e9dc;background:#fff;border-radius:16px;padding:14px 16px;outline:none;box-shadow:0 8px 24px rgba(15,118,110,.05)}
+.search input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(16,185,129,.10)}
+.search button,.primary{border:0;border-radius:16px;padding:0 18px;background:var(--green);color:white;font-weight:600;transition:.2s}
+.search button:hover,.primary:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(16,185,129,.22)}
+.hero-count{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.83rem;padding:0 4px}
+.aquarium{position:absolute;right:28px;bottom:8px;width:260px;height:180px;pointer-events:none;opacity:.88}
+.fish{position:absolute;font-size:2.1rem;filter:drop-shadow(0 8px 10px rgba(15,118,110,.12))}
+.fish.f1{left:20px;top:48px;animation:swim1 8s ease-in-out infinite}
+.fish.f2{left:120px;top:90px;font-size:1.6rem;animation:swim2 10s ease-in-out infinite}
+.plant-wave{position:absolute;bottom:-8px;font-size:4.2rem;transform-origin:bottom center;animation:sway 3.6s ease-in-out infinite}
+.pw1{right:16px}.pw2{right:58px;animation-delay:-1.1s;font-size:3.6rem}
+.bubble{position:absolute;border-radius:50%;border:1px solid rgba(14,165,233,.25);background:rgba(255,255,255,.33);animation:bubbleUp linear infinite}
+.b1{width:10px;height:10px;left:48px;bottom:18px;animation-duration:4.5s}.b2{width:16px;height:16px;left:98px;bottom:0;animation-duration:6.2s;animation-delay:-2s}.b3{width:8px;height:8px;left:160px;bottom:26px;animation-duration:5.3s;animation-delay:-1.2s}
+@keyframes swim1{0%,100%{transform:translateX(0) rotate(-3deg)}50%{transform:translateX(54px) translateY(-10px) rotate(3deg)}}
+@keyframes swim2{0%,100%{transform:translateX(0) scaleX(1)}50%{transform:translateX(-48px) translateY(9px) scaleX(1)}}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(5deg)}}
+@keyframes bubbleUp{0%{transform:translateY(0) scale(.8);opacity:0}15%{opacity:.85}100%{transform:translateY(-150px) scale(1.2);opacity:0}}
+.section{margin:32px auto}
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:17px}
+.head h2{font-size:1.5rem;line-height:1.25}.head p{color:var(--muted);font-size:.9rem;margin-top:4px}
+.smalllink{font-size:.82rem;color:var(--green2);font-weight:600}
+.featured{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 8px 25px rgba(15,118,110,.06);transition:transform .28s,box-shadow .28s,border-color .28s}
+.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(15,118,110,.13);border-color:#a8dfca}
+.cover{height:270px;background:linear-gradient(145deg,#dff8ed,#dff4ff);position:relative;overflow:hidden;display:grid;place-items:center}
+.cover-icon{font-size:6.4rem;filter:drop-shadow(0 16px 24px rgba(15,118,110,.13));animation:floaty 4.2s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+.cover::after{content:"";position:absolute;inset:auto -55px -85px auto;width:240px;height:240px;border:30px solid rgba(255,255,255,.55);border-radius:50%}
+.pad{padding:20px}
+.kicker{font-size:.75rem;color:var(--green2);font-weight:600;margin-bottom:7px}
+.title{font-size:1.3rem;line-height:1.35;margin-bottom:8px}
+.desc{color:var(--muted);font-size:.91rem}
+.meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.76rem;margin:12px 0}
+.read{border:0;background:#eefbf5;color:var(--green2);padding:9px 13px;border-radius:12px;font-weight:600;transition:.2s}
+.read:hover{background:var(--green);color:#fff;transform:translateX(2px)}
+.side{display:grid;gap:14px}
+.small{display:grid;grid-template-columns:112px 1fr;min-height:157px}
+.art{display:grid;place-items:center;font-size:3.7rem;background:linear-gradient(145deg,#f0fbf6,#eef8ff);position:relative;overflow:hidden}
+.art span{animation:floaty 4.6s ease-in-out infinite}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.pill{border:1px solid var(--line);background:#fff;color:var(--muted);padding:7px 12px;border-radius:999px;font-size:.82rem;transition:.2s}
+.pill.active,.pill:hover{background:var(--mint);color:var(--green2);border-color:#9de1c5;transform:translateY(-1px)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.article-art{height:154px;background:linear-gradient(145deg,#e6faf1,#edf9ff);display:grid;place-items:center;font-size:4.8rem;position:relative;overflow:hidden}
+.article-art span{transition:.28s;filter:drop-shadow(0 12px 18px rgba(15,118,110,.10))}
+.card:hover .article-art span{transform:scale(1.08) rotate(2deg)}
+.article-art::after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;border:18px solid rgba(255,255,255,.52);right:-30px;top:-35px}
+.learning{background:linear-gradient(135deg,#ecfdf5,#effaff);border:1px solid var(--line);border-radius:28px;padding:24px;position:relative;overflow:hidden}
+.learning::after{content:"🐟";position:absolute;right:22px;top:10px;font-size:4rem;opacity:.07;transform:rotate(-12deg)}
+.path{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:16px}
+.step{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px;position:relative;transition:.22s}
+.step:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(15,118,110,.10)}
+.n{width:34px;height:34px;border-radius:10px;background:var(--mint);color:var(--green2);display:grid;place-items:center;font-weight:700;margin-bottom:8px}
+.step b{font-size:.88rem}.step p{font-size:.72rem;color:var(--muted);margin-top:4px}
+.tipbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:17px;display:flex;gap:12px;align-items:flex-start}
+.tip-ico{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:var(--mint);font-size:1.3rem;flex:none}
+.tip b{font-size:.92rem}.tip p{font-size:.78rem;color:var(--muted);margin-top:3px}
+.empty{display:none;text-align:center;padding:40px;border:1px dashed #b9ded1;border-radius:20px;background:#fff;color:var(--muted)}
+#articleView{display:none}
+.articleHero{margin:26px auto 18px;background:#fff;border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--shadow);animation:fadeUp .42s ease both}
+.articleHeroTop{min-height:330px;background:linear-gradient(135deg,#dcfce7,#e0f2fe);display:grid;grid-template-columns:1.15fr .85fr;align-items:center;padding:40px;position:relative;overflow:hidden}
+.articleHero h1{font-size:clamp(2rem,4.3vw,3.6rem);line-height:1.15;margin:12px 0}
+.heroArt{font-size:9rem;text-align:center;filter:drop-shadow(0 18px 22px rgba(15,118,110,.12));animation:floaty 4.4s ease-in-out infinite}
+.articleBody{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start}
+.articleMain{background:#fff;border:1px solid var(--line);border-radius:24px;padding:32px;box-shadow:0 8px 24px rgba(15,118,110,.05);animation:fadeUp .5s .05s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.summary{background:linear-gradient(135deg,#ecfdf5,#effaff);border:1px solid #c9eadc;border-radius:18px;padding:18px 19px;margin-bottom:24px}
+.summary b{color:var(--green2)}
+.articleMain h2{font-size:1.35rem;margin:28px 0 9px;scroll-margin-top:94px}
+.articleMain p{color:#334155}
+.articleMain ul{margin:10px 0 0 20px;color:#334155}
+.articleMain li{margin:6px 0}
+.note{margin:22px 0;background:#fff7ed;border:1px solid #fed7aa;color:#92400e;padding:14px 16px;border-radius:16px}
+.goodnote{margin:22px 0;background:#effaf6;border:1px solid #bdebd8;color:#14532d;padding:14px 16px;border-radius:16px}
+.sidebar{position:sticky;top:92px;animation:fadeUp .5s .12s ease both}
+.box{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}
+.box h3{font-size:1rem;margin-bottom:10px}
+.box a{display:block;color:var(--green2);font-size:.84rem;padding:5px 0}
+.box a:hover{text-decoration:underline}
+.related{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.plant{border:1px solid var(--line);background:#fff;border-radius:18px;padding:14px;transition:.22s}
+.plant:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(15,118,110,.08)}
+.plant .emoji{font-size:2.3rem}.plant b{display:block;margin-top:6px}.plant small{display:block;color:var(--muted);font-style:italic}
+.specs{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.spec{font-size:.67rem;background:#f3faf7;color:#44615a;border-radius:999px;padding:4px 7px}
+.back{border:1px solid var(--line);background:#fff;color:var(--green2);padding:9px 13px;border-radius:12px;font-weight:600;margin-bottom:14px;transition:.2s}
+.back:hover{transform:translateX(-2px)}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--green),var(--blue));width:0;z-index:200}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:900px){
+ .featured,.articleHeroTop,.articleBody{grid-template-columns:1fr}
+ .grid{grid-template-columns:repeat(2,1fr)}.path{grid-template-columns:repeat(3,1fr)}.tipbar{grid-template-columns:1fr}
+ .sidebar{position:static}.aquarium{opacity:.32}
+}
+@media(max-width:620px){
+ .navlinks{display:none}.hero{padding:32px 22px}.aquarium{right:-40px;opacity:.22}
+ .featured,.grid{grid-template-columns:1fr}.small{grid-template-columns:92px 1fr}.path{grid-template-columns:repeat(2,1fr)}
+ .related{grid-template-columns:1fr}.articleMain{padding:22px}.articleHeroTop{padding:30px 22px}.heroArt{font-size:6.2rem}
+ .search{min-width:100%}.hero-actions{display:block}.search button{padding:0 14px}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="topbar">
+ <div class="wrap nav">
+  <div class="brand">FishMepedia by FishMe</div>
+  <div class="navlinks">
+   <button onclick="location.href='index.html'">ฐานข้อมูล</button>
+   <button class="active">คลังความรู้</button>
+   <button onclick="location.href='index.html#tools'">เครื่องมือ</button>
+  </div>
+ </div>
+</div>
+
+<main id="libraryView"><div class="wrap">
+ <section class="hero">
+  <span class="badge">📖 FishMepedia Learn</span>
+  <h1>รู้จักปลาให้มากขึ้น<br><span class="grad">เข้าใจตู้ให้ดีขึ้น</span></h1>
+  <p>คลังความรู้สำหรับคนเลี้ยงปลาและพรรณไม้น้ำ อธิบายเรื่องที่ดูซับซ้อนให้เข้าใจง่าย เชื่อมต่อกับข้อมูลชนิดปลา ไม้น้ำ และเครื่องมือใน FishMepedia เพื่อให้เอาไปใช้กับตู้จริงได้</p>
+  <div class="hero-actions">
+   <div class="search">
+    <input id="q" placeholder="ค้นหาเรื่องที่อยากรู้ เช่น รันระบบ, CO₂, ตะไคร่...">
+    <button onclick="filterArticles()">ค้นหา</button>
+   </div>
+   <div class="hero-count">มีบทความตัวอย่าง 9 เรื่อง · 6 หมวด</div>
+  </div>
+  <div class="aquarium" aria-hidden="true">
+   <div class="fish f1">🐠</div><div class="fish f2">🐟</div>
+   <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
+   <div class="plant-wave pw1">🌿</div><div class="plant-wave pw2">🌱</div>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="head"><div><h2>เริ่มอ่านจากเรื่องไหนดี?</h2><p>บทความเด่นจากฐานข้อมูล FishMepedia</p></div></div>
+  <div id="featuredArticles" class="featured">
+    <div class="card" style="padding:28px;grid-column:1/-1;text-align:center;color:var(--muted)">กำลังโหลดบทความจาก FishMepedia…</div>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="head">
+   <div><h2>สำรวจคลังความรู้</h2><p>เลือกตามเรื่องที่กำลังเจอในตู้ หรือเริ่มจากหมวดที่สนใจก็ได้</p></div>
+  </div>
+  <div class="pills">
+   <button class="pill active" onclick="setCategory(this,'all')">ทั้งหมด</button>
+   <button class="pill" onclick="setCategory(this,'เริ่มต้น')">เริ่มต้นเลี้ยงปลา</button>
+   <button class="pill" onclick="setCategory(this,'ระบบ')">เข้าใจระบบตู้</button>
+   <button class="pill" onclick="setCategory(this,'ปลา')">การดูแลปลา</button>
+   <button class="pill" onclick="setCategory(this,'พรรณไม้น้ำ')">พรรณไม้น้ำ</button>
+   <button class="pill" onclick="setCategory(this,'จัดตู้')">จัดตู้</button>
+   <button class="pill" onclick="setCategory(this,'ปัญหา')">แก้ปัญหา</button>
+  </div>
+
+  <div id="grid" class="grid">
+   <div class="card" style="padding:28px;grid-column:1/-1;text-align:center;color:var(--muted)">กำลังอ่านชีต Articles…</div>
+  </div>
+  <div id="empty" class="empty">ยังไม่มีบทความที่ตรงกับคำค้นนี้</div>
+ </section>
+
+ <section class="section learning">
+  <div class="head"><div><h2>มือใหม่ เริ่มตรงนี้</h2><p>เส้นทางอ่านแบบต่อเนื่อง จากการเลือกตู้ไปถึงการดูแลช่วงแรก</p></div></div>
+  <div class="path">
+   <div class="step"><div class="n">01</div><b>เลือกขนาดตู้</b><p>ให้เหมาะกับพื้นที่ ชนิดปลา และเวลาที่ดูแลได้</p></div>
+   <div class="step"><div class="n">02</div><b>เลือกกรอง</b><p>เข้าใจทั้งการดักของเสียและพื้นที่สำหรับจุลินทรีย์</p></div>
+   <div class="step"><div class="n">03</div><b>รันระบบ</b><p>ให้ระบบชีวภาพมีเวลาตั้งตัวก่อนเพิ่มปลา</p></div>
+   <div class="step"><div class="n">04</div><b>เลือกปลาตัวแรก</b><p>ดูนิสัย ขนาดโตเต็มวัย ค่าน้ำ และจำนวนที่ควรเลี้ยง</p></div>
+   <div class="step"><div class="n">05</div><b>เลือกไม้น้ำ</b><p>จับคู่แสง CO₂ ธาตุอาหาร และตำแหน่งปลูก</p></div>
+   <div class="step"><div class="n">06</div><b>30 วันแรก</b><p>สังเกตปลา เปลี่ยนน้ำ และปรับระบบอย่างค่อยเป็นค่อยไป</p></div>
+  </div>
+ </section>
+</div></main>
+
+<main id="articleView"><div class="wrap">
+ <section class="articleHero">
+  <div class="articleHeroTop">
+   <div>
+    <button class="back" onclick="backToLibrary()">← กลับคลังความรู้</button>
+    <div class="kicker" id="detailCat"></div>
+    <h1 id="detailTitle"></h1>
+    <p id="detailSummary" style="color:var(--muted)"></p>
+    <div class="meta"><span id="detailAudience"></span><span id="detailRead"></span><span>FishMepedia</span></div>
+   </div>
+   <div class="heroArt" id="detailEmoji"></div>
+  </div>
+ </section>
+ <div class="articleBody section">
+  <article class="articleMain" id="articleContent"></article>
+  <aside class="sidebar">
+   <div class="box"><h3>ในบทความนี้</h3><div id="toc"></div></div>
+   <div class="box"><h3>เชื่อมกับ FishMepedia</h3><p style="font-size:.82rem;color:var(--muted)">ในเวอร์ชันจริง RelatedIDs จะดึงข้อมูลจาก MasterData มาเป็นการ์ดปลา/ไม้น้ำโดยอัตโนมัติ</p></div>
+  </aside>
+ </div>
+</div></main>
+
+<footer>FishMepedia by FishMe · รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ</footer>
+
+<script>
+const MASTER_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vRt09Hp8SNwRgwdBjQE2Fb1-POW0lj0Kk4aaZDR0X89oT5sq9rrtNItvaujXTFnVR09fYOw-t8JMV-L/pub?gid=177066136&single=true&output=csv';
+const ARTICLES_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vRt09Hp8SNwRgwdBjQE2Fb1-POW0lj0Kk4aaZDR0X89oT5sq9rrtNItvaujXTFnVR09fYOw-t8JMV-L/pub?gid=2001005&single=true&output=csv';
+const ARTICLE_PREVIEW_MODE=true;
+
+let allArticles=[], masterById=new Map(), currentCategory='all';
+const emojiMap={'เริ่มต้นเลี้ยงปลา':'🐠','เข้าใจระบบตู้':'🧪','การดูแลปลา':'🐟','พรรณไม้น้ำ':'🌿','จัดตู้':'🪨','แก้ปัญหา':'💧'};
+
+function esc(v=''){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function csv(url){return new Promise((ok,no)=>Papa.parse(url,{download:true,header:true,skipEmptyLines:true,complete:r=>ok(r.data||[]),error:no}))}
+function visible(a){return a.Status==='Published'||(ARTICLE_PREVIEW_MODE&&['Draft','Review'].includes(a.Status))}
+function catKey(c){return c==='เริ่มต้นเลี้ยงปลา'?'เริ่มต้น':c==='เข้าใจระบบตู้'?'ระบบ':c==='การดูแลปลา'?'ปลา':c}
+function emoji(a){return emojiMap[a.Category]||'📖'}
+function imgOrEmoji(a,large=false){
+ const u=(a.HeroImageURL||'').trim();
+ return /^https?:\/\//i.test(u)?`<img src="${esc(u)}" alt="" style="width:100%;height:100%;object-fit:cover">`:`<span${large?' class="cover-icon"':''}>${emoji(a)}</span>`;
+}
+function meta(a){
+ return `<span>${esc(a.Audience||'อ่านได้ทุกระดับ')}</span><span>${esc(a.ReadMinutes||'-')} นาที</span>${a.Status!=='Published'?'<span style="color:#b45309">ฉบับทดลอง</span>':''}`;
+}
+function renderFeatured(list){
+ const el=document.getElementById('featuredArticles');
+ let picks=list.filter(a=>String(a.Featured).toLowerCase()==='true');
+ if(!picks.length)picks=list;
+ picks=picks.slice(0,3);
+ if(!picks.length){el.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1">ยังไม่มีบทความในชีต Articles</div>';return}
+ const main=picks[0], side=picks.slice(1);
+ el.innerHTML=`<article class="card"><div class="cover">${imgOrEmoji(main,true)}</div><div class="pad">
+ <div class="kicker">${esc(main.Category)} · แนะนำ</div><h3 class="title">${esc(main.Title)}</h3><p class="desc">${esc(main.Summary||'')}</p>
+ <div class="meta">${meta(main)}</div><button class="read" onclick="openArticle('${esc(main.ArticleID)}')">เริ่มอ่าน →</button></div></article>
+ <div class="side">${side.map(a=>`<article class="card small"><div class="art">${imgOrEmoji(a)}</div><div class="pad">
+ <div class="kicker">${esc(a.Category)}</div><h3 class="title" style="font-size:1.05rem">${esc(a.Title)}</h3><p class="desc">${esc(a.Summary||'')}</p>
+ <div class="meta">${meta(a)}</div><button class="read" onclick="openArticle('${esc(a.ArticleID)}')">อ่าน</button></div></article>`).join('')}</div>`;
+}
+function renderGrid(){
+ const q=(document.getElementById('q').value||'').trim().toLowerCase();
+ const list=allArticles.filter(visible).filter(a=>{
+  const hay=[a.Title,a.Summary,a.Tags,a.Category].join(' ').toLowerCase();
+  return (currentCategory==='all'||catKey(a.Category)===currentCategory)&&(!q||hay.includes(q));
+ });
+ document.getElementById('grid').innerHTML=list.map(a=>`<article class="card article">
+ <div class="article-art">${imgOrEmoji(a)}</div><div class="pad"><div class="kicker">${esc(a.Category)}</div>
+ <h3 class="title">${esc(a.Title)}</h3><p class="desc">${esc(a.Summary||'')}</p><div class="meta">${meta(a)}</div>
+ <button class="read" onclick="openArticle('${esc(a.ArticleID)}')">อ่านบทความ</button></div></article>`).join('');
+ document.getElementById('empty').style.display=list.length?'none':'block';
+}
+function contentHtml(content=''){
+ const chunks=String(content).replace(/\r/g,'').split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
+ let sec=0;
+ return chunks.map((c,i)=>{
+  const lines=c.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(i===0&&/^สรุปก่อนอ่าน/.test(lines[0])) return `<div class="summary"><b>${esc(lines[0])}</b><p>${lines.slice(1).map(esc).join('<br>')}</p></div>`;
+  if(/^\d+\.\s/.test(lines[0])){sec++;return `<h2 id="s${sec}">${esc(lines[0])}</h2><p>${lines.slice(1).map(esc).join('<br>')}</p>`}
+  if(/^(เช็กลิสต์|จำง่าย|หลักคิดง่าย)/.test(lines[0])) return `<div class="goodnote"><b>${esc(lines[0])}</b><br>${lines.slice(1).map(esc).join('<br>')}</div>`;
+  return `<p>${lines.map(esc).join('<br>')}</p>`;
+ }).join('');
+}
+function relatedHtml(a){
+ const rows=String(a.RelatedIDs||'').split(',').map(x=>masterById.get(x.trim())).filter(Boolean);
+ if(!rows.length)return '';
+ return `<h2 id="related">ข้อมูลที่เกี่ยวข้องใน FishMepedia</h2><p>ข้อมูลด้านล่างดึงจาก MasterData โดยตรง จึงไม่ต้องเขียนซ้ำในบทความ</p>
+ <div class="related">${rows.map(r=>`<div class="plant" onclick="location.href='index.html?entity=${encodeURIComponent(r.ID)}'">
+ <div class="emoji">${r.Category==='Fish'?'🐟':'🌱'}</div><b>${esc(r.NameTH||r.NameEN||r.ID)}</b><small>${esc(r.ScientificName||r.NameEN||'')}</small>
+ <div class="specs">${r.Difficulty?`<span class="spec">${esc(r.Difficulty)}</span>`:''}${r.Lighting?`<span class="spec">แสง ${esc(r.Lighting)}</span>`:''}${r.CO2?`<span class="spec">CO₂ ${esc(r.CO2)}</span>`:''}</div></div>`).join('')}</div>`;
+}
+function makeToc(a){
+ const heads=[...String(a.Content||'').matchAll(/^(\d+\.\s.+)$/gm)].map((m,i)=>[`s${i+1}`,m[1]]);
+ if(String(a.RelatedIDs||'').trim())heads.push(['related','ข้อมูลที่เกี่ยวข้อง']);
+ return heads.map(x=>`<a href="#${x[0]}">${esc(x[1])}</a>`).join('');
+}
+function openArticle(id){
+ const a=allArticles.find(x=>x.ArticleID===id);if(!a)return;
+ detailCat.textContent=a.Category||'คลังความรู้';detailTitle.textContent=a.Title||'';detailSummary.textContent=a.Summary||'';
+ detailAudience.textContent=a.Audience||'';detailRead.textContent=(a.ReadMinutes||'-')+' นาที';
+ const u=(a.HeroImageURL||'').trim();detailEmoji.innerHTML=/^https?:\/\//i.test(u)?`<img src="${esc(u)}" alt="" style="max-width:100%;max-height:250px;border-radius:24px;object-fit:cover">`:emoji(a);
+ articleContent.innerHTML=contentHtml(a.Content||'')+relatedHtml(a);toc.innerHTML=makeToc(a);
+ libraryView.style.display='none';articleView.style.display='block';
+ history.replaceState(null,'','#article='+encodeURIComponent(a.Slug||a.ArticleID));scrollTo({top:0,behavior:'smooth'});
+}
+function backToLibrary(){articleView.style.display='none';libraryView.style.display='block';history.replaceState(null,'',location.pathname);scrollTo({top:0,behavior:'smooth'})}
+function setCategory(btn,cat){document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentCategory=cat;renderGrid()}
+function filterArticles(){renderGrid()}
+q.addEventListener('input',renderGrid);
+
+async function boot(){
+ try{
+  const [arts,master]=await Promise.all([csv(ARTICLES_CSV),csv(MASTER_CSV)]);
+  allArticles=arts.filter(a=>a.ArticleID);masterById=new Map(master.filter(r=>r.ID).map(r=>[String(r.ID).trim(),r]));
+  const show=allArticles.filter(visible);
+  document.querySelector('.hero-count').textContent=`${show.length} บทความ · ${new Set(show.map(a=>a.Category).filter(Boolean)).size} หมวด`;
+  renderFeatured(show);renderGrid();
+  const p=new URLSearchParams(location.hash.slice(1)), slug=p.get('article');
+  if(slug){const a=allArticles.find(x=>x.Slug===slug||x.ArticleID===slug);if(a)openArticle(a.ArticleID)}
+ }catch(e){
+  console.error(e);
+  featuredArticles.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1"><b>โหลดบทความไม่สำเร็จ</b><p class="desc">ตรวจว่าแท็บ Articles ถูก Publish to web แล้ว</p></div>';
+  grid.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1;color:var(--muted)">ยังเชื่อมชีต Articles ไม่ได้</div>';
+ }
+}
+addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;progress.style.width=(h>0?scrollY/h*100:0)+'%'});
+boot();
+</script>
+</body>
+</html>
