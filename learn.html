@@ -233,7 +233,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
   <article class="articleMain" id="articleContent"></article>
   <aside class="sidebar">
    <div class="box"><h3>ในบทความนี้</h3><div id="toc"></div></div>
-   <div class="box"><h3>เชื่อมกับ FishMepedia</h3><p style="font-size:.82rem;color:var(--muted)">ในเวอร์ชันจริง RelatedIDs จะดึงข้อมูลจาก MasterData มาเป็นการ์ดปลา/ไม้น้ำโดยอัตโนมัติ</p></div>
+   <div class="box"><h3>เชื่อมกับ FishMepedia</h3><p style="font-size:.82rem;color:var(--muted)">รายการที่เกี่ยวข้องด้านล่างดึงจาก MasterData โดยอัตโนมัติ เมื่อบทความระบุ RelatedIDs</p></div>
   </aside>
  </div>
 </div></main>
@@ -243,14 +243,13 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
 <script>
 const MASTER_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vRt09Hp8SNwRgwdBjQE2Fb1-POW0lj0Kk4aaZDR0X89oT5sq9rrtNItvaujXTFnVR09fYOw-t8JMV-L/pub?gid=177066136&single=true&output=csv';
 const ARTICLES_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vRt09Hp8SNwRgwdBjQE2Fb1-POW0lj0Kk4aaZDR0X89oT5sq9rrtNItvaujXTFnVR09fYOw-t8JMV-L/pub?gid=2001005&single=true&output=csv';
-const ARTICLE_PREVIEW_MODE=true;
 
 let allArticles=[], masterById=new Map(), currentCategory='all';
 const emojiMap={'เริ่มต้นเลี้ยงปลา':'🐠','เข้าใจระบบตู้':'🧪','การดูแลปลา':'🐟','พรรณไม้น้ำ':'🌿','จัดตู้':'🪨','แก้ปัญหา':'💧'};
 
 function esc(v=''){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function csv(url){return new Promise((ok,no)=>Papa.parse(url,{download:true,header:true,skipEmptyLines:true,complete:r=>ok(r.data||[]),error:no}))}
-function visible(a){return a.Status==='Published'||(ARTICLE_PREVIEW_MODE&&['Draft','Review'].includes(a.Status))}
+function visible(a){return String(a.Status||'').trim()==='Published'}
 function catKey(c){return c==='เริ่มต้นเลี้ยงปลา'?'เริ่มต้น':c==='เข้าใจระบบตู้'?'ระบบ':c==='การดูแลปลา'?'ปลา':c}
 function emoji(a){return emojiMap[a.Category]||'📖'}
 function imgOrEmoji(a,large=false){
@@ -258,14 +257,14 @@ function imgOrEmoji(a,large=false){
  return /^https?:\/\//i.test(u)?`<img src="${esc(u)}" alt="" style="width:100%;height:100%;object-fit:cover">`:`<span${large?' class="cover-icon"':''}>${emoji(a)}</span>`;
 }
 function meta(a){
- return `<span>${esc(a.Audience||'อ่านได้ทุกระดับ')}</span><span>${esc(a.ReadMinutes||'-')} นาที</span>${a.Status!=='Published'?'<span style="color:#b45309">ฉบับทดลอง</span>':''}`;
+ return `<span>${esc(a.Audience||'อ่านได้ทุกระดับ')}</span><span>${esc(a.ReadMinutes||'-')} นาที</span>`;
 }
 function renderFeatured(list){
  const el=document.getElementById('featuredArticles');
  let picks=list.filter(a=>String(a.Featured).toLowerCase()==='true');
  if(!picks.length)picks=list;
  picks=picks.slice(0,3);
- if(!picks.length){el.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1">ยังไม่มีบทความในชีต Articles</div>';return}
+ if(!picks.length){el.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1">ยังไม่มีบทความที่เผยแพร่ในชีต Articles</div>';return}
  const main=picks[0], side=picks.slice(1);
  el.innerHTML=`<article class="card"><div class="cover">${imgOrEmoji(main,true)}</div><div class="pad">
  <div class="kicker">${esc(main.Category)} · แนะนำ</div><h3 class="title">${esc(main.Title)}</h3><p class="desc">${esc(main.Summary||'')}</p>
