@@ -1443,7 +1443,7 @@ button:disabled{cursor:not-allowed}
 <script>
 // MasterData is not the first tab. Pin the published CSV to its sheet gid so
 // Google Sheets cannot silently return Schema Guide instead of the database.
-const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRlz0QShSwnJnMB-hLZUG61G4kmZ3sVIdWjWrkG_cyyUHmJFC7wijbsH47aUM2Y2g/pub?output=csv';
+const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRlz0QShSwnJnMB-hLZUG61G4kmZ3sVIdWjWrkG_cyyUHmJFC7wijbsH47aUM2Y2g/pub?gid=1452023289&single=true&output=csv';
 let allData=[], currentFiltered=[], selectedDifficulty='', showFavoritesOnly=false, randomContext=null;
 let favorites=JSON.parse(localStorage.getItem('fishmepedia_favorites')||'[]');
 let elecDevices=[{name:'โคมไฟ LED',watt:20,hours:8},{name:'ปั๊มกรองน้ำ',watt:15,hours:24}];
