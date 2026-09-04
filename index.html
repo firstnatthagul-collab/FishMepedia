@@ -1248,18 +1248,6 @@ button:disabled{cursor:not-allowed}
   .fishme-social-btn{flex:1;min-width:0}
 }
 
-
-/* Copyright-safe image attribution — FishMepedia pilot */
-.fm-image-credit{
-  padding:8px 12px 10px;
-  border-top:1px solid var(--line);
-  background:rgba(255,255,255,.94);
-  color:#64748b;
-  font-size:.66rem;
-  line-height:1.5;
-}
-.fm-image-credit a{color:#047857;text-decoration:none;font-weight:600}
-.fm-image-credit a:hover{text-decoration:underline}
 </style>
 <meta name="description" content="FishMepedia by FishMe ฐานความรู้ปลา พรรณไม้น้ำ และเครื่องมือช่วยวางแผนตู้ปลา — รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ">
 <meta name="theme-color" content="#063B45">
@@ -1565,22 +1553,6 @@ function productionSanityCheck(){
   if(typeof allData==='undefined')console.warn('FishMepedia: database state unavailable');
 }
 
-const FISH_IMAGE_PILOT = {"F005":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Betta_splendens.png","author":"Brivanna","license":"CC BY 4.0","licenseUrl":"https://creativecommons.org/licenses/by/4.0/","source":"https://commons.wikimedia.org/wiki/File:Betta_splendens.png"},"P001":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Corydoras_Sterbai.jpg","author":"Susanne Möller-Neukäter","license":"Public Domain","licenseUrl":"https://commons.wikimedia.org/wiki/Template:PD-self","source":"https://commons.wikimedia.org/wiki/File:Corydoras_Sterbai.jpg"},"P002":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Corydoras_julii.jpg","author":"Kai Schreiber","license":"CC BY-SA 2.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/2.0/","source":"https://commons.wikimedia.org/wiki/File:Corydoras_julii.jpg"},"P003":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Corydoras_aeneus.jpg","author":"WIKIFAN-UL","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Corydoras_aeneus.jpg"},"P005":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Corydoras_panda.JPG","author":"Giniro","license":"CC BY 3.0","licenseUrl":"https://creativecommons.org/licenses/by/3.0/","source":"https://commons.wikimedia.org/wiki/File:Corydoras_panda.JPG"},"P006":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Corydoras_adolfoi.jpg","author":"Claudio de Oliveira / UNESP","license":"CC BY 3.0","licenseUrl":"https://creativecommons.org/licenses/by/3.0/","source":"https://commons.wikimedia.org/wiki/File:Corydoras_adolfoi.jpg"},"P007":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Corydoras_pygmaeus.jpg","author":"Sesarma","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Corydoras_pygmaeus.jpg"},"P008":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Corydoras_habrosus.png","author":"SteBo","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Corydoras_habrosus.png"},"P009":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Paracheirodon_axelrodi.png","author":"Robbie N. Cada / FishBase","license":"Public Domain","licenseUrl":"https://commons.wikimedia.org/wiki/Template:PD-self","source":"https://commons.wikimedia.org/wiki/File:Paracheirodon_axelrodi.png"},"P010":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Paracheirodon_innesi.jpg","author":"Leo D'lion","license":"CC BY-SA 2.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/2.0/","source":"https://commons.wikimedia.org/wiki/File:Paracheirodon_innesi.jpg"},"P011":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Petitella_bleheri.jpg","author":"-serwacy01-","license":"CC BY-SA 4.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/4.0/","source":"https://commons.wikimedia.org/wiki/File:Petitella_bleheri.jpg"},"P012":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Hyphessobrycon_amandae.jpg","author":"Mbdtsmo","license":"CC BY-SA 4.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/4.0/","source":"https://commons.wikimedia.org/wiki/File:Hyphessobrycon_amandae.jpg"},"P013":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Hyphessobrycon_herbertaxelrodi.jpg","author":"Luki86","license":"CC BY-SA 4.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/4.0/","source":"https://commons.wikimedia.org/wiki/File:Hyphessobrycon_herbertaxelrodi.jpg"},"P014":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Hemigrammus_erythrozonus.jpg","author":"GOGO","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Hemigrammus_erythrozonus.jpg"},"P015":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Boraras_brigittae.jpg","author":"Atulbhats","license":"CC BY-SA 4.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/4.0/","source":"https://commons.wikimedia.org/wiki/File:Boraras_brigittae.jpg"},"P016":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Trigonostigma_heteromorpha.JPG","author":"Billyhill","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Trigonostigma_heteromorpha.JPG"},"P017":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Trigonostigma_espei.jpg","author":"Lerdsuwa","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Trigonostigma_espei.jpg"},"P018":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Danio_margaritatus.jpg","author":"Cisamarc","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Danio_margaritatus.jpg"},"P019":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Rasbora_borapetensis.jpg","author":"Lerdsuwa","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Rasbora_borapetensis.jpg"},"P020":{"media":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Danio_rerio.JPG","author":"Pogrebnoj-Alexandroff","license":"CC BY-SA 3.0","licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/","source":"https://commons.wikimedia.org/wiki/File:Danio_rerio.JPG"}};
-
-function applyCopyrightSafePilotMedia(){
-  allData.forEach(x=>{
-    const c=FISH_IMAGE_PILOT[x.ID];
-    if(!c)return;
-    if(!String(x.MediaURLs||'').trim()) x.MediaURLs=c.media;
-    x.__imageCredit=c;
-  });
-}
-function imageAttributionHtml(x){
-  const c=x&&x.__imageCredit;
-  if(!c)return '';
-  return `<div class="fm-image-credit">Photo: <a href="${esc(c.source)}" target="_blank" rel="noopener noreferrer">${esc(c.author)}</a> · <a href="${esc(c.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.license)}</a> · Wikimedia Commons</div>`;
-}
-
 async function init(){
   restorePanelState();generateBubbles();setHeroMessage();keyboardSearch();setupEvents();setupBackToTop();productionSanityCheck();
   const loading=$('loading');loading.style.display='block';
@@ -1592,7 +1564,7 @@ async function init(){
     download:true,header:true,skipEmptyLines:true,
     complete:r=>{
       try{
-        allData=r.data.map(normalizeItem).filter(x=>x.NameTH);applyCopyrightSafePilotMedia();
+        allData=r.data.map(normalizeItem).filter(x=>x.NameTH);
         updateStats();updateDiscovery();setupCategoryDropdowns();setupAdvancedFilters();
         applyFilters();renderMyTankV2();enhanceImagesForPerformance();if(perfObserver)perfObserver.observe(document.body,{childList:true,subtree:true});
         loading.style.display='none';
@@ -2624,7 +2596,7 @@ function buildProfileV3(x){
   ];
   const idx=allData.indexOf(x);
   return `
-    <div class="modal-media-col">${typeof renderMediaSlider==='function'?renderMediaSlider(x):`<div class="media-slider">${parseMediaUrls(x.MediaURLs).length?parseMediaUrls(x.MediaURLs).map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>'}</div>`}${imageAttributionHtml(x)}</div>
+    <div class="modal-media-col">${typeof renderMediaSlider==='function'?renderMediaSlider(x):`<div class="media-slider">${parseMediaUrls(x.MediaURLs).length?parseMediaUrls(x.MediaURLs).map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>'}</div>`}</div>
     <div class="modal-info-col profile-v3">
       <div class="profile-hero">
         <div class="profile-eyebrow">${esc(x.Category||'Fish')}${x.SubCategory?' · '+esc(x.SubCategory):''}${x.SpecificType?' · '+esc(x.SpecificType):''}</div>
