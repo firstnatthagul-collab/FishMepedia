@@ -1641,16 +1641,28 @@ async function init(){
   }
   const parseCsv=url=>new Promise((resolve,reject)=>Papa.parse(url,{download:true,header:true,skipEmptyLines:true,complete:r=>resolve(r.data),error:reject}));
   try{
-    const [masterRows,mediaRows]=await Promise.all([parseCsv(CSV_URL),parseCsv(MEDIA_CSV_URL)]);
-    mediaById=new Map(mediaRows.filter(r=>String(r.ID||'').trim()).map(r=>[String(r.ID).trim(),r]));
+    // MasterData is the critical source. Load it first so the site never goes blank
+    // just because the optional Media Library endpoint is temporarily unavailable.
+    const masterRows=await parseCsv(CSV_URL);
     allData=masterRows.map(normalizeItem).filter(x=>x.NameTH);
+
+    // Media Library is an optional enhancement for image attribution.
+    // Failure here must not block the main database UI.
+    try{
+      const mediaRows=await parseCsv(MEDIA_CSV_URL);
+      mediaById=new Map(mediaRows.filter(r=>String(r.ID||'').trim()).map(r=>[String(r.ID).trim(),r]));
+    }catch(mediaErr){
+      console.warn('FishMepedia Media Library load failed; continuing without photo credits:',mediaErr);
+      mediaById=new Map();
+    }
+
     updateStats();updateDiscovery();setupCategoryDropdowns();setupAdvancedFilters();
     applyFilters();renderMyTankV2();enhanceImagesForPerformance();if(perfObserver)perfObserver.observe(document.body,{childList:true,subtree:true});
     loading.style.display='none';
   }catch(err){
-    console.error('FishMepedia database load error:',err);
+    console.error('FishMepedia MasterData load error:',err);
     loading.style.display='block';
-    loading.innerHTML='ไม่สามารถโหลดฐานข้อมูลได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง';
+    loading.innerHTML='ไม่สามารถโหลดฐานข้อมูลหลักได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง';
   }
 }
 function setupEvents(){ $('searchInput').addEventListener('input',scheduleApplyFilters);$('catSelect').addEventListener('change',()=>{updateSubCategoryDropdown();updateSpecificTypeDropdown();applyFilters()});$('subCatSelect').addEventListener('change',()=>{updateSpecificTypeDropdown();applyFilters()});$('typeSelect').addEventListener('change',applyFilters);['placementSelect','tankSelect','tempSelect','phSelect'].forEach(id=>$(id).addEventListener('change',applyFilters));document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>{selectedDifficulty=b.dataset.difficulty;document.querySelectorAll('[data-difficulty]').forEach(x=>x.classList.remove('active'));b.classList.add('active');applyFilters()}));document.querySelector('[data-favorite]').addEventListener('click',e=>{showFavoritesOnly=!showFavoritesOnly;e.currentTarget.classList.toggle('active',showFavoritesOnly);applyFilters()});document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModal(o.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.active').forEach(m=>closeModal(m.id))});}
