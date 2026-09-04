@@ -1730,14 +1730,23 @@ function toggleFavoriteByIndex(i,e){toggleFavorite(allData[i],e)}
 function parseCareInfo(raw){if(!raw)return {intro:'ยังไม่มีคำอธิบายเพิ่มเติม'};const parts=raw.split('|').map(x=>x.trim()).filter(Boolean);let intro='',blocks=[];parts.forEach((p,i)=>{const m=p.match(/^([^:：]+)[:：]\s*(.*)$/);if(m&&i>0)blocks.push({label:m[1].trim(),text:m[2].trim()});else if(i===0)intro=p;else blocks.push({label:'เกร็ดน่ารู้',text:p})});return {intro:intro||'ข้อมูลการเลี้ยงสำหรับสายพันธุ์นี้',blocks}}
 function relatedHtml(x){const rel=allData.filter(y=>y!==x&&x.SpecificType&&y.SpecificType===x.SpecificType).slice(0,8);if(!rel.length)return '';return `<div class="related"><h3>🐟 รายการอื่นในกลุ่ม “${esc(x.SpecificType)}”</h3><div class="related-grid">${rel.map(y=>`<button class="related-chip" onclick='openModalByIndex(${allData.indexOf(y)})'><b>${esc(y.NameTH)}</b><span>${esc(y.NameEN)}</span></button>`).join('')}</div></div>`}
 function valueOrDash(v){return v&&v!=='N/A'?esc(v):'—'}
-function profileHtml(x){const rows=[['📏','ขนาด',x.Size],['🌡️','อุณหภูมิ',x.Temperature],['💧','pH',x.pH],['💡','แสง',x.Lighting],['🫧','CO₂',x.CO2],['🏝️','พื้นตู้ / วัสดุปลูก',x.Substrate],['📍','ตำแหน่งในตู้',x.Placement],['🏠','ขนาดตู้',x.TankSize]].filter(r=>r[2]&&r[2]!=='N/A');if(!rows.length)return '';return `<div class="profile-grid">${rows.map(r=>`<div class="profile-item"><small>${r[0]} ${r[1]}</small><b>${valueOrDash(r[2])}</b></div>`).join('')}</div>`}
-function textSection(title,text){return text&&text!=='N/A'?`<div class="detail-section"><h3>${title}</h3><div class="detail-note">${esc(text)}</div></div>`:''}
-function purposeHtml(x){const tags=(x.Purpose||'').split(';').map(v=>v.trim()).filter(Boolean);return tags.length?`<div class="tag-row">${tags.map(t=>`<span class="detail-tag">${esc(t)}</span>`).join('')}</div>`:''}
+function profileHtml(x){
+  const rows=[
+    ['📏','ขนาด',x.Size],
+    ['🌡️','อุณหภูมิ',x.Temperature],
+    ['💧','pH',x.pH],
+    ['💡','แสง',x.Lighting],
+    ...(isPlant(x)?[['🫧','CO₂',x.CO2]]:[]),
+    ['🏝️','พื้นตู้ / วัสดุปลูก',x.Substrate],
+    ['📍','ตำแหน่งในตู้',x.Placement],
+    ['🏠','ขนาดตู้',x.TankSize]
+  ].filter(r=>r[2]&&r[2]!=='N/A');
 
-function splitShopLinks(raw){
-  if(!raw)return [];
-  return String(raw).split(/\s*(?:\r?\n|\||;|,\s*(?=https?:\/\/))\s*/g)
-    .map(s=>s.trim()).filter(s=>/^https?:\/\//i.test(s));
+  if(!rows.length)return '';
+
+  return `<div class="profile-grid">${rows.map(r=>
+    `<div class="profile-item"><small>${r[0]} ${r[1]}</small><b>${valueOrDash(r[2])}</b></div>`
+  ).join('')}</div>`;
 }
 function shopPlatformLabel(url){
   const u=String(url||'').toLowerCase();
@@ -1825,7 +1834,7 @@ function openModal(x){
   const synonyms=x.Synonyms?`<div class="detail-section"><h3>🏷️ ชื่อเรียกอื่น</h3><div class="detail-note">${esc(x.Synonyms.split(';').join(' · '))}</div></div>`:'';
   const shopee=shopLinksHtml(x);
   const careBlocks=care.blocks.map(b=>`<div class="care-block"><div class="care-label">${labelIcon(b.label)} ${esc(b.label)}</div><div class="care-text">${esc(b.text)}</div></div>`).join('');
-  $('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${scientific}${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(intro||'ยังไม่มีคำอธิบายเพิ่มเติม')}</p></div>${profileHtml(x)}${purposeHtml(x)}${textSection('✨ ลักษณะเด่น',x.Appearance)}${textSection(isPlant(x)?'🌿 ลักษณะการเติบโต':'🐟 พฤติกรรม',x.Behavior)}${textSection('🍽️ อาหาร',x.Feeding)}${textSection('🧪 การให้ปุ๋ย',x.Fertilization)}${careBlocks?`<div class="detail-section"><h3>💚 วิธีดูแล</h3><div class="rich-content">${careBlocks}</div></div>`:''}${synonyms}${compatibilityHtml(x)}${sourceHtml(x)}${relatedHtml(x)}${shopee}</div>`;
+  $('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${scientific}${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(intro||'ยังไม่มีคำอธิบายเพิ่มเติม')}</p></div>${profileHtml(x)}${purposeHtml(x)}${textSection('✨ ลักษณะเด่น',x.Appearance)}${textSection(isPlant(x)?'🌿 ลักษณะการเติบโต':'🐟 พฤติกรรม',x.Behavior)}${textSection('🍽️ อาหาร',x.Feeding)}${isPlant(x)?textSection('🧪 การให้ปุ๋ย',x.Fertilization):''}${careBlocks?`<div class="detail-section"><h3>💚 วิธีดูแล</h3><div class="rich-content">${careBlocks}</div></div>`:''}${synonyms}${compatibilityHtml(x)}${sourceHtml(x)}${relatedHtml(x)}${shopee}</div>`;
   $('detailModal').classList.add('active');document.body.style.overflow='hidden';
 }
 function labelIcon(l){if(/อุณหภูมิ|น้ำ/.test(l))return '🌡️';if(/นิสัย|พฤติกรรม/.test(l))return '🐟';if(/อาหาร/.test(l))return '🍽️';if(/ตู้|พื้น|สภาพ/.test(l))return '🏝️';if(/ดูแล/.test(l))return '💚';return '💡'}
