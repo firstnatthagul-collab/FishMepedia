@@ -28,13 +28,12 @@ button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:auto;padding:0 20px}
 .topbar{position:sticky;top:0;z-index:100;background:rgba(244,251,248,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(220,238,232,.92)}
-.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{font-size:1.35rem;font-weight:700;background:linear-gradient(120deg,#047857,#10b981,#0ea5e9);-webkit-background-clip:text;color:transparent;white-space:nowrap}
-.homebtn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--line);background:#fff;color:var(--green2);padding:8px 12px;border-radius:12px;font-size:.85rem;font-weight:600;box-shadow:0 5px 16px rgba(15,118,110,.06);white-space:nowrap;transition:.2s}
-.homebtn:hover{transform:translateX(-2px);border-color:#9de1c5}
-.navlinks{display:flex;gap:6px;flex-wrap:wrap}
-.navlinks button{border:0;background:transparent;color:var(--muted);padding:8px 12px;border-radius:999px;transition:.22s}
-.navlinks button:hover,.navlinks .active{background:#fff;color:var(--green2);box-shadow:0 6px 18px rgba(15,118,110,.08)}
+.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand-cluster{display:flex;align-items:center;gap:10px;min-width:0}
+.brand{font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-.02em;white-space:nowrap}
+.section-pill{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:#eaf8f3;border:1px solid #cfeadf;color:var(--green2);font-size:.72rem;font-weight:700;white-space:nowrap}
+.db-link{display:inline-flex;align-items:center;gap:5px;color:#4f6f68;text-decoration:none;font-size:.82rem;font-weight:600;padding:7px 9px;border-radius:10px;transition:.18s}
+.db-link:hover{background:#fff;color:var(--green2)}
 .hero{margin:28px auto 22px;border:1px solid rgba(255,255,255,.82);border-radius:34px;padding:44px 40px;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(235,255,247,.90));box-shadow:var(--shadow);position:relative;overflow:hidden;isolation:isolate}
 .hero::before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.13),transparent 65%);right:-80px;top:-120px;z-index:-1}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid #bdebd8;color:var(--green2);font-size:.82rem;font-weight:600}
@@ -140,7 +139,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
  .sidebar{position:static}.aquarium{opacity:.32}
 }
 @media(max-width:620px){
- .navlinks{display:none}.brand{font-size:1.12rem}.homebtn{padding:8px 10px;font-size:.8rem}.hero{padding:32px 22px}.aquarium{right:-40px;opacity:.22}
+ .nav{min-height:62px;gap:8px}.brand-cluster{gap:7px}.brand{font-size:1rem}.section-pill{font-size:.66rem;padding:4px 7px}.db-link{font-size:.75rem;padding:6px}.hero{padding:32px 22px}.aquarium{right:-40px;opacity:.22}
  .featured,.grid{grid-template-columns:1fr}.small{grid-template-columns:92px 1fr}.path{grid-template-columns:repeat(2,1fr)}
  .related{grid-template-columns:1fr}.articleMain{padding:22px}.articleHeroTop{padding:30px 22px}.heroArt{font-size:6.2rem}
  .search{min-width:100%}.hero-actions{display:block}.search button{padding:0 14px}
@@ -151,13 +150,11 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
 <div class="progress" id="progress"></div>
 <div class="topbar">
  <div class="wrap nav">
-  <div class="brand">FishMepedia by FishMe</div>
-  <a class="homebtn" href="index.html" aria-label="กลับหน้าแรก FishMepedia">← หน้าแรก</a>
-  <div class="navlinks">
-   <button onclick="location.href='index.html'">ฐานข้อมูล</button>
-   <button class="active">คลังความรู้</button>
-   <button onclick="location.href='index.html#tools'">เครื่องมือ</button>
+  <div class="brand-cluster">
+    <a class="brand" href="index.html" aria-label="FishMepedia หน้าแรก">FishMepedia by FishMe</a>
+    <span class="section-pill">คลังความรู้</span>
   </div>
+  <a class="db-link" href="index.html" aria-label="ไปยังฐานข้อมูล FishMepedia">ฐานข้อมูล <span aria-hidden="true">→</span></a>
  </div>
 </div>
 
@@ -165,7 +162,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
  <section class="hero">
   <span class="badge">📖 FishMepedia Learn</span>
   <h1>รู้จักปลาให้มากขึ้น<br><span class="grad">เข้าใจตู้ให้ดีขึ้น</span></h1>
-  <p>คลังความรู้สำหรับคนเลี้ยงปลาและพรรณไม้น้ำ อธิบายเรื่องที่ดูซับซ้อนให้เข้าใจง่าย เชื่อมต่อกับข้อมูลชนิดปลา ไม้น้ำ และเครื่องมือใน FishMepedia เพื่อให้เอาไปใช้กับตู้จริงได้</p>
+  <p>คลังความรู้สำหรับคนเลี้ยงปลาและพรรณไม้น้ำ อธิบายเรื่องที่ดูซับซ้อนให้เข้าใจง่าย เชื่อมต่อกับข้อมูลชนิดปลาและไม้น้ำใน FishMepedia เพื่อให้เอาไปใช้กับตู้จริงได้</p>
   <div class="hero-actions">
    <div class="search">
     <input id="q" placeholder="ค้นหา เช่น รันระบบ, CO₂, ตะไคร่">
