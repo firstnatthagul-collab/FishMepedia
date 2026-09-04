@@ -1748,6 +1748,14 @@ function profileHtml(x){
     `<div class="profile-item"><small>${r[0]} ${r[1]}</small><b>${valueOrDash(r[2])}</b></div>`
   ).join('')}</div>`;
 }
+function splitShopLinks(raw){
+  if(!raw)return [];
+  return String(raw)
+    .split(/\s*(?:\r?\n|\||;|,\s*(?=https?:\/\/))\s*/g)
+    .map(s=>s.trim().replace(/^['"]|['"]$/g,''))
+    .filter(s=>/^https?:\/\//i.test(s))
+    .filter((s,i,a)=>a.indexOf(s)===i);
+}
 function shopPlatformLabel(url){
   const u=String(url||'').toLowerCase();
   if(u.includes('shopee.'))return 'Shopee';
@@ -2545,7 +2553,7 @@ function buildProfileV2(x){
         <div class="profile-section-card"><h4>🌡️ อุณหภูมิ</h4><p>${esc(profileVal(x.Temperature))}</p></div>
         <div class="profile-section-card"><h4>💧 pH</h4><p>${esc(profileVal(x.pH))}</p></div>
         ${x.Lighting?`<div class="profile-section-card"><h4>💡 แสง</h4><p>${esc(x.Lighting)}</p></div>`:''}
-        ${x.CO2?`<div class="profile-section-card"><h4>🫧 CO₂</h4><p>${esc(x.CO2)}</p></div>`:''}
+        ${isPlant(x)&&x.CO2&&x.CO2!=='N/A'&&x.CO2!=='None'?`<div class="profile-section-card"><h4>🫧 CO₂</h4><p>${esc(x.CO2)}</p></div>`:''}
         ${x.Substrate?`<div class="profile-section-card"><h4>🪨 พื้นตู้</h4><p>${esc(x.Substrate)}</p></div>`:''}
         ${x.Placement?`<div class="profile-section-card"><h4>📍 ตำแหน่งในตู้</h4><p>${esc(x.Placement)}</p></div>`:''}
       </div>
@@ -2554,7 +2562,7 @@ function buildProfileV2(x){
         ${x.Difficulty?`<div class="profile-section-card"><h4>🌱 ระดับการดูแล</h4><p>${esc(x.Difficulty)}</p></div>`:''}
         ${x.CareInfo?`<div class="profile-section-card"><h4>🧰 วิธีดูแล</h4><p>${esc(x.CareInfo)}</p></div>`:''}
         ${x.Feeding && x.Feeding!=='N/A'?`<div class="profile-section-card"><h4>🍽️ อาหาร</h4><p>${esc(x.Feeding)}</p></div>`:''}
-        ${x.Fertilization && x.Fertilization!=='N/A'?`<div class="profile-section-card"><h4>🌿 ปุ๋ย</h4><p>${esc(x.Fertilization)}</p></div>`:''}
+        ${isPlant(x)&&x.Fertilization&&x.Fertilization!=='N/A'?`<div class="profile-section-card"><h4>🌿 ปุ๋ย</h4><p>${esc(x.Fertilization)}</p></div>`:''}
         ${shopLinksHtml(x)}
       </div>
 
@@ -2641,7 +2649,7 @@ function buildProfileV3(x){
           <div class="profile-section-card"><h4>🌡️ อุณหภูมิ</h4><p>${esc(profileVal(x.Temperature))}</p></div>
           <div class="profile-section-card"><h4>💧 pH</h4><p>${esc(profileVal(x.pH))}</p></div>
           ${x.Lighting?`<div class="profile-section-card"><h4>💡 แสง</h4><p>${esc(x.Lighting)}</p></div>`:''}
-          ${x.CO2?`<div class="profile-section-card"><h4>🫧 CO₂</h4><p>${esc(x.CO2)}</p></div>`:''}
+          ${isPlant(x)&&x.CO2&&x.CO2!=='N/A'&&x.CO2!=='None'?`<div class="profile-section-card"><h4>🫧 CO₂</h4><p>${esc(x.CO2)}</p></div>`:''}
           ${x.Substrate?`<div class="profile-section-card"><h4>🪨 พื้นตู้</h4><p>${esc(x.Substrate)}</p></div>`:''}
           ${x.Placement?`<div class="profile-section-card"><h4>📍 ตำแหน่งในตู้</h4><p>${esc(x.Placement)}</p></div>`:''}
         </div>
@@ -2652,7 +2660,7 @@ function buildProfileV3(x){
           ${x.Difficulty?`<div class="profile-section-card"><h4>🌱 ระดับการดูแล</h4><p>${esc(x.Difficulty)}</p></div>`:''}
           ${x.Feeding&&x.Feeding!=='N/A'?`<div class="profile-section-card"><h4>🍽️ อาหาร</h4><p>${esc(x.Feeding)}</p></div>`:''}
           ${x.CareInfo?`<div class="profile-section-card full"><h4>🧰 วิธีดูแล</h4><p>${esc(x.CareInfo)}</p></div>`:''}
-          ${x.Fertilization&&x.Fertilization!=='N/A'?`<div class="profile-section-card"><h4>🌿 ปุ๋ย</h4><p>${esc(x.Fertilization)}</p></div>`:''}
+          ${isPlant(x)&&x.Fertilization&&x.Fertilization!=='N/A'?`<div class="profile-section-card"><h4>🌿 ปุ๋ย</h4><p>${esc(x.Fertilization)}</p></div>`:''}
         </div>
         
       </div>
