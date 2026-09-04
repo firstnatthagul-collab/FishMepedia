@@ -50,7 +50,6 @@ footer{position:relative;z-index:1;text-align:center;padding:25px 20px 45px;colo
   --fm-glass-border:rgba(255,255,255,.78);
   --fm-glow:rgba(25,199,177,.24);
 }
-        
 body{
   background:
     radial-gradient(900px 500px at 8% -8%,rgba(53,214,239,.18),transparent 62%),
@@ -320,8 +319,6 @@ header{padding:18px 20px 14px}
 .float-toolbar{right:12px;bottom:12px}.calc-float-btn{padding:7px 10px;font-size:.7rem;box-shadow:0 5px 15px rgba(4,79,89,.12)}
 footer{padding-top:20px;background:none;border-top:1px solid var(--clean-border)}
 .modal-container{border-radius:20px;box-shadow:0 24px 70px rgba(0,30,35,.20)}.modal-info-col{padding:27px}.modal-title{font-size:1.65rem}.profile-grid{gap:6px}.profile-item{padding:8px 10px;border-radius:10px}.detail-section{margin-top:12px}.detail-note,.care-block{border-radius:11px;padding:10px 11px}
-/* Hide secondary homepage sections until explicitly needed; features remain accessible elsewhere. */
-#featuredSection,#beginnerSection{display:none!important}
 /* Make catalogue the visual focus. */
 #resultsSection{margin-top:6px}
 @media(max-width:900px){.finder-options{grid-template-columns:repeat(3,1fr)}}
@@ -1263,13 +1260,12 @@ button:disabled{cursor:not-allowed}
 <header>
   <div class="hero">
     <div class="hero-inner">
-    <div class="welcome-badge"><span>✦</span> FISHMEPEDIA · AQUASCAPE DATABASE</div>
+    <div class="welcome-badge"><span>✦</span> ฐานข้อมูลปลาและพรรณไม้น้ำ</div>
     <div class="hero-kicker" id="heroKicker"></div>
     <h1><span class="fm-brand-name">FishMepedia</span><span class="fm-brand-by">by FishMe</span></h1>
-    <p id="heroQuote">สารานุกรมปลาสวยงามและตู้ไม้น้ำ ที่ชวนคุณรู้จักเจ้าตัวเล็กใต้ผิวน้ำให้มากขึ้น</p>
+    <p id="heroQuote">ค้นหาข้อมูลปลา พรรณไม้น้ำ และข้อมูลการดูแลสำหรับวางแผนตู้ของคุณ</p>
     <div class="hero-actions">
-      
-      
+      <a class="social-btn" href="learn.html"><i class="fa-solid fa-book-open"></i> คลังความรู้</a>
       <button class="social-btn lucky-fish" onclick="openRandomFishModal()"><i class="fa-solid fa-dice"></i> วันนี้เลี้ยงอะไรดี?</button><button class="social-btn lucky-plant" onclick="openRandomPlantModal()"><i class="fa-solid fa-seedling"></i> สุ่มพรรณไม้น้ำ</button>
     </div>
     </div><div class="hero-decor"><span>🫧</span><span>🌿</span><span>🐟</span></div>
@@ -1278,18 +1274,18 @@ button:disabled{cursor:not-allowed}
 <section class="stats" id="statsSection">
   <div class="stat"><strong id="statFish">0</strong><span>รายการปลา</span></div>
   <div class="stat"><strong id="statPlants">0</strong><span>พรรณไม้น้ำ</span></div>
-  <div class="stat"><strong id="statEasy">0</strong><span>สายพันธุ์มือใหม่</span></div>
-  <div class="stat"><strong id="statGroups">0</strong><span>กลุ่มสายพันธุ์</span></div>
+  <div class="stat"><strong id="statEasy">0</strong><span>รายการเลี้ยงง่าย</span></div>
+  <div class="stat"><strong id="statGroups">0</strong><span>กลุ่ม</span></div>
 </section>
 
 
 <div class="controls-container" id="catalog">
-  <div class="search-wrap"><input type="text" id="searchInput" class="search-bar" placeholder="🔍 ค้นหาชื่อไทย ชื่อวิทยาศาสตร์ กลุ่มปลา หรือคำในคำแนะนำ..."><button id="clearSearch" class="clear-search" title="ล้างการค้นหา" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="search-wrap"><input type="text" id="searchInput" class="search-bar" placeholder="ค้นหาชื่อปลา ไม้น้ำ หรือชื่อวิทยาศาสตร์"><button id="clearSearch" class="clear-search" title="ล้างการค้นหา" onclick="clearSearch()"><i class="fa-solid fa-xmark"></i></button></div>
   <div class="filter-panel">
     <div class="filter-group">
       <select id="catSelect" class="filter-select"><option value="">🐟 หมวดหมู่หลักทั้งหมด</option></select>
       <select id="subCatSelect" class="filter-select" disabled><option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option></select>
-      <select id="typeSelect" class="filter-select" disabled><option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option></select>
+      <select id="typeSelect" class="filter-select" disabled><option value="">ทุกกลุ่ม</option></select>
     </div>
     <button class="advanced-toggle" id="advancedToggle" onclick="toggleAdvancedFilters()">⚙️ ตัวกรองขั้นสูง</button>
     <div class="advanced-filters" id="advancedFilters">
@@ -1299,7 +1295,7 @@ button:disabled{cursor:not-allowed}
       <div class="filter-field"><label class="filter-label">pH</label><select id="phSelect" class="filter-select"><option value="">ทุกช่วง</option><option value="acidic">กรด / อ่อน</option><option value="neutral">ใกล้กลาง</option><option value="alkaline">ด่าง</option></select></div>
     </div>
     <div class="quick-filters" id="difficultyFilters">
-      <button class="quick-btn active" data-difficulty="">ทั้งหมด</button><button class="quick-btn" data-difficulty="ง่าย">🌱 เลี้ยงง่าย</button><button class="quick-btn" data-difficulty="ปานกลาง">☀️ ปานกลาง</button><button class="quick-btn" data-difficulty="ยาก">🔥 สำหรับผู้มีประสบการณ์</button><button class="quick-btn" data-favorite="true">❤️ รายการโปรด</button>
+      <button class="quick-btn active" data-difficulty="">ทั้งหมด</button><button class="quick-btn" data-difficulty="ง่าย">เลี้ยงง่าย</button><button class="quick-btn" data-difficulty="ปานกลาง">ดูแลปานกลาง</button><button class="quick-btn" data-difficulty="ยาก">ดูแลมาก</button><button class="quick-btn" data-favorite="true">รายการโปรด</button>
     </div>
     <div class="setup-utils">
       <span class="setup-utils-label">ก่อนจัดตู้ ลองคำนวณคร่าว ๆ</span>
@@ -1313,9 +1309,7 @@ button:disabled{cursor:not-allowed}
 </div>
 
 
-<section class="section" id="featuredSection"><div class="section-head"><div><h2>✨ สายพันธุ์น่าสนใจ</h2><p>เลือกดูตัวอย่างจากฐานข้อมูลได้ทันที</p></div><a class="mini-link" href="#catalog">ดูทั้งหมด ↓</a></div><div class="grid" id="featuredGrid"></div></section>
-<section class="section" id="beginnerSection"><div class="section-head"><div><h2>🌱 เริ่มต้นเลี้ยงปลา</h2><p>รวมสายพันธุ์ที่มีระดับการดูแล “ง่าย” จากข้อมูลของคุณ</p></div></div><div class="grid" id="beginnerGrid"></div></section>
-<section class="section" id="resultsSection"><div class="section-head"><div><h2>🐟 สำรวจโลกใต้น้ำ</h2><p>ค้นหาปลาที่ใช่ แล้วค่อย ๆ ทำความรู้จักพวกเขาทีละสายพันธุ์</p></div><span class="mini-link">FISH · PLANT · DISCOVER</span></div><div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดฐานข้อมูล...</div><div class="grid" id="dataContainer"></div></section>
+<section class="section" id="resultsSection"><div class="section-head"><div><h2>ฐานข้อมูลปลาและพรรณไม้น้ำ</h2><p>ค้นหาและเปิดดูข้อมูลที่เหมาะกับตู้ของคุณ</p></div></div><div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลดฐานข้อมูล...</div><div class="grid" id="dataContainer"></div></section>
 
 
 
@@ -1329,7 +1323,7 @@ button:disabled{cursor:not-allowed}
   <div class="home-group-head">
     <div>
       <h2>วางแผนตู้ของคุณ</h2>
-      <p>เก็บปลาที่สนใจและทดลองจัดสมาชิกในตู้ โดยเปิดใช้เฉพาะเวลาที่ต้องการ</p>
+      <p>เก็บปลาที่สนใจไว้ แล้วค่อยลองวางแผนสมาชิกในตู้</p>
     </div>
   </div>
   <div class="home-group-stack">
@@ -1347,7 +1341,7 @@ button:disabled{cursor:not-allowed}
     </div></div>
   </div>
 </section>
-    <section class="team-builder" id="teamBuilder"><div class="team-card fm-collapsible is-collapsed" id="teamCard"><div class="fm-section-top"><div><h2>🧩 จัดทีมสมาชิกในตู้ของฉัน</h2><p>บอกเงื่อนไขคร่าว ๆ แล้ว FishMepedia จะคัดปลาและไม้น้ำจากฐานข้อมูลที่เหมาะกับตู้ของคุณ</p><div class="fm-summary" style="color:rgba(255,255,255,.68)">Tank Planner · ใช้เมื่ออยากวางแผนสมาชิกทั้งตู้</div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('teamCard',this)" aria-expanded="false" style="color:#d8fffa">เปิดใช้ <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner"><div class="team-form"><div class="team-field"><label>ขนาดตู้</label><select id="teamTank"><option value="nano">นาโน / เล็ก</option><option value="medium" selected>กลาง</option><option value="large">ใหญ่</option></select></div><div class="team-field"><label>ประสบการณ์</label><select id="teamLevel"><option value="easy" selected>มือใหม่</option><option value="medium">มีประสบการณ์บ้าง</option><option value="any">ไม่จำกัด</option></select></div><div class="team-field"><label>ตำแหน่งที่อยากเติม</label><select id="teamPlacement"><option value="any">ทุกระดับ</option><option value="Bottom">พื้นตู้</option><option value="Mid">กลางตู้</option><option value="Top">ผิวน้ำ</option><option value="Foreground">ไม้หน้า</option><option value="Midground">ไม้กลาง</option><option value="Background">ไม้หลัง</option></select></div><div class="team-field"><label>สไตล์</label><select id="teamStyle"><option value="community">ตู้เลี้ยงรวมสงบ</option><option value="aquascape">ตู้ไม้น้ำ / Aquascape</option><option value="color">เน้นสีสัน</option><option value="cleanup">ทีมช่วยดูแลตู้</option></select></div><button class="team-build-btn" onclick="buildTankTeam()">จัดทีมให้ฉัน ✨</button></div><div class="team-results" id="teamResults"><div class="team-result-title" id="teamResultTitle"></div><div class="team-chips" id="teamChips"></div><div class="team-note">คำแนะนำนี้เป็นการคัดจากข้อมูลในฐาน FishMepedia ควรตรวจสอบจำนวนปลา ความเข้ากันได้จริง และพื้นที่ว่ายน้ำก่อนนำมาเลี้ยงร่วมกัน</div></div></div></div></div></section>
+    <section class="team-builder" id="teamBuilder"><div class="team-card fm-collapsible is-collapsed" id="teamCard"><div class="fm-section-top"><div><h2>ช่วยวางแผนสมาชิกในตู้</h2><p>บอกเงื่อนไขของตู้คร่าว ๆ แล้ว FishMepedia จะช่วยคัดตัวเลือกให้</p><div class="fm-summary" style="color:rgba(255,255,255,.68)">ใช้เมื่ออยากวางแผนสมาชิกทั้งตู้</div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('teamCard',this)" aria-expanded="false" style="color:#d8fffa">ลองใช้ <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner"><div class="team-form"><div class="team-field"><label>ขนาดตู้</label><select id="teamTank"><option value="nano">นาโน / เล็ก</option><option value="medium" selected>กลาง</option><option value="large">ใหญ่</option></select></div><div class="team-field"><label>ประสบการณ์</label><select id="teamLevel"><option value="easy" selected>มือใหม่</option><option value="medium">มีประสบการณ์บ้าง</option><option value="any">ไม่จำกัด</option></select></div><div class="team-field"><label>ตำแหน่งที่อยากเติม</label><select id="teamPlacement"><option value="any">ทุกระดับ</option><option value="Bottom">พื้นตู้</option><option value="Mid">กลางตู้</option><option value="Top">ผิวน้ำ</option><option value="Foreground">ไม้หน้า</option><option value="Midground">ไม้กลาง</option><option value="Background">ไม้หลัง</option></select></div><div class="team-field"><label>สไตล์</label><select id="teamStyle"><option value="community">ตู้เลี้ยงรวมสงบ</option><option value="aquascape">ตู้ไม้น้ำ</option><option value="color">เน้นสีสัน</option><option value="cleanup">กลุ่มช่วยดูแลตู้</option></select></div><button class="team-build-btn" onclick="buildTankTeam()">แนะนำสมาชิก →</button></div><div class="team-results" id="teamResults"><div class="team-result-title" id="teamResultTitle"></div><div class="team-chips" id="teamChips"></div><div class="team-note">ใช้เป็นตัวช่วยเลือกเบื้องต้น ก่อนเลี้ยงจริงควรดูจำนวนปลา นิสัย และพื้นที่ว่ายร่วมด้วย</div></div></div></div></div></section>
   </div>
 </section>
 
@@ -1360,8 +1354,8 @@ button:disabled{cursor:not-allowed}
     </div>
   </div>
   <div class="home-group-stack">
-    <section class="discover-panel"><div class="discover-card fm-collapsible is-collapsed" id="discoverCard"><div class="fm-section-top"><div class="discover-top" style="flex:1"><div><h2>🧭 เส้นทางนักสำรวจ FishMepedia</h2><p>เปิดดูปลาไปเรื่อย ๆ แล้วค่อย ๆ สะสมสายพันธุ์ที่คุณค้นพบ</p><div class="fm-summary">ติดตามปลาที่เคยเปิดดูและค้นหาตัวใหม่</div></div><div class="discover-progress"><strong id="discoverCount">0 / 0</strong><div class="progress-track"><div class="progress-fill" id="discoverFill"></div></div></div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('discoverCard',this)" aria-expanded="false">เปิดดู <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner"><div class="discover-actions"><button class="discover-btn" onclick="showUnseenFish()">✨ ดูปลาที่ยังไม่เคยเปิด</button></div></div></div></div></section>
-    <section class="finder" id="finderSection"><div class="finder-card fm-collapsible is-collapsed" id="finderCard"><div class="fm-section-top"><div class="finder-head"><div><h2>🐠 ช่วยเลือกปลาให้หน่อย</h2><p>เลือกสิ่งที่ตรงกับตู้ของคุณ แล้ว FishMepedia จะช่วยคัดรายการจากข้อมูลที่มี</p><div class="fm-summary">Smart Finder · มือใหม่ · ตู้นาโน · สีสัน · ตู้ไม้น้ำ</div></div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('finderCard',this)" aria-expanded="false">เปิดใช้ <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner">
+    <section class="discover-panel"><div class="discover-card fm-collapsible is-collapsed" id="discoverCard"><div class="fm-section-top"><div class="discover-top" style="flex:1"><div><h2>รายการที่คุณเคยดู</h2><p>ย้อนดูว่าคุณเคยเปิดข้อมูลอะไรแล้ว และหาเรื่องใหม่ ๆ ต่อได้ง่ายขึ้น</p><div class="fm-summary">ดูรายการที่เคยเปิด และหาเรื่องใหม่ต่อ</div></div><div class="discover-progress"><strong id="discoverCount">0 / 0</strong><div class="progress-track"><div class="progress-fill" id="discoverFill"></div></div></div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('discoverCard',this)" aria-expanded="false">เปิดดู <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner"><div class="discover-actions"><button class="discover-btn" onclick="showUnseenFish()">ดูรายการที่ยังไม่ได้ดู</button></div></div></div></div></section>
+    <section class="finder" id="finderSection"><div class="finder-card fm-collapsible is-collapsed" id="finderCard"><div class="fm-section-top"><div class="finder-head"><div><h2>🐠 ช่วยเลือกปลาให้หน่อย</h2><p>เลือกสิ่งที่ตรงกับตู้ของคุณ แล้ว FishMepedia จะช่วยคัดรายการจากข้อมูลที่มี</p><div class="fm-summary">ช่วยเลือกตามขนาดตู้ · ประสบการณ์ · สไตล์ที่ชอบ</div></div></div><button class="fm-collapse-toggle" type="button" onclick="togglePanel('finderCard',this)" aria-expanded="false">ลองใช้ <span class="chev">▼</span></button></div><div class="fm-collapse-body"><div class="fm-collapse-inner">
 <div class="finder-v2" id="finderV2">
   <div class="finder-progress-v2" id="finderProgressV2"><span class="finder-progress-dot active"></span><span class="finder-progress-dot"></span><span class="finder-progress-dot"></span></div>
 
@@ -1369,7 +1363,7 @@ button:disabled{cursor:not-allowed}
     <div class="finder-question">1. ตู้ของคุณประมาณขนาดไหน?</div>
     <div class="finder-help">ไม่ต้องเป๊ะ เลือกขนาดใกล้เคียงที่สุด</div>
     <div class="finder-choice-grid">
-      <button class="finder-choice" onclick="finderV2Choose('tank','nano',this)"><b>🏠 ตู้เล็ก / Nano</b><span>พื้นที่จำกัด เน้นปลาตัวเล็ก</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('tank','nano',this)"><b>🏠 ตู้เล็ก / นาโน</b><span>พื้นที่จำกัด เน้นปลาตัวเล็ก</span></button>
       <button class="finder-choice" onclick="finderV2Choose('tank','medium',this)"><b>🌿 ตู้ขนาดกลาง</b><span>เหมาะกับตู้ชุมชนทั่วไป</span></button>
       <button class="finder-choice" onclick="finderV2Choose('tank','large',this)"><b>🌊 ตู้ขนาดใหญ่</b><span>มีพื้นที่ว่ายน้ำมากขึ้น</span></button>
     </div>
@@ -1390,7 +1384,7 @@ button:disabled{cursor:not-allowed}
     <div class="finder-help">เลือกสไตล์ที่ตรงกับตู้หรือสิ่งที่คุณชอบที่สุด</div>
     <div class="finder-choice-grid">
       <button class="finder-choice" onclick="finderV2Choose('style','community',this)"><b>🤝 เลี้ยงรวมง่าย</b><span>นิสัยสงบและเข้ากับตู้ชุมชน</span></button>
-      <button class="finder-choice" onclick="finderV2Choose('style','aquascape',this)"><b>🌿 เข้ากับตู้ไม้น้ำ</b><span>เหมาะกับ Aquascape</span></button>
+      <button class="finder-choice" onclick="finderV2Choose('style','aquascape',this)"><b>🌿 เข้ากับตู้ไม้น้ำ</b><span>เหมาะกับตู้ไม้น้ำ</span></button>
       <button class="finder-choice" onclick="finderV2Choose('style','color',this)"><b>✨ สีสันโดดเด่น</b><span>เพิ่มจุดเด่นให้ตู้</span></button>
       <button class="finder-choice" onclick="finderV2Choose('style','bottom',this)"><b>🐡 ปลาหน้าดิน</b><span>เติมชีวิตบริเวณพื้นตู้</span></button>
       <button class="finder-choice" onclick="finderV2Choose('style','cleanup',this)"><b>🧹 ตัวช่วยดูแลตู้</b><span>กลุ่มกินตะไคร่หรือหากินพื้นตู้</span></button>
@@ -1412,7 +1406,7 @@ button:disabled{cursor:not-allowed}
 <div class="mobile-sticky-tools" aria-label="เครื่องมือด่วนบนมือถือ">
   <button onclick="document.getElementById('searchInput').focus();document.getElementById('searchInput').scrollIntoView({behavior:'smooth',block:'center'})">🔎 ค้นหา</button>
   <button onclick="document.getElementById('myTankCard')?.scrollIntoView({behavior:'smooth',block:'start'})">🐟 ตู้ของฉัน</button>
-  <button onclick="document.getElementById('finderCard')?.scrollIntoView({behavior:'smooth',block:'start'})">🧭 Finder</button>
+  <button onclick="document.getElementById('finderCard')?.scrollIntoView({behavior:'smooth',block:'start'})">ช่วยเลือกปลา</button>
 </div>
 
 
@@ -1434,7 +1428,7 @@ button:disabled{cursor:not-allowed}
   </div>
 </section>
 
-<footer><strong style="color:#075763">FishMepedia</strong> · ฐานความรู้สำหรับคนรักปลาสวยงามและตู้ไม้น้ำ<br><span>Explore · Learn · Build your underwater world · ข้อมูลเชื่อมต่อจาก Google Sheets</span><div class="fm-brand-signature"><span>FishMepedia</span><span>•</span><b>by FishMe</b></div>
+<footer><strong style="color:#075763">FishMepedia</strong> · ฐานข้อมูลและคลังความรู้สำหรับคนรักปลาสวยงามและตู้ไม้น้ำ<br><span>รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ</span><div class="fm-brand-signature"><span>FishMepedia</span><span>•</span><b>by FishMe</b></div>
 </footer>
 <div class="modal-overlay" id="tipModal"><div class="modal-container" style="max-width:520px"><button class="close-modal-btn" onclick="closeModal('tipModal')"><i class="fa-solid fa-xmark"></i></button><div class="random-stage" id="tipContent"></div></div></div>
 <div class="modal-overlay" id="detailModal"><div class="modal-container"><button class="close-modal-btn" onclick="closeModal('detailModal')"><i class="fa-solid fa-xmark"></i></button><div class="modal-body" id="modalContent"></div></div></div>
@@ -1442,9 +1436,7 @@ button:disabled{cursor:not-allowed}
 <div class="modal-overlay" id="calcModal"><div class="modal-container" style="max-width:500px"><button class="close-modal-btn" onclick="closeModal('calcModal')"><i class="fa-solid fa-xmark"></i></button><div style="padding:30px"><h2 style="color:var(--green2);font-size:1.5rem">💧 คำนวณปริมาณน้ำในตู้ปลา</h2><p style="color:var(--muted);font-size:.88rem">กรอกขนาดตู้เป็นเซนติเมตร</p><div class="calc-box"><div class="calc-input-group"><div class="calc-field"><label>กว้าง</label><input type="number" id="calcW" value="30" min="0" oninput="calculateWaterVolume()"></div><div class="calc-field"><label>ยาว</label><input type="number" id="calcL" value="60" min="0" oninput="calculateWaterVolume()"></div><div class="calc-field"><label>สูง</label><input type="number" id="calcH" value="35" min="0" oninput="calculateWaterVolume()"></div></div><div class="calc-result-card"><div style="font-size:.8rem;color:var(--muted)">ปริมาณน้ำโดยประมาณ</div><div class="calc-result-val" id="calcLiters">63.0 ลิตร</div><div style="font-size:.78rem;color:var(--green2)" id="calcGallons">(~ 16.6 แกลลอน)</div></div></div></div></div></div>
 <div class="modal-overlay" id="elecModal"><div class="modal-container" style="max-width:650px"><button class="close-modal-btn" onclick="closeModal('elecModal')"><i class="fa-solid fa-xmark"></i></button><div style="padding:30px;max-height:88vh;overflow:auto"><h2 style="color:#d97706;font-size:1.5rem">⚡ คำนวณค่าไฟอุปกรณ์ตู้ปลา</h2><p style="color:var(--muted);font-size:.86rem">ปรับอุปกรณ์และอัตราค่าไฟได้ตามจริง</p><div style="background:#fffbeb;border:1px solid #fde68a;padding:13px;border-radius:15px;margin:14px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><label style="font-weight:600;color:#92400e">อัตราค่าไฟต่อยูนิต (บาท)</label><div><button class="rate-preset-btn" onclick="setRatePreset(4.5)">บ้าน ~4.5฿</button> <button class="rate-preset-btn" onclick="setRatePreset(8)">หอ ~8฿</button></div></div><input type="number" id="elecRate" value="4.5" step=".1" oninput="calculateElectricityTotal()" style="width:100%;padding:10px;margin-top:7px;border:1px solid #fcd34d;border-radius:10px"></div><div style="display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;font-size:.75rem;color:var(--muted);padding:0 4px 6px"><span>ชื่ออุปกรณ์</span><span>Watt</span><span>ชม./วัน</span><span></span></div><div id="elecDeviceList"></div><button class="add-device-btn" onclick="addElecDevice()">＋ เพิ่มอุปกรณ์</button><div style="background:#fffbeb;border:1px dashed #fcd34d;border-radius:16px;padding:17px;margin-top:15px;text-align:center"><div style="font-size:.8rem;color:#b45309">ค่าไฟโดยประมาณ</div><div style="font-size:2rem;font-weight:800;color:#d97706" id="totalCostVal">0.00 บาท/เดือน</div><div style="font-size:.78rem;color:#92400e"><span id="totalUnitsVal">0 ยูนิต/เดือน</span> · <span id="dailyCostVal">~0.00 บาท/วัน</span></div></div></div></div></div>
 <script>
-// MasterData is not the first tab. Pin the published CSV to its sheet gid so
-// Google Sheets cannot silently return Schema Guide instead of the database.
-const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRt09Hp8SNwRgwdBjQE2Fb1-POW0lj0Kk4aaZDR0X89oT5sq9rrtNItvaujXTFnVR09fYOw-t8JMV-L/pub?gid=177066136&single=true&output=csv';
+const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRlz0QShSwnJnMB-hLZUG61G4kmZ3sVIdWjWrkG_cyyUHmJFC7wijbsH47aUM2Y2g/pub?output=csv';
 let allData=[], currentFiltered=[], selectedDifficulty='', showFavoritesOnly=false, randomContext=null;
 let favorites=JSON.parse(localStorage.getItem('fishmepedia_favorites')||'[]');
 let elecDevices=[{name:'โคมไฟ LED',watt:20,hours:8},{name:'ปั๊มกรองน้ำ',watt:15,hours:24}];
@@ -1462,13 +1454,13 @@ function normalizeItem(r){
   };
 }
 
-const heroMessages=[['','รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ']];
-function setHeroMessage(){const m=heroMessages[0];$('heroKicker').textContent='';$('heroQuote').textContent=m[1]}
+const heroMessages=[['รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ','ค้นหาข้อมูลปลา พรรณไม้น้ำ และข้อมูลการดูแลสำหรับวางแผนตู้ของคุณ']];
+function setHeroMessage(){const m=heroMessages[0];$('heroKicker').textContent=m[0];$('heroQuote').textContent=m[1]}
 function seenKeys(){try{return JSON.parse(localStorage.getItem('fishmepedia_seen')||'[]')}catch{return[]}}
 function isSeen(x){return seenKeys().includes(favKey(x))}
 function markSeen(x){const a=seenKeys(),k=favKey(x);if(!a.includes(k)){a.push(k);localStorage.setItem('fishmepedia_seen',JSON.stringify(a))}updateDiscovery()}
 function updateDiscovery(){const seen=seenKeys(),total=allData.length,found=allData.filter(x=>seen.includes(favKey(x))).length;$('discoverCount').textContent=`${found.toLocaleString()} / ${total.toLocaleString()}`;$('discoverFill').style.width=(total?Math.min(100,found/total*100):0)+'%'}
-function showUnseenFish(){const list=allData.filter(x=>!isSeen(x));if(!list.length){openTip('🏆 คุณค้นพบครบทุกสายพันธุ์แล้ว!','ยอดเยี่ยมมาก ตอนนี้ลองสุ่มปลาเพื่อสำรวจข้อมูลอีกครั้งได้เลย');return}openRandomResult(list,'✨','ตัวที่คุณยังไม่เคยเปิด')}
+function showUnseenFish(){const list=allData.filter(x=>!isSeen(x));if(!list.length){openTip('คุณเปิดดูครบทุกข้อมูลแล้ว','ลองสุ่มปลา หรือกลับไปดูรายการที่ชอบอีกครั้งได้เลย');return}openRandomResult(list,'🐟','ลองดูรายการนี้')}
 function showDiscoveryTips(){const tips=['ลองกดดูปลาในกลุ่มเดียวกัน เพราะปลาแพะหรือเตตร้าอาจมีหลายสปีชีส์ให้รู้จัก','รายการโปรดจะถูกเก็บไว้ในเครื่องนี้ ไม่ต้องสมัครสมาชิก','ยิ่งเปิดดูมากขึ้น แถบการค้นพบของคุณก็จะค่อย ๆ เต็ม','ถ้าค้นไม่เจอ ลองใช้ชื่อไทย ชื่อวิทยาศาสตร์ หรือ Specific Type'];openTip('💡 เกร็ดสำหรับนักสำรวจ',tips[Math.floor(Math.random()*tips.length)])}
 function openTip(title,text){$('tipContent').innerHTML=`<div class="random-icon">💡</div><h2>${esc(title)}</h2><p>${esc(text)}</p><div class="random-actions" style="margin-top:18px"><button class="random-primary" onclick="closeModal('tipModal')">ได้เลย!</button></div>`;$('tipModal').classList.add('active');document.body.style.overflow='hidden'}
 function openSmartFinder(){const fc=$('finderCard');if(fc&&fc.classList.contains('is-collapsed'))togglePanel('finderCard',fc.querySelector('.fm-collapse-toggle'));finderV2ShowStep(finderV2State.step);if(fc)fc.scrollIntoView({behavior:'smooth',block:'center'});}
@@ -1497,8 +1489,8 @@ function togglePanel(id,btn){
     const base=id==='toolsCard'?'เครื่องมือ':'ดู';
     const labels={
       discoverCard:collapsed?'เปิดดู':'ย่อ',
-      finderCard:collapsed?'เปิดใช้':'ย่อ',
-      teamCard:collapsed?'เปิดใช้':'ย่อ',
+      finderCard:collapsed?'ลองใช้':'ย่อ',
+      teamCard:collapsed?'ลองใช้':'ย่อ',
       myTankCard:collapsed?'เปิดดู':'ย่อ',
       toolsCard:collapsed?'เปิดเครื่องมือ':'ย่อ'
     };
@@ -1565,33 +1557,27 @@ async function init(){
   restorePanelState();generateBubbles();setHeroMessage();keyboardSearch();setupEvents();setupBackToTop();productionSanityCheck();
   const loading=$('loading');loading.style.display='block';
   if(typeof Papa==='undefined'){
-    loading.innerHTML='❌ ไม่สามารถเริ่มระบบอ่านฐานข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วเปิดหน้าใหม่';
+    loading.innerHTML='ไม่สามารถโหลดฐานข้อมูลได้ในขณะนี้ กรุณาตรวจสอบการเชื่อมต่อแล้วลองใหม่อีกครั้ง';
     return;
   }
   Papa.parse(CSV_URL,{
     download:true,header:true,skipEmptyLines:true,
     complete:r=>{
       try{
-        const fields=r.meta&&Array.isArray(r.meta.fields)?r.meta.fields:[];
-        if(!fields.includes('NameTH')){
-          throw new Error('CSV_TAB_MISMATCH: MasterData/NameTH header not found');
-        }
-        if(r.errors&&r.errors.length)console.warn('FishMepedia CSV warnings:',r.errors);
         allData=r.data.map(normalizeItem).filter(x=>x.NameTH);
-        if(!allData.length)throw new Error('CSV_EMPTY: MasterData contains no usable rows');
         updateStats();updateDiscovery();setupCategoryDropdowns();setupAdvancedFilters();
-        renderFeatured();renderBeginner();applyFilters();renderMyTankV2();enhanceImagesForPerformance();if(perfObserver)perfObserver.observe(document.body,{childList:true,subtree:true});
+        applyFilters();renderMyTankV2();enhanceImagesForPerformance();if(perfObserver)perfObserver.observe(document.body,{childList:true,subtree:true});
         loading.style.display='none';
       }catch(err){
         console.error('FishMepedia render error:',err);
         loading.style.display='block';
-        loading.innerHTML='❌ ไม่พบข้อมูลจากแท็บ MasterData กรุณาตรวจสอบการเผยแพร่ Google Sheets และเปิดหน้าใหม่';
+        loading.innerHTML='ไม่สามารถแสดงฐานข้อมูลได้ในขณะนี้ กรุณาลองโหลดหน้าใหม่อีกครั้ง';
       }
     },
     error:e=>{
       console.error('FishMepedia CSV error:',e);
       loading.style.display='block';
-      loading.innerHTML='❌ ไม่สามารถโหลดข้อมูลจาก Google Sheets ได้ กรุณาตรวจสอบการเผยแพร่ชีตเป็น CSV';
+      loading.innerHTML='ไม่สามารถโหลดฐานข้อมูลได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง';
     }
   });
 }
@@ -1655,7 +1641,7 @@ function galleryMove(id,delta){const root=$(id);if(root)galleryGo(id,(parseInt(r
 
 function setupCategoryDropdowns(){const s=$('catSelect');s.innerHTML='<option value="">🐟 หมวดหมู่หลักทั้งหมด</option>';[...new Set(allData.map(x=>x.Category).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));updateSubCategoryDropdown()}
 function updateSubCategoryDropdown(){const cat=$('catSelect').value,s=$('subCatSelect');s.innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';if(!cat){s.disabled=true;updateSpecificTypeDropdown();return} [...new Set(allData.filter(x=>x.Category===cat).map(x=>x.SubCategory).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));s.disabled=false}
-function updateSpecificTypeDropdown(){const cat=$('catSelect').value,sub=$('subCatSelect').value,s=$('typeSelect');s.innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';if(!sub){s.disabled=true;return}[...new Set(allData.filter(x=>x.Category===cat&&x.SubCategory===sub).map(x=>x.SpecificType).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));s.disabled=false}
+function updateSpecificTypeDropdown(){const cat=$('catSelect').value,sub=$('subCatSelect').value,s=$('typeSelect');s.innerHTML='<option value="">ทุกกลุ่ม</option>';if(!sub){s.disabled=true;return}[...new Set(allData.filter(x=>x.Category===cat&&x.SubCategory===sub).map(x=>x.SpecificType).filter(Boolean))].forEach(v=>s.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));s.disabled=false}
 function toggleAdvancedFilters(){const box=$('advancedFilters');box.classList.toggle('active');$('advancedToggle').textContent=box.classList.contains('active')?'✕ ปิดตัวกรองขั้นสูง':'⚙️ ตัวกรองขั้นสูง'}
 function setupAdvancedFilters(){const p=$('placementSelect');p.innerHTML='<option value="">ทั้งหมด</option>';[...new Set(allData.map(x=>x.Placement).filter(Boolean))].sort().forEach(v=>p.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`))}
 function firstNum(v){const m=String(v||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/);return m?parseFloat(m[0]):null}
@@ -1731,20 +1717,18 @@ function buildTankTeam(){
   result.classList.add('active');
   result.style.display='block';
 }
-function applyFilters(){resetCatalogLimit();const cat=$('catSelect').value,sub=$('subCatSelect').value,type=$('typeSelect').value,k=$('searchInput').value.toLowerCase().trim(),placement=$('placementSelect').value,tank=$('tankSelect').value,temp=$('tempSelect').value,ph=$('phSelect').value;currentFiltered=allData.filter(x=>{const hay=[x.NameTH,x.NameEN,x.ScientificName,x.Synonyms,x.Category,x.SubCategory,x.SpecificType,x.Description,x.Appearance,x.Behavior,x.CareInfo,x.Purpose,x.Feeding,x.TankSize,x.Placement].join(' ').toLowerCase();return(!cat||x.Category===cat)&&(!sub||x.SubCategory===sub)&&(!type||x.SpecificType===type)&&(!placement||x.Placement===placement)&&(!tank||tankBucket(x)===tank)&&tempMatch(x,temp)&&phMatch(x,ph)&&(!selectedDifficulty||difficultyTier(x.Difficulty)===({'ง่าย':'easy','ปานกลาง':'medium','ยาก':'hard'}[selectedDifficulty]||selectedDifficulty))&&(!showFavoritesOnly||favorites.includes(favKey(x)))&&(!k||hay.includes(k))});$('resultCount').textContent=`พบ ${currentFiltered.length.toLocaleString()} รายการ`;renderCatalogCompact(currentFiltered);const active=k||cat||sub||type||placement||tank||temp||ph||selectedDifficulty||showFavoritesOnly;$('featuredSection').style.display=active?'none':'block';$('beginnerSection').style.display=active?'none':'block'}
-function resetFilters(){$('searchInput').value='';$('catSelect').value='';$('subCatSelect').innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';$('subCatSelect').disabled=true;$('typeSelect').innerHTML='<option value="">🏷️ กลุ่มสายพันธุ์ทั้งหมด</option>';$('typeSelect').disabled=true;selectedDifficulty='';showFavoritesOnly=false;['placementSelect','tankSelect','tempSelect','phSelect'].forEach(id=>$(id).value='');document.querySelectorAll('.quick-btn').forEach(x=>x.classList.remove('active'));document.querySelector('[data-difficulty=""]').classList.add('active');document.querySelector('[data-favorite]').classList.remove('active');applyFilters()}
+function applyFilters(){resetCatalogLimit();const cat=$('catSelect').value,sub=$('subCatSelect').value,type=$('typeSelect').value,k=$('searchInput').value.toLowerCase().trim(),placement=$('placementSelect').value,tank=$('tankSelect').value,temp=$('tempSelect').value,ph=$('phSelect').value;currentFiltered=allData.filter(x=>{const hay=[x.NameTH,x.NameEN,x.ScientificName,x.Synonyms,x.Category,x.SubCategory,x.SpecificType,x.Description,x.Appearance,x.Behavior,x.CareInfo,x.Purpose,x.Feeding,x.TankSize,x.Placement].join(' ').toLowerCase();return(!cat||x.Category===cat)&&(!sub||x.SubCategory===sub)&&(!type||x.SpecificType===type)&&(!placement||x.Placement===placement)&&(!tank||tankBucket(x)===tank)&&tempMatch(x,temp)&&phMatch(x,ph)&&(!selectedDifficulty||difficultyTier(x.Difficulty)===({'ง่าย':'easy','ปานกลาง':'medium','ยาก':'hard'}[selectedDifficulty]||selectedDifficulty))&&(!showFavoritesOnly||favorites.includes(favKey(x)))&&(!k||hay.includes(k))});$('resultCount').textContent=`พบ ${currentFiltered.length.toLocaleString()} รายการ`;renderCatalogCompact(currentFiltered)}
+function resetFilters(){$('searchInput').value='';$('catSelect').value='';$('subCatSelect').innerHTML='<option value="">🌿 หมวดหมู่ย่อยทั้งหมด</option>';$('subCatSelect').disabled=true;$('typeSelect').innerHTML='<option value="">ทุกกลุ่ม</option>';$('typeSelect').disabled=true;selectedDifficulty='';showFavoritesOnly=false;['placementSelect','tankSelect','tempSelect','phSelect'].forEach(id=>$(id).value='');document.querySelectorAll('.quick-btn').forEach(x=>x.classList.remove('active'));document.querySelector('[data-difficulty=""]').classList.add('active');document.querySelector('[data-favorite]').classList.remove('active');applyFilters()}
 function clearSearch(){$('searchInput').value='';applyFilters();$('searchInput').focus()}
 function getCareBadgesHtml(x){if(!x.Difficulty)return '';let h='';if(/ง่าย|beginner|easy/i.test(x.Difficulty))h+='<span class="feature-badge badge-easy">🌱 เลี้ยงง่าย</span>';else if(/ปานกลาง|medium/i.test(x.Difficulty))h+='<span class="feature-badge badge-medium">☀️ ปานกลาง</span>';else if(/ยาก|advanced|hard/i.test(x.Difficulty))h+='<span class="feature-badge badge-hard">🔥 ยาก</span>';if(isPlant(x))h+='<span class="feature-badge" style="background:#e0f2fe;color:#0369a1">🌿 ไม้น้ำ</span>';return h}
 function favKey(x){return x.ID||x.ScientificName||x.NameEN||x.NameTH}
-function toggleFavorite(x,e){e.stopPropagation();const k=favKey(x);favorites=favorites.includes(k)?favorites.filter(v=>v!==k):[...favorites,k];localStorage.setItem('fishmepedia_favorites',JSON.stringify(favorites));renderCards(currentFiltered,$('dataContainer'));if(!($('featuredSection').style.display==='none')){renderFeatured();renderBeginner()}}
-function cardHtml(x){const urls=parseMediaUrls(x.MediaURLs),u=urls[0],idx=allData.indexOf(x),seen=isSeen(x);return `<article class="card" onclick='openModalByIndex(${idx})'><button class="favorite-btn ${favorites.includes(favKey(x))?'active':''}" title="${favorites.includes(favKey(x))?'นำออกจากรายการโปรด':'เพิ่มในรายการโปรด'}" onclick='toggleFavoriteByIndex(${idx},event)'><i class="fa-${favorites.includes(favKey(x))?'solid':'regular'} fa-heart"></i></button><div class="card-media-box">${urls.length>1?`<span class="media-count-badge"><i class="fa-solid fa-images"></i> ${urls.length}</span>`:''}${cardImageHtml(x)}</div><div class="card-body"><span class="category-badge">${esc([x.Category,x.SubCategory].filter(Boolean).join(' • '))}</span><div class="feature-badges-group">${getCareBadgesHtml(x)}</div><h3 class="card-title">${esc(x.NameTH)}</h3><div class="card-subtitle">${esc(x.NameEN)}${x.ScientificName?` · <i>${esc(x.ScientificName)}</i>`:''}</div><div class="card-discovery"><span>${seen?'<span class="seen-dot"></span>ค้นพบแล้ว':'✨ ยังไม่เคยเปิด'}</span><span>${esc(x.SpecificType||'')}</span></div><div class="card-cta"><button class="view-btn" onclick='openModalByIndex(${idx});event.stopPropagation()'><i class="fa-solid fa-book-open"></i> รู้จักเจ้าตัวนี้</button>${!isPlant(x)?`<button class="card-tank-add ${isInMyTank(x)?'added':''}" title="${isInMyTank(x)?'อยู่ในตู้ของฉันแล้ว':'เพิ่มเข้าตู้ของฉัน'}" onclick='addToMyTankByIndex(${idx},event);event.stopPropagation()'>${isInMyTank(x)?'✓':'+'}</button>`:''}</div></div></article>`}
-function renderCards(data,container){container.innerHTML='';if(!data.length){container.innerHTML='<div class="empty-state" style="grid-column:1/-1"><strong>🐠 เจ้าตัวนี้ยังว่ายมาไม่ถึงฐานข้อมูลของเรา</strong><small>ลองเปลี่ยนคำค้น หรือกดรีเซ็ตตัวกรองแล้วสำรวจสายพันธุ์อื่นดูนะครับ</small></div>';return}data.forEach(x=>container.insertAdjacentHTML('beforeend',cardHtml(x)))}
-function renderFeatured(){const pool=allData.filter(x=>!isPlant(x));const picks=[...pool].sort(()=>Math.random()-.5).slice(0,6);renderCards(picks,$('featuredGrid'))}
-function renderBeginner(){const picks=allData.filter(x=>/ง่าย|beginner|easy/i.test(x.Difficulty)).slice(0,6);renderCards(picks,$('beginnerGrid'))}
+function toggleFavorite(x,e){e.stopPropagation();const k=favKey(x);favorites=favorites.includes(k)?favorites.filter(v=>v!==k):[...favorites,k];localStorage.setItem('fishmepedia_favorites',JSON.stringify(favorites));renderCatalogCompact(currentFiltered)}
+function cardHtml(x){const urls=parseMediaUrls(x.MediaURLs),u=urls[0],idx=allData.indexOf(x),seen=isSeen(x);return `<article class="card" onclick='openModalByIndex(${idx})'><button class="favorite-btn ${favorites.includes(favKey(x))?'active':''}" title="${favorites.includes(favKey(x))?'นำออกจากรายการโปรด':'เพิ่มในรายการโปรด'}" onclick='toggleFavoriteByIndex(${idx},event)'><i class="fa-${favorites.includes(favKey(x))?'solid':'regular'} fa-heart"></i></button><div class="card-media-box">${urls.length>1?`<span class="media-count-badge"><i class="fa-solid fa-images"></i> ${urls.length}</span>`:''}${cardImageHtml(x)}</div><div class="card-body"><span class="category-badge">${esc([x.Category,x.SubCategory].filter(Boolean).join(' • '))}</span><div class="feature-badges-group">${getCareBadgesHtml(x)}</div><h3 class="card-title">${esc(x.NameTH)}</h3><div class="card-subtitle">${esc(x.NameEN)}${x.ScientificName?` · <i>${esc(x.ScientificName)}</i>`:''}</div><div class="card-discovery"><span>${seen?'<span class="seen-dot"></span>เคยดูแล้ว':'ยังไม่ได้ดู'}</span><span>${esc(x.SpecificType||'')}</span></div><div class="card-cta"><button class="view-btn" onclick='openModalByIndex(${idx});event.stopPropagation()'><i class="fa-solid fa-book-open"></i> รู้จักเจ้าตัวนี้</button>${!isPlant(x)?`<button class="card-tank-add ${isInMyTank(x)?'added':''}" title="${isInMyTank(x)?'อยู่ในตู้ของฉันแล้ว':'เพิ่มเข้าตู้ของฉัน'}" onclick='addToMyTankByIndex(${idx},event);event.stopPropagation()'>${isInMyTank(x)?'✓':'+'}</button>`:''}</div></div></article>`}
+function renderCards(data,container){container.innerHTML='';if(!data.length){container.innerHTML='<div class="empty-state" style="grid-column:1/-1"><strong>🐠 เจ้าตัวนี้ยังว่ายมาไม่ถึงฐานข้อมูลของเรา</strong><small>ลองเปลี่ยนคำค้น หรือกดรีเซ็ตตัวกรองแล้วสำรวจรายการอื่น</small></div>';return}data.forEach(x=>container.insertAdjacentHTML('beforeend',cardHtml(x)))}
 function openModalByIndex(i){openModal(allData[i])}
 function toggleFavoriteByIndex(i,e){toggleFavorite(allData[i],e)}
 function parseCareInfo(raw){if(!raw)return {intro:'ยังไม่มีคำอธิบายเพิ่มเติม'};const parts=raw.split('|').map(x=>x.trim()).filter(Boolean);let intro='',blocks=[];parts.forEach((p,i)=>{const m=p.match(/^([^:：]+)[:：]\s*(.*)$/);if(m&&i>0)blocks.push({label:m[1].trim(),text:m[2].trim()});else if(i===0)intro=p;else blocks.push({label:'เกร็ดน่ารู้',text:p})});return {intro:intro||'ข้อมูลการเลี้ยงสำหรับสายพันธุ์นี้',blocks}}
-function relatedHtml(x){const rel=allData.filter(y=>y!==x&&x.SpecificType&&y.SpecificType===x.SpecificType).slice(0,8);if(!rel.length)return '';return `<div class="related"><h3>🐟 สายพันธุ์อื่นในกลุ่ม “${esc(x.SpecificType)}”</h3><div class="related-grid">${rel.map(y=>`<button class="related-chip" onclick='openModalByIndex(${allData.indexOf(y)})'><b>${esc(y.NameTH)}</b><span>${esc(y.NameEN)}</span></button>`).join('')}</div></div>`}
+function relatedHtml(x){const rel=allData.filter(y=>y!==x&&x.SpecificType&&y.SpecificType===x.SpecificType).slice(0,8);if(!rel.length)return '';return `<div class="related"><h3>🐟 รายการอื่นในกลุ่ม “${esc(x.SpecificType)}”</h3><div class="related-grid">${rel.map(y=>`<button class="related-chip" onclick='openModalByIndex(${allData.indexOf(y)})'><b>${esc(y.NameTH)}</b><span>${esc(y.NameEN)}</span></button>`).join('')}</div></div>`}
 function valueOrDash(v){return v&&v!=='N/A'?esc(v):'—'}
 function profileHtml(x){const rows=[['📏','ขนาด',x.Size],['🌡️','อุณหภูมิ',x.Temperature],['💧','pH',x.pH],['💡','แสง',x.Lighting],['🫧','CO₂',x.CO2],['🏝️','พื้นตู้ / วัสดุปลูก',x.Substrate],['📍','ตำแหน่งในตู้',x.Placement],['🏠','ขนาดตู้',x.TankSize]].filter(r=>r[2]&&r[2]!=='N/A');if(!rows.length)return '';return `<div class="profile-grid">${rows.map(r=>`<div class="profile-item"><small>${r[0]} ${r[1]}</small><b>${valueOrDash(r[2])}</b></div>`).join('')}</div>`}
 function textSection(title,text){return text&&text!=='N/A'?`<div class="detail-section"><h3>${title}</h3><div class="detail-note">${esc(text)}</div></div>`:''}
@@ -1776,10 +1760,10 @@ function shopLinksHtml(x){
   if(!uniq.length)return '';
   return `<div class="shop-links-subtle shop-support-box">
     <div class="shop-support-copy">
-      <b>🐠💚 ชอบ FishMepedia? ช่วยซัพพอร์ตเราได้นะ</b>
-      <span>ทุกการสั่งซื้อผ่านลิงก์ของเรา เป็นแรงสนับสนุนเล็ก ๆ ให้ FishMepedia เติบโตต่อไป</span>
+      <b>สนับสนุน FishMepedia</b>
+      <span>หากสินค้าที่เกี่ยวข้องมีประโยชน์กับคุณ การสั่งซื้อผ่านลิงก์นี้ช่วยสนับสนุนการพัฒนา FishMepedia</span>
     </div>
-    ${uniq.map((v,i)=>`<a class="shop-link-subtle" href="${esc(v.url)}" target="_blank" rel="noopener noreferrer">🛍 ดูสินค้าที่เกี่ยวข้อง${uniq.length>1?` ${i+1}`:''} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`).join('')}
+    ${uniq.map((v,i)=>`<a class="shop-link-subtle" href="${esc(v.url)}" target="_blank" rel="noopener noreferrer">ดูสินค้าที่เกี่ยวข้อง${uniq.length>1?` ${i+1}`:''} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`).join('')}
   </div>`;
 }
 
@@ -1821,7 +1805,7 @@ function compatibilityBetween(a,b){
   add(bs,20,bs>=90?'นิสัยโดยรวมเข้ากันได้':bs>=60?'ควรสังเกตพฤติกรรม':'มีสัญญาณพฤติกรรมที่ควรระวัง');
   const sa=firstNum(a.Size),sb=firstNum(b.Size);if(sa&&sb){const ratio=Math.max(sa,sb)/Math.max(1,Math.min(sa,sb));const ss=ratio<=1.8?100:ratio<=3?70:35;add(ss,10,ss>=90?'ขนาดตัวใกล้เคียงกัน':ss>=60?'ขนาดต่างกันพอสมควร':'ขนาดตัวต่างกันมาก')}
   const score=total?Math.round(weighted/total):50;
-  const label=score>=80?'เข้ากันได้ดี':score>=60?'ควรระวัง':'ไม่แนะนำ';
+  const label=score>=80?'น่าเข้ากันได้':score>=60?'ต้องดูเพิ่ม':'ไม่ค่อยเหมาะ';
   const cls=score>=80?'compat-good':score>=60?'compat-warn':'compat-bad';
   return {score,label,cls,reasons:reasons.filter(Boolean)};
 }
@@ -1829,7 +1813,7 @@ function compatibilityHtml(x){
   if(isPlant(x))return '';
   const candidates=allData.filter(y=>y!==x&&!isPlant(y)).map(y=>({y,...compatibilityBetween(x,y)})).sort((a,b)=>b.score-a.score).slice(0,6);
   if(!candidates.length)return '';
-  return `<div class="compat-section"><div class="compat-head"><div><h3>🤝 Compatibility Score</h3><p>คัดคู่ที่มีแนวโน้มเข้ากันได้จากข้อมูลในฐาน</p></div></div><div class="compat-list">${candidates.map(c=>`<button class="compat-row" onclick="openModalByIndex(${allData.indexOf(c.y)})"><span class="compat-icon ${c.cls}">${c.score}</span><span class="compat-name"><b>${esc(c.y.NameTH)}</b><span>${esc(c.y.NameEN||c.y.ScientificName||'')}</span></span><span class="compat-score"><strong>${c.label}</strong><small>${c.score}/100</small></span></button>`).join('')}</div><div class="compat-reasons">คะแนนประเมินจากช่วงอุณหภูมิ, pH, ขนาดตู้, พฤติกรรม และขนาดตัวเท่าที่ข้อมูลมี</div><div class="compat-note">เป็นตัวช่วยคัดกรองเบื้องต้น ไม่ใช่การรับรองว่าสามารถเลี้ยงร่วมกันได้เสมอ ควรตรวจสอบจำนวนปลา สัดส่วนเพศ นิสัยเฉพาะตัว และพื้นที่หลบซ่อนก่อนจัดตู้จริง</div></div>`;
+  return `<div class="compat-section"><div class="compat-head"><div><h3>เลี้ยงรวมกันได้ไหม?</h3><p>ดูจากค่าน้ำ ขนาดตู้ และนิสัยโดยรวม</p></div></div><div class="compat-list">${candidates.map(c=>`<button class="compat-row" onclick="openModalByIndex(${allData.indexOf(c.y)})"><span class="compat-icon ${c.cls}">${c.score>=80?'✓':c.score>=60?'!':'×'}</span><span class="compat-name"><b>${esc(c.y.NameTH)}</b><span>${esc(c.y.NameEN||c.y.ScientificName||'')}</span></span><span class="compat-score"><strong>${c.label}</strong></span></button>`).join('')}</div><div class="compat-reasons">เทียบจากอุณหภูมิ pH ขนาดตู้ นิสัย และขนาดตัวเท่าที่มีข้อมูล</div><div class="compat-note">ใช้เป็นแนวทางก่อนเลือกเพื่อนร่วมตู้ ควรดูจำนวนปลา เพศ นิสัยเฉพาะตัว และพื้นที่หลบซ่อนร่วมด้วย</div></div>`;
 }
 
 function openModal(x){
@@ -1841,13 +1825,13 @@ function openModal(x){
   const synonyms=x.Synonyms?`<div class="detail-section"><h3>🏷️ ชื่อเรียกอื่น</h3><div class="detail-note">${esc(x.Synonyms.split(';').join(' · '))}</div></div>`:'';
   const shopee=shopLinksHtml(x);
   const careBlocks=care.blocks.map(b=>`<div class="care-block"><div class="care-label">${labelIcon(b.label)} ${esc(b.label)}</div><div class="care-text">${esc(b.text)}</div></div>`).join('');
-  $('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${scientific}${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(intro||'ยังไม่มีคำอธิบายเพิ่มเติม')}</p></div>${profileHtml(x)}${purposeHtml(x)}${textSection('✨ ลักษณะเด่น',x.Appearance)}${textSection(isPlant(x)?'🌿 ลักษณะการเติบโต':'🐟 พฤติกรรม',x.Behavior)}${textSection('🍽️ อาหาร',x.Feeding)}${textSection('🧪 การให้ปุ๋ย',x.Fertilization)}${careBlocks?`<div class="detail-section"><h3>💚 วิธีดูแล</h3><div class="rich-content">${careBlocks}</div></div>`:''}${synonyms}${shopee}${compatibilityHtml(x)}${sourceHtml(x)}${relatedHtml(x)}</div>`;
+  $('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${scientific}${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(intro||'ยังไม่มีคำอธิบายเพิ่มเติม')}</p></div>${profileHtml(x)}${purposeHtml(x)}${textSection('✨ ลักษณะเด่น',x.Appearance)}${textSection(isPlant(x)?'🌿 ลักษณะการเติบโต':'🐟 พฤติกรรม',x.Behavior)}${textSection('🍽️ อาหาร',x.Feeding)}${textSection('🧪 การให้ปุ๋ย',x.Fertilization)}${careBlocks?`<div class="detail-section"><h3>💚 วิธีดูแล</h3><div class="rich-content">${careBlocks}</div></div>`:''}${synonyms}${compatibilityHtml(x)}${sourceHtml(x)}${relatedHtml(x)}${shopee}</div>`;
   $('detailModal').classList.add('active');document.body.style.overflow='hidden';
 }
 function labelIcon(l){if(/อุณหภูมิ|น้ำ/.test(l))return '🌡️';if(/นิสัย|พฤติกรรม/.test(l))return '🐟';if(/อาหาร/.test(l))return '🍽️';if(/ตู้|พื้น|สภาพ/.test(l))return '🏝️';if(/ดูแล/.test(l))return '💚';return '💡'}
 function openRandomFishModal(){const list=allData.filter(x=>!isPlant(x));openRandomResult(list,'🐟','วันนี้ปลาอะไรดี?')}
 function openRandomPlantModal(){const list=allData.filter(isPlant);openRandomResult(list,'🌿','วันนี้ปลูกอะไรดี?')}
-function openRandomResult(list,icon,title){if(!list.length){openTip('🐠 ยังไม่มีข้อมูล','ลองเพิ่มข้อมูลใน Google Sheets แล้วกลับมาใหม่ได้เลย');return}randomContext={list,icon,title};const x=list[Math.floor(Math.random()*list.length)];$('randomContent').innerHTML=`<div class="random-stage"><div class="random-icon">${icon}</div><h2>${esc(title)}</h2><p class="random-subtitle">วันนี้เราอยากชวนคุณไปรู้จัก...</p><div style="margin-top:15px"><div style="font-size:1.6rem;font-weight:700;color:var(--green2)">${esc(x.NameTH)}</div><div class="random-subtitle">${esc(x.NameEN)}</div></div><div class="random-pills"><span class="random-pill">${esc(x.SpecificType||(isPlant(x)?'ไม้น้ำ':'ปลาสวยงาม'))}</span>${x.Difficulty?`<span class="random-pill">🌱 ${esc(x.Difficulty)}</span>`:''}</div><p style="max-width:430px;margin:auto;color:#475569">${esc((x.Description||parseCareInfo(x.CareInfo).intro||'รายการนี้กำลังรอให้คุณเปิดดูรายละเอียด')).slice(0,220)}</p><div class="random-actions" style="margin-top:18px"><button class="random-primary" onclick="closeModal('randomModal');openModalByIndex(${allData.indexOf(x)})">รู้จักเจ้าตัวนี้ →</button><button class="random-secondary lucky-again" onclick="randomAgain()">🎲 ขออีกตัว</button></div></div>`;$('randomModal').classList.add('active');document.body.style.overflow='hidden'}
+function openRandomResult(list,icon,title){if(!list.length){openTip('ยังไม่มีข้อมูล','ฐานข้อมูลยังไม่พร้อมในขณะนี้ กรุณาลองใหม่อีกครั้ง');return}randomContext={list,icon,title};const x=list[Math.floor(Math.random()*list.length)];$('randomContent').innerHTML=`<div class="random-stage"><div class="random-icon">${icon}</div><h2>${esc(title)}</h2><p class="random-subtitle">วันนี้เราอยากชวนคุณไปรู้จัก...</p><div style="margin-top:15px"><div style="font-size:1.6rem;font-weight:700;color:var(--green2)">${esc(x.NameTH)}</div><div class="random-subtitle">${esc(x.NameEN)}</div></div><div class="random-pills"><span class="random-pill">${esc(x.SpecificType||(isPlant(x)?'ไม้น้ำ':'ปลาสวยงาม'))}</span>${x.Difficulty?`<span class="random-pill">🌱 ${esc(x.Difficulty)}</span>`:''}</div><p style="max-width:430px;margin:auto;color:#475569">${esc((x.Description||parseCareInfo(x.CareInfo).intro||'รายการนี้กำลังรอให้คุณเปิดดูรายละเอียด')).slice(0,220)}</p><div class="random-actions" style="margin-top:18px"><button class="random-primary" onclick="closeModal('randomModal');openModalByIndex(${allData.indexOf(x)})">รู้จักเจ้าตัวนี้ →</button><button class="random-secondary lucky-again" onclick="randomAgain()">🎲 ขออีกตัว</button></div></div>`;$('randomModal').classList.add('active');document.body.style.overflow='hidden'}
 function randomAgain(){if(randomContext)openRandomResult(randomContext.list,randomContext.icon,randomContext.title)}
 function closeModal(id){$(id).classList.remove('active');if(!document.querySelector('.modal-overlay.active'))document.body.style.overflow='auto'}
 function openCalcModal(){$('calcModal').classList.add('active');document.body.style.overflow='hidden';calculateWaterVolume()}
@@ -1882,8 +1866,8 @@ function renderCatalogCompact(items){
     const remaining=items.length-catalogDisplayLimit;
     wrap.innerHTML=`<div class="catalog-more-card">
       <div class="catalog-more-copy">
-        <b>ยังมีปลาให้สำรวจอีก</b>
-        <span>เหลือ ${remaining} รายการในฐานข้อมูล</span>
+        <b>ยังมีให้ดูอีก</b>
+        <span>อีก ${remaining} รายการ</span>
       </div>
       <button class="catalog-more-btn" onclick="showMoreCatalog()"><i class="fa-solid fa-chevron-down"></i> ดูเพิ่ม 24 รายการ</button>
     </div>`;
@@ -2683,6 +2667,5 @@ openModalByIndex = function(i){
 window.addEventListener('DOMContentLoaded',init);
 </script>
 <button class="fm-backtop" id="fmBackTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="กลับขึ้นด้านบน"><i class="fa-solid fa-arrow-up"></i></button>
-<script src="fishmepedia-learn-integration.js"></script>
 </body>
 </html>
