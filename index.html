@@ -1250,75 +1250,24 @@ button:disabled{cursor:not-allowed}
 
 
 /* =========================================================
-   EXTERNAL PHOTO ATTRIBUTION UI — FishMepedia
-   Separates image license/creator from biological data sources.
+   FISH PROFILE — IMAGE RIGHTS / REFERENCES SEPARATION
    ========================================================= */
-.photo-credit-card{
-  margin-top:14px;
-  display:grid;
-  grid-template-columns:auto minmax(0,1fr) auto;
-  align-items:center;
-  gap:10px;
-  padding:10px 11px;
-  border:1px solid #d8ebe6;
-  border-radius:12px;
-  background:linear-gradient(135deg,#f6fcfa,#f4fafc);
+.image-rights-box{
+  margin-top:14px;padding:13px 14px;border:1px solid #cfe9e3;border-radius:13px;
+  background:linear-gradient(135deg,#f3fbf8,#f6fbfd);color:#36585b;
 }
-.photo-credit-icon{
-  width:34px;height:34px;border-radius:10px;
-  display:grid;place-items:center;
-  background:#e4f7f2;color:#08756e;
-  font-size:.78rem;
-}
-.photo-credit-main{min-width:0}
-.photo-credit-kicker{
-  font-size:.57rem;line-height:1.2;
-  color:#839698;text-transform:uppercase;
-  letter-spacing:.06em;font-weight:700;
-}
-.photo-credit-author{
-  margin-top:2px;font-size:.72rem;line-height:1.35;
-  color:#28565c;font-weight:700;
-  overflow-wrap:anywhere;
-}
-.photo-credit-meta{
-  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
-  margin-top:4px;font-size:.61rem;color:#7a9092;
-}
-.photo-license{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:3px 6px;border-radius:999px;
-  background:#edf8f5;border:1px solid #d2e9e3;
-  color:#0c746c;text-decoration:none;font-weight:700;
-}
-.photo-license:hover{background:#e4f5f0;border-color:#bddfd6}
-.photo-license.is-static{cursor:default}
-.photo-credit-provider:before{content:'•';margin-right:6px;color:#adc0c1}
-.photo-original-btn{
-  display:inline-flex;align-items:center;gap:5px;
-  white-space:nowrap;text-decoration:none;
-  padding:6px 8px;border-radius:9px;
-  border:1px solid #d7e8e4;background:#fff;
-  color:#456d72;font-size:.61rem;font-weight:700;
-}
-.photo-original-btn:hover{border-color:#acd8cf;color:#08756e;background:#fbfefd}
-.source-box{
-  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
-}
-.source-label{
-  display:inline-flex;align-items:center;gap:5px;
-  color:#607d80;font-weight:700;
-}
-.source-text{color:#7a8f92}
-.source-updated{
-  margin-left:auto;padding-left:7px;
-  color:#91a1a3;font-size:.66rem;
-}
-@media(max-width:620px){
-  .photo-credit-card{grid-template-columns:auto minmax(0,1fr)}
-  .photo-original-btn{grid-column:1/-1;justify-content:center;width:100%}
-  .source-updated{margin-left:0;width:100%;padding-left:0}
-}
+.image-rights-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#075f62;font-size:.8rem;font-weight:700}
+.image-rights-head i{color:#0e9f93}
+.image-rights-row{display:grid;grid-template-columns:88px minmax(0,1fr);gap:7px 10px;align-items:start;font-size:.72rem;line-height:1.55}
+.image-rights-label{color:#7a9092}
+.image-rights-value{color:#294e52;min-width:0;overflow-wrap:anywhere}
+.image-license-badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:999px;background:#e5f7f1;border:1px solid #bfe7dc;color:#08756e;font-size:.66rem;font-weight:700}
+.image-rights-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.image-rights-link{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:9px;border:1px solid #cfe6e1;background:#fff;color:#08756e!important;text-decoration:none!important;font-size:.68rem;font-weight:600}
+.image-rights-link:hover{border-color:#8fd6c9;background:#f4fbf9}
+.source-box.data-source-box{margin-top:9px;background:#fafcfc;border-color:#e3ecea;color:#647b7e}
+.source-box.data-source-box .source-title{display:block;color:#526c6f;font-weight:700;margin-bottom:3px}
+@media(max-width:520px){.image-rights-row{grid-template-columns:1fr;gap:2px}.image-rights-label{margin-top:4px}.image-rights-box{padding:12px}}
 
 </style>
 <meta name="description" content="FishMepedia by FishMe ฐานความรู้ปลา พรรณไม้น้ำ และเครื่องมือช่วยวางแผนตู้ปลา — รู้จักปลา เข้าใจตู้ สร้างโลกใต้น้ำของคุณ">
@@ -1873,47 +1822,30 @@ function referenceLinksHtml(raw,label='ดูแหล่งอ้างอิ�
   return ` · ${urls.map((u,i)=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${label} ${i+1}</a>`).join(' · ')}`;
 }
 
-function parsePhotoAttribution(raw){
-  const source=String(raw||'').trim();
+function splitSourceAndImageRights(raw){
+  const text=String(raw||'').trim();
+  if(!text)return {dataSource:'',rights:null};
   const marker=' | Photo: ';
-  const pos=source.indexOf(marker);
-  if(pos<0)return {dataSource:source,photo:null};
-  const dataSource=source.slice(0,pos).trim();
-  const credit=source.slice(pos+marker.length).trim();
-  const srcMatch=credit.match(/\s·\sSource:\s*(https?:\/\/\S+)/i);
-  const licMatch=credit.match(/\s·\sLicense:\s*(https?:\/\/\S+)/i);
-  const beforeLinks=credit.split(/\s·\sSource:\s*/i)[0].trim();
-  const parts=beforeLinks.split(/\s·\s/).map(s=>s.trim()).filter(Boolean);
-  const author=parts[0]||'';
-  const license=parts[1]||'';
-  const provider=parts.slice(2).join(' · ')||'Wikimedia Commons';
-  return {dataSource,photo:{author,license,provider,sourceUrl:srcMatch?srcMatch[1]:'',licenseUrl:licMatch?licMatch[1]:''}};
+  const at=text.indexOf(marker);
+  if(at<0)return {dataSource:text,rights:null};
+  const dataSource=text.slice(0,at).trim();
+  const photoPart=text.slice(at+3).trim();
+  const m=photoPart.match(/^Photo:\s*(.*?)\s*·\s*(.*?)\s*·\s*Wikimedia Commons\s*·\s*Source:\s*(https?:\/\/\S+)\s*·\s*License:\s*(https?:\/\/\S+)\s*$/i);
+  if(!m)return {dataSource:text,rights:null};
+  return {dataSource,rights:{author:m[1].trim(),license:m[2].trim(),sourcePage:m[3].trim(),licenseUrl:m[4].trim()}};
 }
-function photoAttributionHtml(photo){
-  if(!photo)return '';
-  const licenseHtml=photo.licenseUrl
-    ?`<a class="photo-license" href="${esc(photo.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(photo.license||'License')} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`
-    :`<span class="photo-license is-static">${esc(photo.license||'License')}</span>`;
-  const originalHtml=photo.sourceUrl
-    ?`<a class="photo-original-btn" href="${esc(photo.sourceUrl)}" target="_blank" rel="noopener noreferrer"><i class="fa-regular fa-image"></i> ดูภาพต้นฉบับ</a>`
-    :'';
-  return `<div class="photo-credit-card">
-    <div class="photo-credit-icon"><i class="fa-solid fa-camera"></i></div>
-    <div class="photo-credit-main">
-      <div class="photo-credit-kicker">เครดิตภาพ</div>
-      <div class="photo-credit-author">${esc(photo.author||'ไม่ระบุผู้สร้าง')}</div>
-      <div class="photo-credit-meta">${licenseHtml}<span class="photo-credit-provider">${esc(photo.provider||'Wikimedia Commons')}</span></div>
-    </div>
-    ${originalHtml}
-  </div>`;
+function imageRightsHtml(x){
+  const p=splitSourceAndImageRights(x.Source);
+  if(!p.rights)return '';
+  const r=p.rights;
+  return `<div class="image-rights-box"><div class="image-rights-head"><i class="fa-regular fa-image"></i><span>ลิขสิทธิ์ภาพ</span></div><div class="image-rights-row"><div class="image-rights-label">ผู้สร้างภาพ</div><div class="image-rights-value">${esc(r.author)}</div><div class="image-rights-label">ใบอนุญาต</div><div class="image-rights-value"><span class="image-license-badge">${esc(r.license)}</span></div><div class="image-rights-label">แหล่งภาพ</div><div class="image-rights-value">Wikimedia Commons</div></div><div class="image-rights-actions"><a class="image-rights-link" href="${esc(r.sourcePage)}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> ดูภาพต้นฉบับ</a><a class="image-rights-link" href="${esc(r.licenseUrl)}" target="_blank" rel="noopener noreferrer"><i class="fa-regular fa-file-lines"></i> ดูใบอนุญาต</a></div></div>`;
 }
 function sourceHtml(x){
-  if(!x.Source&&!x.ReferenceURL&&!x.LastUpdated)return '';
-  const parsed=parsePhotoAttribution(x.Source);
+  const p=splitSourceAndImageRights(x.Source);
+  const src=p.dataSource;
+  if(!src&&!x.ReferenceURL&&!x.LastUpdated)return '';
   const link=referenceLinksHtml(x.ReferenceURL,'เปิดแหล่งอ้างอิง');
-  const dataSource=parsed.dataSource||(!parsed.photo?x.Source:'')||'ไม่ระบุ';
-  const info=`<div class="source-box"><span class="source-label"><i class="fa-solid fa-book-open"></i> แหล่งข้อมูล</span><span class="source-text">${esc(dataSource)}</span>${link}${x.LastUpdated?`<span class="source-updated">อัปเดต ${esc(x.LastUpdated)}</span>`:''}</div>`;
-  return `${photoAttributionHtml(parsed.photo)}${info}`;
+  return `<div class="source-box data-source-box"><span class="source-title">แหล่งอ้างอิงข้อมูล</span>${src?esc(src):'ไม่ระบุ'}${link}${x.LastUpdated?` · อัปเดต ${esc(x.LastUpdated)}`:''}</div>`;
 }
 
 
@@ -1955,7 +1887,7 @@ function openModal(x){
   const synonyms=x.Synonyms?`<div class="detail-section"><h3>🏷️ ชื่อเรียกอื่น</h3><div class="detail-note">${esc(x.Synonyms.split(';').join(' · '))}</div></div>`:'';
   const shopee=shopLinksHtml(x);
   const careBlocks=care.blocks.map(b=>`<div class="care-block"><div class="care-label">${labelIcon(b.label)} ${esc(b.label)}</div><div class="care-text">${esc(b.text)}</div></div>`).join('');
-  $('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${scientific}${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(intro||'ยังไม่มีคำอธิบายเพิ่มเติม')}</p></div>${profileHtml(x)}${purposeHtml(x)}${textSection('✨ ลักษณะเด่น',x.Appearance)}${textSection(isPlant(x)?'🌿 ลักษณะการเติบโต':'🐟 พฤติกรรม',x.Behavior)}${textSection('🍽️ อาหาร',x.Feeding)}${isPlant(x)?textSection('🧪 การให้ปุ๋ย',x.Fertilization):''}${careBlocks?`<div class="detail-section"><h3>💚 วิธีดูแล</h3><div class="rich-content">${careBlocks}</div></div>`:''}${synonyms}${compatibilityHtml(x)}${sourceHtml(x)}${relatedHtml(x)}${shopee}</div>`;
+  $('modalContent').innerHTML=`<div class="modal-media-col"><div class="media-slider">${media}</div></div><div class="modal-info-col"><div class="modal-path">${esc([x.Category,x.SubCategory,x.SpecificType].filter(Boolean).join(' › '))}</div><h2 class="modal-title">${esc(x.NameTH)}</h2><div class="modal-subtitle">${esc(x.NameEN)}</div>${scientific}${x.Difficulty?`<div class="modal-meta"><i class="fa-solid fa-seedling"></i>&nbsp; ระดับการดูแล <b style="margin-left:4px">${esc(x.Difficulty)}</b></div>`:''}<div class="rich-content"><p class="rich-intro">${esc(intro||'ยังไม่มีคำอธิบายเพิ่มเติม')}</p></div>${profileHtml(x)}${purposeHtml(x)}${textSection('✨ ลักษณะเด่น',x.Appearance)}${textSection(isPlant(x)?'🌿 ลักษณะการเติบโต':'🐟 พฤติกรรม',x.Behavior)}${textSection('🍽️ อาหาร',x.Feeding)}${isPlant(x)?textSection('🧪 การให้ปุ๋ย',x.Fertilization):''}${careBlocks?`<div class="detail-section"><h3>💚 วิธีดูแล</h3><div class="rich-content">${careBlocks}</div></div>`:''}${synonyms}${compatibilityHtml(x)}${imageRightsHtml(x)}${sourceHtml(x)}${relatedHtml(x)}${shopee}</div>`;
   $('detailModal').classList.add('active');document.body.style.overflow='hidden';
 }
 function labelIcon(l){if(/อุณหภูมิ|น้ำ/.test(l))return '🌡️';if(/นิสัย|พฤติกรรม/.test(l))return '🐟';if(/อาหาร/.test(l))return '🍽️';if(/ตู้|พื้น|สภาพ/.test(l))return '🏝️';if(/ดูแล/.test(l))return '💚';return '💡'}
