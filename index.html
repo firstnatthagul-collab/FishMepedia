@@ -522,11 +522,80 @@ body:before{
 
 
 
-.photo-credit-card{margin:0;padding:9px 11px;border-top:1px solid #dceee8;background:#f8fbfa;color:#5f7477}
-.photo-credit-head{display:flex;align-items:center;gap:7px;min-width:0}.photo-credit-icon{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#edf7f4;color:#5e827f;font-weight:700;font-size:.62rem;flex:0 0 auto}.photo-credit-head small{display:none}.photo-credit-head b{display:block;color:#486467;font-size:.68rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.photo-credit-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0 0 29px}.photo-license-badge{display:inline-flex;padding:2px 6px;border-radius:999px;background:#eef7f4;color:#397369;border:1px solid #d7ebe5;font-size:.58rem;font-weight:700}.photo-credit-source{font-size:.58rem;color:#829395}
-.photo-credit-actions{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 0 29px}.photo-credit-actions a{display:inline-flex;align-items:center;padding:3px 7px;border-radius:7px;border:1px solid #d7e7e3;background:#fff;color:#47756f;text-decoration:none;font-size:.59rem;font-weight:600}.photo-credit-actions a:hover{background:#eef8f5;border-color:#bcded6}
-@media(max-width:560px){.photo-credit-card{padding:8px 9px}.photo-credit-actions{margin-left:0}.photo-credit-meta{margin-left:0}.photo-credit-actions a{flex:0 0 auto}}
+.photo-credit-card{
+  margin:0;
+  padding:6px 10px 7px;
+  background:transparent;
+  border:0;
+  color:#8a9a9c;
+  font-size:.57rem;
+  line-height:1.45;
+}
+.photo-credit-head{
+  display:inline;
+}
+.photo-credit-icon,
+.photo-credit-head small{
+  display:none;
+}
+.photo-credit-head b{
+  display:inline;
+  color:#7f9092;
+  font-size:inherit;
+  font-weight:400;
+}
+.photo-credit-head b:after{
+  content:" · ";
+  color:#b0babc;
+}
+.photo-credit-meta{
+  display:inline;
+  margin:0;
+}
+.photo-license-badge{
+  display:inline;
+  padding:0;
+  border:0;
+  background:none;
+  color:#7f9092;
+  font-size:inherit;
+  font-weight:400;
+}
+.photo-license-badge:after{
+  content:" · ";
+  color:#b0babc;
+}
+.photo-credit-source{
+  display:none;
+}
+.photo-credit-actions{
+  display:inline;
+  margin:0;
+}
+.photo-credit-actions a{
+  display:inline;
+  padding:0;
+  border:0;
+  background:none;
+  color:#6e8d89;
+  text-decoration:none;
+  font-size:inherit;
+  font-weight:500;
+}
+.photo-credit-actions a + a:before{
+  content:" · ";
+  color:#b0babc;
+}
+.photo-credit-actions a:hover{
+  text-decoration:underline;
+  background:none;
+}
+@media(max-width:560px){
+  .photo-credit-card{
+    padding:5px 8px 6px;
+    font-size:.55rem;
+  }
+}
 
 
 /* =========================================================
@@ -2533,14 +2602,14 @@ function photoCreditHtml(x){
   const author=p.author||'ไม่ระบุผู้สร้าง';
   const license=p.license||'License';
   return `<div class="photo-credit-card">
-    <div class="photo-credit-head"><span class="photo-credit-icon">©</span><div><small>เครดิตภาพ</small><b>ภาพ: ${esc(author)}</b></div></div>
+    <div class="photo-credit-head"><span class="photo-credit-icon">©</span><div><small>เครดิตภาพ</small><b>© ${esc(author)}</b></div></div>
     <div class="photo-credit-meta">
       <span class="photo-license-badge">${esc(license)}</span>
       <span class="photo-credit-source">Wikimedia Commons</span>
     </div>
     <div class="photo-credit-actions">
-      ${p.sourcePage?`<a href="${esc(p.sourcePage)}" target="_blank" rel="noopener">ดูภาพต้นฉบับ</a>`:''}
-      ${p.licenseURL?`<a href="${esc(p.licenseURL)}" target="_blank" rel="noopener">ดูใบอนุญาต</a>`:''}
+      ${p.sourcePage?`<a href="${esc(p.sourcePage)}" target="_blank" rel="noopener">ต้นฉบับ</a>`:''}
+      ${p.licenseURL?`<a href="${esc(p.licenseURL)}" target="_blank" rel="noopener">ใบอนุญาต</a>`:''}
     </div>
   </div>`;
 }
