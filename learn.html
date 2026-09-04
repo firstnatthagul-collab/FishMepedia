@@ -93,8 +93,9 @@ a{color:inherit;text-decoration:none}
 .learning{background:linear-gradient(135deg,#ecfdf5,#effaff);border:1px solid var(--line);border-radius:28px;padding:24px;position:relative;overflow:hidden}
 .learning::after{content:"🐟";position:absolute;right:22px;top:10px;font-size:4rem;opacity:.07;transform:rotate(-12deg)}
 .path{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:16px}
-.step{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px;position:relative;transition:.22s}
+.step{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px;position:relative;transition:.22s;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
 .step:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(15,118,110,.10)}
+.step:focus-visible{outline:3px solid rgba(16,185,129,.25);outline-offset:2px}
 .n{width:34px;height:34px;border-radius:10px;background:var(--mint);color:var(--green2);display:grid;place-items:center;font-weight:700;margin-bottom:8px}
 .step b{font-size:.88rem}.step p{font-size:.72rem;color:var(--muted);margin-top:4px}
 .tipbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -167,10 +168,10 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
   <p>คลังความรู้สำหรับคนเลี้ยงปลาและพรรณไม้น้ำ อธิบายเรื่องที่ดูซับซ้อนให้เข้าใจง่าย เชื่อมต่อกับข้อมูลชนิดปลา ไม้น้ำ และเครื่องมือใน FishMepedia เพื่อให้เอาไปใช้กับตู้จริงได้</p>
   <div class="hero-actions">
    <div class="search">
-    <input id="q" placeholder="ค้นหาเรื่องที่อยากรู้ เช่น รันระบบ, CO₂, ตะไคร่...">
+    <input id="q" placeholder="ค้นหา เช่น รันระบบ, CO₂, ตะไคร่">
     <button onclick="filterArticles()">ค้นหา</button>
    </div>
-   <div class="hero-count">มีบทความตัวอย่าง 9 เรื่อง · 6 หมวด</div>
+   <div class="hero-count">กำลังโหลดคลังความรู้…</div>
   </div>
   <div class="aquarium" aria-hidden="true">
    <div class="fish f1">🐠</div><div class="fish f2">🐟</div>
@@ -180,7 +181,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
  </section>
 
  <section class="section">
-  <div class="head"><div><h2>เริ่มอ่านจากเรื่องไหนดี?</h2><p>บทความเด่นจากฐานข้อมูล FishMepedia</p></div></div>
+  <div class="head"><div><h2>เริ่มอ่านจากเรื่องไหนดี?</h2><p>เรื่องแนะนำสำหรับคุณ</p></div></div>
   <div id="featuredArticles" class="featured">
     <div class="card" style="padding:28px;grid-column:1/-1;text-align:center;color:var(--muted)">กำลังโหลดบทความจาก FishMepedia…</div>
   </div>
@@ -201,7 +202,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
   </div>
 
   <div id="grid" class="grid">
-   <div class="card" style="padding:28px;grid-column:1/-1;text-align:center;color:var(--muted)">กำลังอ่านชีต Articles…</div>
+   <div class="card" style="padding:28px;grid-column:1/-1;text-align:center;color:var(--muted)">กำลังโหลดคลังความรู้…</div>
   </div>
   <div id="empty" class="empty">ยังไม่มีบทความที่ตรงกับคำค้นนี้</div>
  </section>
@@ -209,12 +210,12 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
  <section class="section learning">
   <div class="head"><div><h2>มือใหม่ เริ่มตรงนี้</h2><p>เส้นทางอ่านแบบต่อเนื่อง จากการเลือกตู้ไปถึงการดูแลช่วงแรก</p></div></div>
   <div class="path">
-   <div class="step"><div class="n">01</div><b>เลือกขนาดตู้</b><p>ให้เหมาะกับพื้นที่ ชนิดปลา และเวลาที่ดูแลได้</p></div>
-   <div class="step"><div class="n">02</div><b>เลือกกรอง</b><p>เข้าใจทั้งการดักของเสียและพื้นที่สำหรับจุลินทรีย์</p></div>
-   <div class="step"><div class="n">03</div><b>รันระบบ</b><p>ให้ระบบชีวภาพมีเวลาตั้งตัวก่อนเพิ่มปลา</p></div>
-   <div class="step"><div class="n">04</div><b>เลือกปลาตัวแรก</b><p>ดูนิสัย ขนาดโตเต็มวัย ค่าน้ำ และจำนวนที่ควรเลี้ยง</p></div>
-   <div class="step"><div class="n">05</div><b>เลือกไม้น้ำ</b><p>จับคู่แสง CO₂ ธาตุอาหาร และตำแหน่งปลูก</p></div>
-   <div class="step"><div class="n">06</div><b>30 วันแรก</b><p>สังเกตปลา เปลี่ยนน้ำ และปรับระบบอย่างค่อยเป็นค่อยไป</p></div>
+   <button class="step" onclick="openLearningArticle('AR001')"><div class="n">01</div><b>เลือกขนาดตู้</b><p>ให้เหมาะกับพื้นที่ ชนิดปลา และเวลาที่ดูแลได้</p></button>
+   <button class="step" onclick="openLearningArticle('AR001')"><div class="n">02</div><b>เลือกกรอง</b><p>เข้าใจทั้งการดักของเสียและพื้นที่สำหรับจุลินทรีย์</p></button>
+   <button class="step" onclick="openLearningArticle('AR002')"><div class="n">03</div><b>รันระบบ</b><p>ให้ระบบชีวภาพมีเวลาตั้งตัวก่อนเพิ่มปลา</p></button>
+   <button class="step" onclick="openLearningArticle('AR005')"><div class="n">04</div><b>เลือกปลาตัวแรก</b><p>ดูนิสัย ขนาดโตเต็มวัย ค่าน้ำ และจำนวนที่ควรเลี้ยง</p></button>
+   <button class="step" onclick="openLearningArticle('AR007')"><div class="n">05</div><b>เลือกไม้น้ำ</b><p>จับคู่แสง CO₂ ธาตุอาหาร และตำแหน่งปลูก</p></button>
+   <button class="step" onclick="openLearningArticle('AR008')"><div class="n">06</div><b>30 วันแรก</b><p>สังเกตปลา เปลี่ยนน้ำ และปรับระบบอย่างค่อยเป็นค่อยไป</p></button>
   </div>
  </section>
 </div></main>
@@ -236,7 +237,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:38px 20px 48
   <article class="articleMain" id="articleContent"></article>
   <aside class="sidebar">
    <div class="box"><h3>ในบทความนี้</h3><div id="toc"></div></div>
-   <div class="box" id="relatedInfoBox" style="display:none"><h3>เชื่อมกับ FishMepedia</h3><p style="font-size:.82rem;color:var(--muted)">เปิดดูข้อมูลปลาและพรรณไม้น้ำที่เกี่ยวข้องจากฐานข้อมูล FishMepedia</p></div>
+   
   </aside>
  </div>
 </div></main>
@@ -271,10 +272,10 @@ function renderFeatured(list){
  const main=picks[0], side=picks.slice(1);
  el.innerHTML=`<article class="card"><div class="cover">${imgOrEmoji(main,true)}</div><div class="pad">
  <div class="kicker">${esc(main.Category)} · แนะนำ</div><h3 class="title">${esc(main.Title)}</h3><p class="desc">${esc(main.Summary||'')}</p>
- <div class="meta">${meta(main)}</div><button class="read" onclick="openArticle('${esc(main.ArticleID)}')">เริ่มอ่าน →</button></div></article>
+ <div class="meta">${meta(main)}</div><button class="read" onclick="openArticle('${esc(main.ArticleID)}')">อ่านบทความ →</button></div></article>
  <div class="side">${side.map(a=>`<article class="card small"><div class="art">${imgOrEmoji(a)}</div><div class="pad">
  <div class="kicker">${esc(a.Category)}</div><h3 class="title" style="font-size:1.05rem">${esc(a.Title)}</h3><p class="desc">${esc(a.Summary||'')}</p>
- <div class="meta">${meta(a)}</div><button class="read" onclick="openArticle('${esc(a.ArticleID)}')">อ่าน</button></div></article>`).join('')}</div>`;
+ <div class="meta">${meta(a)}</div><button class="read" onclick="openArticle('${esc(a.ArticleID)}')">อ่านบทความ →</button></div></article>`).join('')}</div>`;
 }
 function renderGrid(){
  const q=(document.getElementById('q').value||'').trim().toLowerCase();
@@ -285,7 +286,7 @@ function renderGrid(){
  document.getElementById('grid').innerHTML=list.map(a=>`<article class="card article">
  <div class="article-art">${imgOrEmoji(a)}</div><div class="pad"><div class="kicker">${esc(a.Category)}</div>
  <h3 class="title">${esc(a.Title)}</h3><p class="desc">${esc(a.Summary||'')}</p><div class="meta">${meta(a)}</div>
- <button class="read" onclick="openArticle('${esc(a.ArticleID)}')">อ่านบทความ</button></div></article>`).join('');
+ <button class="read" onclick="openArticle('${esc(a.ArticleID)}')">อ่านบทความ →</button></div></article>`).join('');
  document.getElementById('empty').style.display=list.length?'none':'block';
 }
 function contentHtml(content=''){
@@ -293,9 +294,9 @@ function contentHtml(content=''){
  let sec=0;
  return chunks.map((c,i)=>{
   const lines=c.split('\n').map(s=>s.trim()).filter(Boolean);
-  if(i===0&&/^สรุปก่อนอ่าน/.test(lines[0])) return `<div class="summary"><b>${esc(lines[0])}</b><p>${lines.slice(1).map(esc).join('<br>')}</p></div>`;
+  if(i===0&&/^เรื่องนี้ควรรู้อะไร\?/.test(lines[0])) return `<div class="summary"><b>${esc(lines[0])}</b><p>${lines.slice(1).map(esc).join('<br>')}</p></div>`;
   if(/^\d+\.\s/.test(lines[0])){sec++;return `<h2 id="s${sec}">${esc(lines[0])}</h2><p>${lines.slice(1).map(esc).join('<br>')}</p>`}
-  if(/^(เช็กลิสต์|จำง่าย|หลักคิดง่าย)/.test(lines[0])) return `<div class="goodnote"><b>${esc(lines[0])}</b><br>${lines.slice(1).map(esc).join('<br>')}</div>`;
+  if(/^(เช็กลิสต์ก่อนลงปลา|จุดสำคัญ|เลือกให้เหมาะกับตู้|สังเกตแบบนี้|ก่อนเพิ่มปลาใหม่|แยกสาเหตุแบบเร็ว|ตัวอย่างเริ่มต้น|หลักคิดเรื่องการเปลี่ยนน้ำ|ลำดับตรวจปัญหา)/.test(lines[0])) return `<div class="goodnote"><b>${esc(lines[0])}</b><br>${lines.slice(1).map(esc).join('<br>')}</div>`;
   return `<p>${lines.map(esc).join('<br>')}</p>`;
  }).join('');
 }
@@ -305,24 +306,23 @@ function getRelatedRows(a){
 function relatedHtml(a){
  const rows=getRelatedRows(a);
  if(!rows.length)return '';
- return `<h2 id="related">ข้อมูลที่เกี่ยวข้องใน FishMepedia</h2>
+ return `<h2 id="related">ดูข้อมูลที่เกี่ยวข้อง</h2>
  <div class="related">${rows.map(r=>`<div class="plant" onclick="location.href='index.html?entity=${encodeURIComponent(r.ID)}'">
  <div class="emoji">${r.Category==='Fish'?'🐟':'🌱'}</div><b>${esc(r.NameTH||r.NameEN||r.ID)}</b><small>${esc(r.ScientificName||r.NameEN||'')}</small>
  <div class="specs">${r.Difficulty?`<span class="spec">${esc(r.Difficulty)}</span>`:''}${r.Lighting?`<span class="spec">แสง ${esc(r.Lighting)}</span>`:''}${r.CO2?`<span class="spec">CO₂ ${esc(r.CO2)}</span>`:''}</div></div>`).join('')}</div>`;
 }
 function makeToc(a){
  const heads=[...String(a.Content||'').matchAll(/^(\d+\.\s.+)$/gm)].map((m,i)=>[`s${i+1}`,m[1]]);
- if(getRelatedRows(a).length)heads.push(['related','ข้อมูลที่เกี่ยวข้อง']);
+ if(getRelatedRows(a).length)heads.push(['related','ดูข้อมูลที่เกี่ยวข้อง']);
  return heads.map(x=>`<a href="#${x[0]}">${esc(x[1])}</a>`).join('');
 }
+function openLearningArticle(id){const a=allArticles.find(x=>x.ArticleID===id&&visible(x));if(a)openArticle(id)}
 function openArticle(id){
  const a=allArticles.find(x=>x.ArticleID===id);if(!a)return;
  detailCat.textContent=a.Category||'คลังความรู้';detailTitle.textContent=a.Title||'';detailSummary.textContent=a.Summary||'';
  detailAudience.textContent=a.Audience||'';detailRead.textContent=(a.ReadMinutes||'-')+' นาที';
  const u=(a.HeroImageURL||'').trim();detailEmoji.innerHTML=/^https?:\/\//i.test(u)?`<img src="${esc(u)}" alt="" style="max-width:100%;max-height:250px;border-radius:24px;object-fit:cover">`:emoji(a);
- const hasRelated=getRelatedRows(a).length>0;
  articleContent.innerHTML=contentHtml(a.Content||'')+relatedHtml(a);toc.innerHTML=makeToc(a);
- relatedInfoBox.style.display=hasRelated?'block':'none';
  libraryView.style.display='none';articleView.style.display='block';
  history.replaceState(null,'','#article='+encodeURIComponent(a.Slug||a.ArticleID));scrollTo({top:0,behavior:'smooth'});
 }
@@ -342,8 +342,8 @@ async function boot(){
   if(slug){const a=allArticles.find(x=>x.Slug===slug||x.ArticleID===slug);if(a)openArticle(a.ArticleID)}
  }catch(e){
   console.error(e);
-  featuredArticles.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1"><b>โหลดบทความไม่สำเร็จ</b><p class="desc">ตรวจว่าแท็บ Articles ถูก Publish to web แล้ว</p></div>';
-  grid.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1;color:var(--muted)">ยังเชื่อมชีต Articles ไม่ได้</div>';
+  featuredArticles.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1"><b>ไม่สามารถโหลดคลังความรู้ได้ในขณะนี้</b><p class="desc">กรุณาลองใหม่อีกครั้ง</p></div>';
+  grid.innerHTML='<div class="card" style="padding:28px;grid-column:1/-1;color:var(--muted)">ไม่สามารถโหลดคลังความรู้ได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง</div>';
  }
 }
 addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;progress.style.width=(h>0?scrollY/h*100:0)+'%'});
