@@ -1647,8 +1647,9 @@ async function init(){
     const masterRows=await parseCsv(CSV_URL);
     allData=masterRows.map(normalizeItem).filter(x=>x.NameTH);
 
-    // Media Library is an optional enhancement for image attribution.
-    // Failure here must not block the main database UI.
+    // Media Library is authoritative for verified cover media and attribution.
+    // Failure here must not block the main database UI; embedded attribution metadata
+    // plus the QA-verified MasterData fallback keep approved images usable.
     try{
       const mediaRows=await parseCsv(MEDIA_CSV_URL);
       mediaById=new Map(mediaRows.filter(r=>String(r.ID||'').trim()).map(r=>[String(r.ID).trim(),r]));
@@ -1679,6 +1680,54 @@ function parseMediaUrls(raw){
     .filter(x=>/^https?:\/\//i.test(x))
     .filter((x,i,a)=>a.indexOf(x)===i);
 }
+
+const MEDIA_REPLACE_IDS=new Set(['S2F017','S3F008','S4F001','P043','P024','P021']);
+function mediaRecordForItem(x){
+  return mediaById.get(String(x&&x.ID||'').trim())||null;
+}
+function mediaIsSuppressed(x,m=mediaRecordForItem(x)){
+  const id=String(x&&x.ID||'').trim();
+  if(MEDIA_REPLACE_IDS.has(id))return true;
+  if(!m)return false;
+  const status=String(m.Status||'').trim().toUpperCase();
+  const visual=String(m.VisualStatus||'').trim().toUpperCase();
+  const priority=String(m.CoverPriority||'').trim().toUpperCase();
+  if(status==='DO_NOT_USE')return true;
+  if(visual&&visual!=='KEEP')return true;
+  if(priority&&priority!=='PRIMARY')return true;
+  return false;
+}
+function mediaUrlsForItem(x){
+  const m=mediaRecordForItem(x);
+  if(mediaIsSuppressed(x,m))return [];
+  if(m&&String(m.Status||'').trim()==='LICENSE_VERIFIED'){
+    const fromLibrary=parseMediaUrls(m.CoverURL||m.MediaURLs||'');
+    if(fromLibrary.length)return fromLibrary;
+    // Embedded fallback snapshots from older builds may contain attribution only.
+    // MasterData fallback is allowed here because QA verified current active image rows
+    // are fully covered by LICENSE_VERIFIED Media Library records.
+    return parseMediaUrls(x.MediaURLs);
+  }
+  // IDs without a Media Library record keep temporary MasterData fallback until coverage expands.
+  if(!m)return parseMediaUrls(x.MediaURLs);
+  return [];
+}
+function mediaCreditMatchesDisplayedImage(x,m){
+  const urls=mediaUrlsForItem(x);
+  if(!urls.length)return false;
+  if(!m||String(m.Status||'').trim()!=='LICENSE_VERIFIED')return false;
+  const source=String(m.SourcePage||'').trim();
+  if(!source)return false;
+  if(m.MediaURLs||m.CoverURL)return true;
+  // During Media CSV outage the embedded snapshot may be older than MasterData.
+  // Only show fallback attribution when the source filename still matches the displayed media.
+  const fileName=s=>{
+    try{return decodeURIComponent(String(s||'').split('/').pop().split('?')[0]).toLowerCase().replace(/[_\s]+/g,'_')}
+    catch(e){return String(s||'').toLowerCase()}
+  };
+  return urls.some(u=>fileName(u)===fileName(source));
+}
+
 function getYouTubeEmbedUrl(u){const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&#/]+)/i);return m?`https://www.youtube.com/embed/${m[1]}?autoplay=0&mute=1&rel=0`:null}
 function fixMediaUrl(u){
   u=String(u||'').trim();
@@ -1697,11 +1746,11 @@ function fmImg(url,label){
     onerror="this.onerror=null;this.closest('.fm-image-wrap').innerHTML=fmPlaceholder(this.alt)">`;
 }
 function cardImageHtml(x){
-  const urls=parseMediaUrls(x.MediaURLs),u=urls[0],label=x.NameTH||x.NameEN||'FishMepedia';
+  const urls=mediaUrlsForItem(x),u=urls[0],label=x.NameTH||x.NameEN||'FishMepedia';
   return `<div class="fm-image-wrap">${u?fmImg(u,label):fmPlaceholder(label)}</div>`;
 }
 function galleryHtml(x){
-  const urls=parseMediaUrls(x.MediaURLs),label=x.NameTH||x.NameEN||'FishMepedia';
+  const urls=mediaUrlsForItem(x),label=x.NameTH||x.NameEN||'FishMepedia';
   if(!urls.length)return `<div class="fm-gallery"><div class="fm-gallery-main"><div class="fm-image-wrap">${fmPlaceholder(label)}</div></div></div>`;
   const id='fmGallery_'+Math.random().toString(36).slice(2,8);
   return `<div class="fm-gallery" id="${id}" data-index="0" data-label="${esc(label)}">
@@ -1808,7 +1857,7 @@ function clearSearch(){$('searchInput').value='';applyFilters();$('searchInput')
 function getCareBadgesHtml(x){if(!x.Difficulty)return '';let h='';if(/ง่าย|beginner|easy/i.test(x.Difficulty))h+='<span class="feature-badge badge-easy">🌱 เลี้ยงง่าย</span>';else if(/ปานกลาง|medium/i.test(x.Difficulty))h+='<span class="feature-badge badge-medium">☀️ ปานกลาง</span>';else if(/ยาก|advanced|hard/i.test(x.Difficulty))h+='<span class="feature-badge badge-hard">🔥 ยาก</span>';if(isPlant(x))h+='<span class="feature-badge" style="background:#e0f2fe;color:#0369a1">🌿 ไม้น้ำ</span>';return h}
 function favKey(x){return x.ID||x.ScientificName||x.NameEN||x.NameTH}
 function toggleFavorite(x,e){e.stopPropagation();const k=favKey(x);favorites=favorites.includes(k)?favorites.filter(v=>v!==k):[...favorites,k];localStorage.setItem('fishmepedia_favorites',JSON.stringify(favorites));renderCatalogCompact(currentFiltered)}
-function cardHtml(x){const urls=parseMediaUrls(x.MediaURLs),u=urls[0],idx=allData.indexOf(x),seen=isSeen(x);return `<article class="card" onclick='openModalByIndex(${idx})'><button class="favorite-btn ${favorites.includes(favKey(x))?'active':''}" title="${favorites.includes(favKey(x))?'นำออกจากรายการโปรด':'เพิ่มในรายการโปรด'}" onclick='toggleFavoriteByIndex(${idx},event)'><i class="fa-${favorites.includes(favKey(x))?'solid':'regular'} fa-heart"></i></button><div class="card-media-box">${urls.length>1?`<span class="media-count-badge"><i class="fa-solid fa-images"></i> ${urls.length}</span>`:''}${cardImageHtml(x)}</div><div class="card-body"><span class="category-badge">${esc([x.Category,x.SubCategory].filter(Boolean).join(' • '))}</span><div class="feature-badges-group">${getCareBadgesHtml(x)}</div><h3 class="card-title">${esc(x.NameTH)}</h3><div class="card-subtitle">${esc(x.NameEN)}${x.ScientificName?` · <i>${esc(x.ScientificName)}</i>`:''}</div><div class="card-discovery"><span>${seen?'<span class="seen-dot"></span>เคยดูแล้ว':'ยังไม่ได้ดู'}</span><span>${esc(x.SpecificType||'')}</span></div><div class="card-cta"><button class="view-btn" onclick='openModalByIndex(${idx});event.stopPropagation()'><i class="fa-solid fa-book-open"></i> รู้จักเจ้าตัวนี้</button>${!isPlant(x)?`<button class="card-tank-add ${isInMyTank(x)?'added':''}" title="${isInMyTank(x)?'อยู่ในตู้ของฉันแล้ว':'เพิ่มเข้าตู้ของฉัน'}" onclick='addToMyTankByIndex(${idx},event);event.stopPropagation()'>${isInMyTank(x)?'✓':'+'}</button>`:''}</div></div></article>`}
+function cardHtml(x){const urls=mediaUrlsForItem(x),u=urls[0],idx=allData.indexOf(x),seen=isSeen(x);return `<article class="card" onclick='openModalByIndex(${idx})'><button class="favorite-btn ${favorites.includes(favKey(x))?'active':''}" title="${favorites.includes(favKey(x))?'นำออกจากรายการโปรด':'เพิ่มในรายการโปรด'}" onclick='toggleFavoriteByIndex(${idx},event)'><i class="fa-${favorites.includes(favKey(x))?'solid':'regular'} fa-heart"></i></button><div class="card-media-box">${urls.length>1?`<span class="media-count-badge"><i class="fa-solid fa-images"></i> ${urls.length}</span>`:''}${cardImageHtml(x)}</div><div class="card-body"><span class="category-badge">${esc([x.Category,x.SubCategory].filter(Boolean).join(' • '))}</span><div class="feature-badges-group">${getCareBadgesHtml(x)}</div><h3 class="card-title">${esc(x.NameTH)}</h3><div class="card-subtitle">${esc(x.NameEN)}${x.ScientificName?` · <i>${esc(x.ScientificName)}</i>`:''}</div><div class="card-discovery"><span>${seen?'<span class="seen-dot"></span>เคยดูแล้ว':'ยังไม่ได้ดู'}</span><span>${esc(x.SpecificType||'')}</span></div><div class="card-cta"><button class="view-btn" onclick='openModalByIndex(${idx});event.stopPropagation()'><i class="fa-solid fa-book-open"></i> รู้จักเจ้าตัวนี้</button>${!isPlant(x)?`<button class="card-tank-add ${isInMyTank(x)?'added':''}" title="${isInMyTank(x)?'อยู่ในตู้ของฉันแล้ว':'เพิ่มเข้าตู้ของฉัน'}" onclick='addToMyTankByIndex(${idx},event);event.stopPropagation()'>${isInMyTank(x)?'✓':'+'}</button>`:''}</div></div></article>`}
 function renderCards(data,container){container.innerHTML='';if(!data.length){container.innerHTML='<div class="empty-state" style="grid-column:1/-1"><strong>🐠 เจ้าตัวนี้ยังว่ายมาไม่ถึงฐานข้อมูลของเรา</strong><small>ลองเปลี่ยนคำค้น หรือกดรีเซ็ตตัวกรองแล้วสำรวจรายการอื่น</small></div>';return}data.forEach(x=>container.insertAdjacentHTML('beforeend',cardHtml(x)))}
 function openModalByIndex(i){openModal(allData[i])}
 function toggleFavoriteByIndex(i,e){toggleFavorite(allData[i],e)}
@@ -1920,7 +1969,7 @@ function compatibilityHtml(x){
 
 function openModal(x){
   markSeen(x);
-  const urls=parseMediaUrls(x.MediaURLs),media=urls.length?urls.map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>';
+  const urls=mediaUrlsForItem(x),media=urls.length?urls.map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>';
   const care=parseCareInfo(x.CareInfo);
   const intro=x.Description||care.intro;
   const scientific=x.ScientificName?`<div class="scientific-name">${esc(x.ScientificName)}</div>`:'';
@@ -2604,8 +2653,8 @@ function splitSourceAndPhotoCredit(raw){
   return {source,photo:{author,license,sourcePage,licenseURL}};
 }
 function photoCreditHtml(x){
-  const m=mediaById.get(String(x.ID||'').trim());
-  if(!m||String(m.Status||'').trim()!=='LICENSE_VERIFIED')return '';
+  const m=mediaRecordForItem(x);
+  if(!mediaCreditMatchesDisplayedImage(x,m))return '';
   const author=String(m.AuthorCreator||'').trim()||'ไม่ระบุผู้สร้าง';
   const license=String(m.License||'').trim()||'License';
   const sourcePage=String(m.SourcePage||'').trim();
@@ -2721,7 +2770,7 @@ function buildProfileV3(x){
   ];
   const idx=allData.indexOf(x);
   return `
-    <div class="modal-media-col">${typeof renderMediaSlider==='function'?renderMediaSlider(x):`<div class="media-slider">${parseMediaUrls(x.MediaURLs).length?parseMediaUrls(x.MediaURLs).map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>'}</div>`}${photoCreditHtml(x)}</div>
+    <div class="modal-media-col">${typeof renderMediaSlider==='function'?renderMediaSlider(x):`<div class="media-slider">${mediaUrlsForItem(x).length?mediaUrlsForItem(x).map(u=>`<div class="media-wrapper">${mediaHtml(u)}</div>`).join(''):'<div class="media-wrapper"><div class="placeholder-art">🐟</div></div>'}</div>`}${photoCreditHtml(x)}</div>
     <div class="modal-info-col profile-v3">
       <div class="profile-hero">
         <div class="profile-eyebrow">${esc(x.Category||'Fish')}${x.SubCategory?' · '+esc(x.SubCategory):''}${x.SpecificType?' · '+esc(x.SpecificType):''}</div>
