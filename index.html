@@ -907,6 +907,46 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
   transform:translateY(-1px)!important;
 }
 
+
+@media (max-width:720px){
+  .profile-close,
+  .modal-close,
+  #closeProfile,
+  [data-close-profile]{
+    position:absolute!important;
+    top:10px!important;
+    right:10px!important;
+    z-index:6!important;
+  }
+  .profile-fav,
+  .favorite-btn,
+  #favoriteBtn,
+  #favBtn,
+  [data-favorite]{
+    position:absolute!important;
+    top:10px!important;
+    right:52px!important;
+    z-index:6!important;
+  }
+  .profile,
+  .modal-card,
+  .profile-card{
+    padding-top:54px!important;
+  }
+}
+
+
+.quick .quick-reset{
+  border-color:rgba(255,255,255,.09);
+  color:#b5c8c4;
+  margin-left:2px;
+}
+.quick .quick-reset i{color:#8ca7a2}
+.quick .quick-reset:hover{
+  border-color:rgba(97,232,232,.18);
+  color:#e1f0ec;
+}
+
 </style>
 </head>
 <body>
@@ -1018,6 +1058,7 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
         <button data-quick="small"><i class="fa-solid fa-minimize"></i>ตู้เล็ก</button>
         <button data-quick="community"><i class="fa-solid fa-people-group"></i>ตู้รวม</button>
         <button data-quick="bottom"><i class="fa-solid fa-layer-group"></i>อยู่พื้นตู้</button>
+        <button class="quick-reset" id="resetQuick" type="button"><i class="fa-solid fa-rotate-left"></i>รีเซ็ตตัวกรอง</button>
       </div>
     </div>
 
@@ -1029,7 +1070,7 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
         <div class="fgroup"><label>ครอบครัว / กลุ่ม</label><select id="subcategory"><option value="">ทั้งหมด</option></select></div>
         <div class="fgroup plant-only-filter"><label>แสง</label><select id="lighting"><option value="">ทั้งหมด</option></select></div>
         <div class="fgroup plant-only-filter"><label>CO₂</label><select id="co2"><option value="">ทั้งหมด</option></select></div>
-        <button class="clear-filters" id="reset" type="button"><i class="fa-solid fa-rotate-left"></i> ล้างตัวกรอง</button>
+        <button class="clear-filters" id="reset" type="button"><i class="fa-solid fa-rotate-left"></i> รีเซ็ตตัวกรอง</button>
       </div>
     </details>
   </section>
@@ -1276,7 +1317,14 @@ function applyFilters(){
   updateSavedCount();
 }
 function mediaFor(r){return mediaMap.get(norm(r.ID))||{}}
-function imageFor(r){const m=mediaFor(r);return firstUrl(m.CoverURL)||firstUrl(m.MediaURLs)||firstUrl(r.MediaURLs)}
+function imageFor(r){
+  const m=mediaFor(r);
+  if(!m) return '';
+  const visualOk=norm(m.VisualStatus).toUpperCase()==='KEEP';
+  const priorityOk=norm(m.CoverPriority).toUpperCase()==='PRIMARY';
+  if(!visualOk || !priorityOk) return '';
+  return firstUrl(m.CoverURL);
+}
 function factSet(r){
   if(r.Category==='Plant') return [
     ['sun',thaiDisplay('Lighting',r.Lighting)||'—'],['cloud',thaiDisplay('CO2',r.CO2)||'—'],['ruler-vertical',r.Size||'—'],['location-dot',thaiDisplay('Placement',r.Placement)||'—']
@@ -1450,15 +1498,6 @@ function randomProfile(){
   const pool=filtered.length?filtered:allData; if(!pool.length)return;
   openProfile(pool[Math.floor(Math.random()*pool.length)].ID);
 }
-async function shareRecord(r){
-  const title=`${r.NameTH||r.NameEN} — FishMepedia`;
-  const url=location.href.split('#')[0]+'#'+encodeURIComponent(r.ID);
-  try{
-    if(navigator.share){await navigator.share({title,text:title,url});return;}
-    if(navigator.clipboard){await navigator.clipboard.writeText(url);alert('คัดลอกลิงก์ไว้ให้แล้ว');return;}
-    const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('คัดลอกลิงก์ไว้ให้แล้ว');
-  }catch(e){}
-}
 
 function profileFactsV17(r){
   return r.Category==='Plant'
@@ -1492,7 +1531,6 @@ function openProfile(id){
       </div>
       <div class="profile-actions">
         <button id="saveProfile" class="${fav?'is-saved':''}" type="button"><i class="${fav?'fa-solid':'fa-regular'} fa-heart"></i><span>${fav?'จำไว้แล้ว':'จำไว้ก่อน'}</span></button>
-        <button id="shareProfile" type="button"><i class="fa-solid fa-share-nodes"></i><span>แชร์หน้านี้</span></button>
       </div>
     </div>
 
@@ -1562,7 +1600,6 @@ function openProfile(id){
     </div>`;
 
   $('#saveProfile')?.addEventListener('click',()=>toggleFav(r.ID));
-  $('#shareProfile')?.addEventListener('click',()=>shareRecord(r));
   document.querySelectorAll('[data-related]').forEach(b=>b.addEventListener('click',()=>openProfile(b.dataset.related)));
 
   lastFocused=document.activeElement;
@@ -1607,7 +1644,16 @@ $('#search').addEventListener('input',()=>{page=1;applyFilters()});
 ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).addEventListener('change',()=>{page=1;applyFilters()}));
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.cat;page=1;applyFilters()});
 document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{const same=quick===b.dataset.quick;document.querySelectorAll('.quick button').forEach(x=>x.classList.remove('active'));quick=same?'':b.dataset.quick;if(!same)b.classList.add('active');page=1;applyFilters()});
-$('#reset').onclick=()=>{$('#search').value='';['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');quick='';document.querySelectorAll('.quick button').forEach(x=>x.classList.remove('active'));page=1;applyFilters()};
+function resetFilters(){
+  $('#search').value='';
+  ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');
+  quick='';
+  document.querySelectorAll('.quick button[data-quick]').forEach(x=>x.classList.remove('active'));
+  page=1;
+  applyFilters();
+}
+$('#reset').onclick=resetFilters;
+$('#resetQuick').onclick=resetFilters;
 
 
 
@@ -1719,6 +1765,8 @@ load();
 document.getElementById('randomProfileBtn')?.addEventListener('click',randomProfile);
 
 $('#randomFab')?.addEventListener('click', randomProfile);
+
+
 </script>
 </body>
 </html>
