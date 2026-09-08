@@ -1530,6 +1530,65 @@ html[data-theme="light"] .hero-aquarium-scene{
   mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 97%)!important;
 }
 
+
+  .cards.list-view .card{grid-template-columns:120px minmax(0,1fr)}
+  .cards.list-view .card-stats{grid-template-columns:1fr 1fr}
+  .compare-tray{align-items:stretch;flex-direction:column}
+  .compare-items{overflow:auto}
+  .compare-dialog{padding:16px}
+  .compare-grid{grid-template-columns:120px repeat(var(--compare-cols,2),minmax(155px,1fr));overflow:auto}
+}
+
+
+/* v24.1 — view switcher + cute media fallback */
+.results-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px
+}
+.view-switch{
+  display:inline-flex;gap:5px;padding:4px;border:1px solid var(--line);
+  border-radius:12px;background:rgba(255,255,255,.018)
+}
+.view-switch button{
+  width:38px;height:34px;border:0;border-radius:9px;background:transparent;color:var(--dim)
+}
+.view-switch button.active{background:rgba(75,215,189,.08);color:var(--text)}
+.cards.list-view{display:grid;grid-template-columns:1fr;gap:10px}
+.cards.list-view .card{
+  display:grid;grid-template-columns:180px minmax(0,1fr);min-height:132px;border-radius:16px
+}
+.cards.list-view .card-media{aspect-ratio:auto;min-height:132px}
+.cards.list-view .card-body{padding:14px 16px}
+.cards.list-view .card-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+.cards.list-view .card-bottom{margin-top:10px}
+
+.media-fallback{
+  background:
+    radial-gradient(circle at 38% 30%,rgba(75,215,189,.12),transparent 32%),
+    linear-gradient(145deg,rgba(8,40,44,.96),rgba(3,21,29,.98))
+}
+.media-fallback::before{
+  content:"";position:absolute;inset:12%;border:1px solid rgba(97,232,232,.08);
+  border-radius:50%
+}
+.media-fallback i{position:relative;z-index:2;opacity:.76;transform:translateY(-5px)}
+.media-fallback::after{
+  content:"ยังไม่มีรูปน้องตอนนี้";
+  position:absolute;bottom:15px;left:10px;right:10px;z-index:2;
+  text-align:center;font-size:9px;color:#789996;letter-spacing:.01em
+}
+html[data-theme="light"] .media-fallback{
+  background:
+    radial-gradient(circle at 38% 30%,rgba(28,133,121,.12),transparent 32%),
+    linear-gradient(145deg,#e4f2ee,#d5e8e3)!important
+}
+html[data-theme="light"] .media-fallback::before{border-color:rgba(31,109,105,.10)}
+html[data-theme="light"] .media-fallback::after{color:#6f8b88}
+@media(max-width:700px){
+  .results-toolbar{align-items:flex-start}
+  .cards.list-view .card{grid-template-columns:120px minmax(0,1fr)}
+  .cards.list-view .card-stats{grid-template-columns:1fr 1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1663,9 +1722,15 @@ html[data-theme="light"] .hero-aquarium-scene{
 
   <section class="content content-wide">
     <div>
-      <div class="results-head">
-        <h2>มีใครอยู่ในตู้บ้าง</h2>
-        <div class="results-meta" id="resultsMeta">กำลังโหลด...</div>
+      <div class="results-toolbar">
+        <div class="results-head" style="margin-bottom:0;flex:1">
+          <h2>มีใครอยู่ในตู้บ้าง</h2>
+          <div class="results-meta" id="resultsMeta">กำลังโหลด...</div>
+        </div>
+        <div class="view-switch" role="group" aria-label="เลือกรูปแบบการแสดงผล">
+          <button id="viewGrid" class="active" type="button" aria-label="มุมมองการ์ด"><i class="fa-solid fa-grip"></i></button>
+          <button id="viewList" type="button" aria-label="มุมมองรายการ"><i class="fa-solid fa-list"></i></button>
+        </div>
       </div>
       <div class="cards" id="cards"><div class="loading"><i class="fa-solid fa-circle-notch fa-spin"></i>กำลังจัดรายชื่อให้</div></div>
       <div class="pager" id="pager"></div>
@@ -1775,6 +1840,7 @@ html[data-theme="light"] .hero-aquarium-scene{
   </div>
 </div>
 
+
 <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
   <article class="profile" id="profile" tabindex="-1">
     <button class="close" id="closeModal" aria-label="ปิด"><i class="fa-solid fa-xmark"></i></button>
@@ -1791,6 +1857,7 @@ const csvUrl=gid=>`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?for
 const PAGE_SIZE=18;
 let allData=[], filtered=[], mediaMap=new Map(), refsMap=new Map(), page=1, cat='All', quick='', lastFocused=null;
 let searchTimer=null, loadInFlight=false;
+let viewMode='grid';
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
@@ -1978,6 +2045,7 @@ function render(){
   if(!rows.length){$('#cards').innerHTML='<div class="empty"><i class="fa-solid fa-water"></i><div>ยังไม่เจอชนิดที่ตรงกับตัวกรองนี้</div><small>ลองลดตัวกรองหรือค้นหาด้วยชื่ออื่นดูนะ</small></div>'; $('#pager').innerHTML=''; return;}
   $('#cards').innerHTML=rows.map((r,i)=>card(r,i)).join('');
   renderPager();
+  applyViewMode(viewMode);
 
 }
 function card(r,i){
@@ -2402,6 +2470,17 @@ document.querySelectorAll('#toolModal input[type="number"]').forEach(input=>{
   });
 });
 
+
+
+
+function applyViewMode(mode){
+  viewMode=mode==='list'?'list':'grid';
+  $('#cards')?.classList.toggle('list-view',viewMode==='list');
+  $('#viewGrid')?.classList.toggle('active',viewMode==='grid');
+  $('#viewList')?.classList.toggle('active',viewMode==='list');
+}
+$('#viewGrid')?.addEventListener('click',()=>applyViewMode('grid'));
+$('#viewList')?.addEventListener('click',()=>applyViewMode('list'));
 
 
 for(let i=0;i<18;i++){const b=document.createElement('i');b.className='bubble';b.style.left=Math.random()*100+'%';b.style.animationDuration=(10+Math.random()*18)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.style.opacity=.1+Math.random()*.35;b.style.width=b.style.height=(3+Math.random()*6)+'px';$('#bubbles').appendChild(b)}
