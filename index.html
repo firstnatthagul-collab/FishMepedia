@@ -431,7 +431,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .story-section.secondary summary{color:#a9bfba}
 @media(max-width:860px){
  #closeModal{position:fixed!important;top:calc(6vh + 10px)!important;right:12px!important;width:44px!important;height:44px!important}
- .profile-actions{right:68px!important;top:10px!important;z-index:70!important}
  .profile-head{padding-right:18px}
  .profile-story-open .story-copy{padding-left:0}
 }
@@ -909,43 +908,97 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
 }
 
 
-@media (max-width:720px){
-  .profile-close,
-  .modal-close,
-  #closeProfile,
-  [data-close-profile]{
-    position:absolute!important;
-    top:10px!important;
-    right:10px!important;
-    z-index:6!important;
-  }
-  .profile-fav,
-  .favorite-btn,
-  #favoriteBtn,
-  #favBtn,
-  [data-favorite]{
-    position:absolute!important;
-    top:10px!important;
-    right:52px!important;
-    z-index:6!important;
-  }
-  .profile,
-  .modal-card,
-  .profile-card{
-    padding-top:54px!important;
-  }
+/* v21 — detail modal performance: avoid decoding/filtering the same large image twice */
+.profile-media.v17-media::before{
+  background-image:none!important;
+  background:radial-gradient(circle at 45% 38%,rgba(75,215,189,.12),transparent 38%),linear-gradient(145deg,#08282c,#03151d)!important;
+  filter:none!important;
+  opacity:1!important;
+  transform:none!important;
+}
+.profile-media.v17-media img{
+  contain:paint;
 }
 
 
-.quick .quick-reset{
-  border-color:rgba(255,255,255,.09);
-  color:#b5c8c4;
-  margin-left:2px;
+/* v21.1 — hard-bound detail media layout for extreme portrait images */
+.profile-left{
+  display:grid!important;
+  grid-template-rows:minmax(0,1fr) auto!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
 }
-.quick .quick-reset i{color:#8ca7a2}
-.quick .quick-reset:hover{
-  border-color:rgba(97,232,232,.18);
-  color:#e1f0ec;
+.profile-media-wrap{
+  display:grid!important;
+  grid-template-rows:minmax(0,1fr) auto!important;
+  min-height:0!important;
+  height:100%!important;
+  overflow:hidden!important;
+}
+.profile-media.v17-media{
+  min-height:0!important;
+  height:100%!important;
+  max-height:100%!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:12px!important;
+}
+.profile-media.v17-media img{
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  flex:0 1 auto!important;
+}
+.image-credit-inline.v17-credit{
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:34px!important;
+  max-height:74px!important;
+  overflow:auto!important;
+  position:relative!important;
+  z-index:12!important;
+}
+.profile-actions{
+  flex:0 0 auto!important;
+  position:relative!important;
+  z-index:14!important;
+}
+@media(max-width:860px){
+  .profile{
+    grid-template-rows:minmax(0,42vh) minmax(0,1fr)!important;
+  }
+  .profile-left{
+    position:relative!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  .profile-media-wrap{
+    min-height:0!important;
+    height:100%!important;
+  }
+  .profile-media.v17-media{
+    padding:8px!important;
+  }
+  .image-credit-inline.v17-credit{
+    max-height:58px!important;
+    padding:6px 58px 7px 10px!important;
+    font-size:8.5px!important;
+  }
+  .profile-actions{
+    position:absolute!important;
+    right:68px!important;
+    top:10px!important;
+    z-index:70!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+  }
 }
 
 </style>
@@ -1059,7 +1112,6 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
         <button data-quick="small"><i class="fa-solid fa-minimize"></i>ตู้เล็ก</button>
         <button data-quick="community"><i class="fa-solid fa-people-group"></i>ตู้รวม</button>
         <button data-quick="bottom"><i class="fa-solid fa-layer-group"></i>อยู่พื้นตู้</button>
-        <button class="quick-reset" id="resetQuick" type="button"><i class="fa-solid fa-rotate-left"></i>รีเซ็ตตัวกรอง</button>
       </div>
     </div>
 
@@ -1071,7 +1123,7 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
         <div class="fgroup"><label>ครอบครัว / กลุ่ม</label><select id="subcategory"><option value="">ทั้งหมด</option></select></div>
         <div class="fgroup plant-only-filter"><label>แสง</label><select id="lighting"><option value="">ทั้งหมด</option></select></div>
         <div class="fgroup plant-only-filter"><label>CO₂</label><select id="co2"><option value="">ทั้งหมด</option></select></div>
-        <button class="clear-filters" id="reset" type="button"><i class="fa-solid fa-rotate-left"></i> รีเซ็ตตัวกรอง</button>
+        <button class="clear-filters" id="reset" type="button"><i class="fa-solid fa-rotate-left"></i> ล้างตัวกรอง</button>
       </div>
     </details>
   </section>
@@ -1235,7 +1287,9 @@ async function load(){
   try{
     const [master,media,refs]=await Promise.all([parseCSV(GID.master),parseCSV(GID.media),parseCSV(GID.refs)]);
     allData=master.filter(r=>valid(r.ID)&&['Fish','Plant'].includes(norm(r.Category)));
-    mediaMap=new Map(media.filter(r=>valid(r.ID)).map(r=>[norm(r.ID),r]));
+    mediaMap=new Map(media
+      .filter(r=>valid(r.ID)&&norm(r.VisualStatus).toUpperCase()==='KEEP'&&norm(r.CoverPriority).toUpperCase()==='PRIMARY')
+      .map(r=>[norm(r.ID),r]));
     refs.forEach(r=>{
       const url=norm(r.ReferenceURL)||norm(r['ReferenceURL_1']);
       if(url) refsMap.set(url,r);
@@ -1318,13 +1372,22 @@ function applyFilters(){
   updateSavedCount();
 }
 function mediaFor(r){return mediaMap.get(norm(r.ID))||{}}
-function imageFor(r){
+function displayImageUrl(url,maxWidth=1600){
+  const raw=norm(url);
+  if(!raw) return '';
+  try{
+    const u=new URL(raw);
+    if(u.hostname==='commons.wikimedia.org'&&u.pathname.startsWith('/wiki/Special:Redirect/file/')){
+      u.searchParams.set('width',String(maxWidth));
+      return u.toString();
+    }
+  }catch(e){}
+  return raw;
+}
+function imageFor(r,maxWidth=1600){
   const m=mediaFor(r);
-  if(!m) return '';
-  const visualOk=norm(m.VisualStatus).toUpperCase()==='KEEP';
-  const priorityOk=norm(m.CoverPriority).toUpperCase()==='PRIMARY';
-  if(!visualOk || !priorityOk) return '';
-  return firstUrl(m.CoverURL);
+  const original=firstUrl(m.CoverURL);
+  return displayImageUrl(original,maxWidth);
 }
 function factSet(r){
   if(r.Category==='Plant') return [
@@ -1344,7 +1407,7 @@ function render(){
   });
 }
 function card(r,i){
-  const img=imageFor(r), facts=factSet(r).slice(0,4), diff=levelVal('difficulty',r.Difficulty);
+  const img=imageFor(r,900), facts=factSet(r).slice(0,4), diff=levelVal('difficulty',r.Difficulty);
   const kindIcon=r.Category==='Plant'?'seedling':'fish';
   const kindLabel=r.Category==='Plant'?'ไม้น้ำ':'ปลา';
   return `<article class="card" tabindex="0" role="button" aria-label="ดูรายละเอียด ${esc(r.NameTH||r.NameEN)}" data-open="${esc(r.ID)}" style="animation-delay:${Math.min(i,8)*30}ms">
@@ -1443,7 +1506,7 @@ function renderSaved(){
     return;
   }
   $('#savedList').innerHTML=rows.map(r=>{
-    const img=imageFor(r);
+    const img=imageFor(r,360);
     return `<div class="saved-item">
       <div class="saved-thumb">${img?`<img src="${esc(img)}" alt="${esc(r.NameTH||r.NameEN)}">`:icon(r.Category==='Plant'?'seedling':'fish')}</div>
       <div class="saved-copy" data-saved-open="${esc(r.ID)}"><strong>${esc(r.NameTH||r.NameEN)}</strong><small>${esc(r.ScientificName||r.NameEN||'')}</small></div>
@@ -1499,6 +1562,15 @@ function randomProfile(){
   const pool=filtered.length?filtered:allData; if(!pool.length)return;
   openProfile(pool[Math.floor(Math.random()*pool.length)].ID);
 }
+async function shareRecord(r){
+  const title=`${r.NameTH||r.NameEN} — FishMepedia`;
+  const url=location.href.split('#')[0]+'#'+encodeURIComponent(r.ID);
+  try{
+    if(navigator.share){await navigator.share({title,text:title,url});return;}
+    if(navigator.clipboard){await navigator.clipboard.writeText(url);alert('คัดลอกลิงก์ไว้ให้แล้ว');return;}
+    const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('คัดลอกลิงก์ไว้ให้แล้ว');
+  }catch(e){}
+}
 
 function profileFactsV17(r){
   return r.Category==='Plant'
@@ -1508,7 +1580,10 @@ function profileFactsV17(r){
 
 function openProfile(id){
   const r=allData.find(x=>x.ID===id); if(!r)return;
-  const m=mediaFor(r), img=imageFor(r);
+  $('#modal').classList.add('open');
+  $('#modal').setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  const m=mediaFor(r), img=imageFor(r,1600);
   const facts=profileFactsV17(r), related=relatedRecords(r);
   const creditText=m?.AttributionText || [m?.AuthorCreator,m?.License].filter(Boolean).join(' · ');
   const intro=r.Description||'';
@@ -1520,8 +1595,8 @@ function openProfile(id){
   $('#profileContent').innerHTML=`
     <div class="profile-left">
       <div class="profile-media-wrap">
-        <div class="profile-media v17-media ${img?'has-image':''}" ${img?`style="--profile-bg:url('${esc(img)}')"`:''}>
-          ${img?`<img src="${esc(img)}" alt="${esc(r.NameTH||r.NameEN)}" onerror="this.style.display='none';this.parentElement.classList.remove('has-image')">`:''}
+        <div class="profile-media v17-media ${img?'has-image':''}">
+          ${img?`<img src="${esc(img)}" alt="${esc(r.NameTH||r.NameEN)}" decoding="async" fetchpriority="high" onerror="this.style.display='none';this.parentElement.classList.remove('has-image')">`:''}
           <div class="media-fallback">${icon(r.Category==='Plant'?'seedling':'fish')}</div>
         </div>
         ${img?`<div class="image-credit-inline v17-credit">
@@ -1604,9 +1679,6 @@ function openProfile(id){
   document.querySelectorAll('[data-related]').forEach(b=>b.addEventListener('click',()=>openProfile(b.dataset.related)));
 
   lastFocused=document.activeElement;
-  $('#modal').classList.add('open');
-  $('#modal').setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
   try{history.replaceState(null,'','#'+encodeURIComponent(r.ID))}catch(e){}
   setTimeout(()=>$('#closeModal')?.focus(),0);
 }
@@ -1645,16 +1717,7 @@ $('#search').addEventListener('input',()=>{page=1;applyFilters()});
 ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).addEventListener('change',()=>{page=1;applyFilters()}));
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.cat;page=1;applyFilters()});
 document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{const same=quick===b.dataset.quick;document.querySelectorAll('.quick button').forEach(x=>x.classList.remove('active'));quick=same?'':b.dataset.quick;if(!same)b.classList.add('active');page=1;applyFilters()});
-function resetFilters(){
-  $('#search').value='';
-  ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');
-  quick='';
-  document.querySelectorAll('.quick button[data-quick]').forEach(x=>x.classList.remove('active'));
-  page=1;
-  applyFilters();
-}
-$('#reset').onclick=resetFilters;
-$('#resetQuick').onclick=resetFilters;
+$('#reset').onclick=()=>{$('#search').value='';['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');quick='';document.querySelectorAll('.quick button').forEach(x=>x.classList.remove('active'));page=1;applyFilters()};
 
 
 
@@ -1766,8 +1829,6 @@ load();
 document.getElementById('randomProfileBtn')?.addEventListener('click',randomProfile);
 
 $('#randomFab')?.addEventListener('click', randomProfile);
-
-
 </script>
 </body>
 </html>
