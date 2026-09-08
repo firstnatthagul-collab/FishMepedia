@@ -1001,6 +1001,47 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
   }
 }
 
+
+/* v22 — hardening: image delivery, loading/error states, accessibility & mobile */
+.quick .quick-reset{border-color:rgba(255,255,255,.09);color:#b5c8c4;margin-left:2px}
+.quick .quick-reset i{color:#8ca7a2}
+.quick .quick-reset:hover{border-color:rgba(97,232,232,.18);color:#e1f0ec}
+
+.card-media,.profile-media.v17-media{isolation:isolate}
+.card-media img,.profile-media.v17-media img{transition:opacity .18s ease}
+.card-media.is-loading img,.profile-media.v17-media.is-loading img{opacity:0}
+.card-media.is-loading::after,.profile-media.v17-media.is-loading::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(100deg,rgba(255,255,255,.02) 20%,rgba(255,255,255,.08) 40%,rgba(255,255,255,.02) 60%);
+  background-size:220% 100%;animation:fmShimmer 1.25s linear infinite;pointer-events:none
+}
+@keyframes fmShimmer{to{background-position:-220% 0}}
+.image-error-note{
+  position:absolute;left:12px;right:12px;bottom:12px;z-index:4;
+  padding:7px 9px;border-radius:10px;background:rgba(2,18,22,.78);
+  color:#a9bfba;font-size:11px;text-align:center;backdrop-filter:blur(6px)
+}
+.load-panel{grid-column:1/-1;padding:34px 18px;text-align:center;color:#a9bfba}
+.load-panel i{display:block;font-size:25px;margin-bottom:10px;color:#73d8cf}
+.load-panel button{margin-top:13px;min-height:44px;padding:0 16px;border-radius:12px}
+
+button,.tab,.card,[role="button"],a{touch-action:manipulation}
+.close,.modal-close,.tool-modal-close,.profile-actions button,.quick button,.clear-filters,.related-card{
+  min-height:44px
+}
+.close{min-width:44px}
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible,.card:focus-visible,summary:focus-visible{
+  outline:2px solid rgba(97,232,232,.78)!important;outline-offset:3px
+}
+@media(max-width:720px){
+  .quick{gap:8px}
+  .quick button{min-height:44px}
+  .profile-right{-webkit-overflow-scrolling:touch}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 </head>
 <body>
@@ -1112,6 +1153,7 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
         <button data-quick="small"><i class="fa-solid fa-minimize"></i>ตู้เล็ก</button>
         <button data-quick="community"><i class="fa-solid fa-people-group"></i>ตู้รวม</button>
         <button data-quick="bottom"><i class="fa-solid fa-layer-group"></i>อยู่พื้นตู้</button>
+        <button class="quick-reset" id="resetQuick" type="button"><i class="fa-solid fa-rotate-left"></i>รีเซ็ตตัวกรอง</button>
       </div>
     </div>
 
@@ -1123,7 +1165,7 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
         <div class="fgroup"><label>ครอบครัว / กลุ่ม</label><select id="subcategory"><option value="">ทั้งหมด</option></select></div>
         <div class="fgroup plant-only-filter"><label>แสง</label><select id="lighting"><option value="">ทั้งหมด</option></select></div>
         <div class="fgroup plant-only-filter"><label>CO₂</label><select id="co2"><option value="">ทั้งหมด</option></select></div>
-        <button class="clear-filters" id="reset" type="button"><i class="fa-solid fa-rotate-left"></i> ล้างตัวกรอง</button>
+        <button class="clear-filters" id="reset" type="button"><i class="fa-solid fa-rotate-left"></i> รีเซ็ตตัวกรอง</button>
       </div>
     </details>
   </section>
@@ -1242,8 +1284,8 @@ body > *:not(.aquarium-ambience):not(.modal):not(.saved-backdrop):not(.tool-moda
   </div>
 </div>
 
-<div class="modal" id="modal" aria-hidden="true">
-  <article class="profile" id="profile">
+<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+  <article class="profile" id="profile" tabindex="-1">
     <button class="close" id="closeModal" aria-label="ปิด"><i class="fa-solid fa-xmark"></i></button>
     <div id="profileContent"></div>
   </article>
@@ -1257,6 +1299,7 @@ const GID={master:'177066136',media:'2001001',refs:'2001002'};
 const csvUrl=gid=>`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
 const PAGE_SIZE=18;
 let allData=[], filtered=[], mediaMap=new Map(), refsMap=new Map(), page=1, cat='All', quick='', lastFocused=null;
+let searchTimer=null, loadInFlight=false;
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
@@ -1264,6 +1307,16 @@ const norm=s=>String(s??'').trim();
 const splitVals=s=>norm(s).split(/[;,|]/).map(v=>v.trim()).filter(Boolean);
 const firstUrl=s=>splitVals(s)[0]||'';
 const valid=v=>{v=norm(v); return v && !['N/A','NA','-','—','None'].includes(v)};
+const debounce=(fn,wait=140)=>(...args)=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>fn(...args),wait)};
+function prepareRecord(r){
+  r.__search=[r.NameTH,r.NameEN,r.ScientificName,r.Synonyms,r.Description,r.Appearance,r.Behavior,r.Purpose,r.SubCategory].join(' ').toLowerCase();
+  r.__community=[r.Purpose,r.Behavior,r.Description].join(' ');
+  r.__bottom=[r.Placement,r.SpecificType,r.Behavior,r.Description].join(' ');
+  const nums=(norm(r.TankSize).match(/\d+(?:\.\d+)?/g)||[]).map(Number);
+  r.__tankMin=nums.length?Math.min(...nums):NaN;
+  return r;
+}
+
 const levelVal=(type,v)=>{
   v=norm(v).toLowerCase();
   if(type==='difficulty') return v.includes('easy')?1:v.includes('medium')?3:(v.includes('advanced')||v.includes('hard'))?5:2;
@@ -1284,9 +1337,13 @@ function parseCSV(gid){
 }
 
 async function load(){
+  if(loadInFlight) return;
+  loadInFlight=true;
+  $('#cards').setAttribute('aria-busy','true');
+  $('#cards').innerHTML='<div class="load-panel" role="status" aria-live="polite"><i class="fa-solid fa-water"></i><div>กำลังเตรียมข้อมูลในตู้...</div></div>';
   try{
     const [master,media,refs]=await Promise.all([parseCSV(GID.master),parseCSV(GID.media),parseCSV(GID.refs)]);
-    allData=master.filter(r=>valid(r.ID)&&['Fish','Plant'].includes(norm(r.Category)));
+    allData=master.filter(r=>valid(r.ID)&&['Fish','Plant'].includes(norm(r.Category))).map(prepareRecord);
     mediaMap=new Map(media
       .filter(r=>valid(r.ID)&&norm(r.VisualStatus).toUpperCase()==='KEEP'&&norm(r.CoverPriority).toUpperCase()==='PRIMARY')
       .map(r=>[norm(r.ID),r]));
@@ -1309,8 +1366,12 @@ async function load(){
   }catch(err){
     console.error(err);
     $('#statusText') && ($('#statusText').textContent='ยังนับเพื่อนในตู้ไม่สำเร็จ');
-    $('#statusSub') && ($('#statusSub').textContent='ลองรีเฟรชหน้าอีกครั้งนะ');
-    $('#cards').innerHTML='<div class="empty"><i class="fa-solid fa-triangle-exclamation"></i><div>ยังดึงฐานข้อมูลไม่ได้</div><small>ตอนนี้ยังเปิดข้อมูลให้ดูไม่ได้</small></div>';
+    $('#statusSub') && ($('#statusSub').textContent='ลองใหม่ได้โดยไม่ต้องรีเฟรชทั้งหน้า');
+    $('#cards').innerHTML='<div class="empty" role="alert"><i class="fa-solid fa-triangle-exclamation"></i><div>ยังดึงฐานข้อมูลไม่ได้</div><small>อาจเป็นเพราะเครือข่ายหรือ Google Sheets ตอบช้า</small><br><button class="clear-filters" id="retryLoad" type="button"><i class="fa-solid fa-rotate"></i> ลองโหลดอีกครั้ง</button></div>';
+    $('#retryLoad')?.addEventListener('click',load,{once:true});
+  }finally{
+    $('#cards').setAttribute('aria-busy','false');
+    loadInFlight=false;
   }
 }
 
@@ -1339,26 +1400,21 @@ function applyFilters(){
     if(lighting&&norm(r.Lighting)!==lighting) return false;
     if(co2&&norm(r.CO2)!==co2) return false;
     if(q){
-      const hay=[r.NameTH,r.NameEN,r.ScientificName,r.Synonyms,r.Description,r.Appearance,r.Behavior,r.Purpose,r.SubCategory].join(' ').toLowerCase();
-      if(!hay.includes(q)) return false;
+      if(!r.__search.includes(q)) return false;
     }
 
     if(quick==='easy'&&!/easy/i.test(norm(r.Difficulty))) return false;
 
     if(quick==='small'){
-      const nums=(norm(r.TankSize).match(/\d+(?:\.\d+)?/g)||[]).map(Number);
-      const liters=nums.length?Math.min(...nums):NaN;
-      if(!Number.isFinite(liters)||liters>50) return false;
+      if(!Number.isFinite(r.__tankMin)||r.__tankMin>50) return false;
     }
 
     if(quick==='community'){
-      const text=[r.Purpose,r.Behavior,r.Description].join(' ');
-      if(!/ตู้รวม|community|peaceful|สงบ|รวมฝูง/i.test(text)) return false;
+      if(!/ตู้รวม|community|peaceful|สงบ|รวมฝูง/i.test(r.__community)) return false;
     }
 
     if(quick==='bottom'){
-      const text=[r.Placement,r.SpecificType,r.Behavior,r.Description].join(' ');
-      if(!/bottom|พื้น|bottom dweller|benthic/i.test(text)) return false;
+      if(!/bottom|พื้น|bottom dweller|benthic/i.test(r.__bottom)) return false;
     }
     return true;
   });
@@ -1384,10 +1440,40 @@ function displayImageUrl(url,maxWidth=1600){
   }catch(e){}
   return raw;
 }
+function displayImageSrcset(url,widths=[480,900,1600]){
+  const raw=norm(url);
+  if(!raw) return '';
+  try{
+    const u=new URL(raw);
+    if(u.hostname==='commons.wikimedia.org'&&u.pathname.startsWith('/wiki/Special:Redirect/file/')){
+      return widths.map(w=>`${displayImageUrl(raw,w)} ${w}w`).join(', ');
+    }
+  }catch(e){}
+  return '';
+}
 function imageFor(r,maxWidth=1600){
   const m=mediaFor(r);
   const original=firstUrl(m.CoverURL);
   return displayImageUrl(original,maxWidth);
+}
+function imageMetaFor(r){
+  const m=mediaFor(r), original=firstUrl(m.CoverURL);
+  return {m,original};
+}
+function imageLoaded(img){
+  const box=img.closest('.card-media,.profile-media');
+  box?.classList.remove('is-loading');
+}
+function imageFailed(img){
+  const box=img.closest('.card-media,.profile-media');
+  img.style.display='none';
+  box?.classList.remove('has-image','is-loading');
+  if(box && !box.querySelector('.image-error-note')){
+    const note=document.createElement('div');
+    note.className='image-error-note';
+    note.textContent='ภาพโหลดไม่สำเร็จ';
+    box.appendChild(note);
+  }
 }
 function factSet(r){
   if(r.Category==='Plant') return [
@@ -1401,22 +1487,19 @@ function render(){
   if(!rows.length){$('#cards').innerHTML='<div class="empty"><i class="fa-solid fa-water"></i><div>ยังไม่เจอชนิดที่ตรงกับตัวกรองนี้</div><small>ลองลดตัวกรองหรือค้นหาด้วยชื่ออื่นดูนะ</small></div>'; $('#pager').innerHTML=''; return;}
   $('#cards').innerHTML=rows.map((r,i)=>card(r,i)).join('');
   renderPager();
-  document.querySelectorAll('.card[data-open]').forEach(card=>{
-    card.onclick=()=>openProfile(card.dataset.open);
-    card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProfile(card.dataset.open);}};
-  });
+
 }
 function card(r,i){
-  const img=imageFor(r,900), facts=factSet(r).slice(0,4), diff=levelVal('difficulty',r.Difficulty);
+  const {m,original}=imageMetaFor(r), img=displayImageUrl(original,900), srcset=displayImageSrcset(original,[360,640,900]), facts=factSet(r).slice(0,4), diff=levelVal('difficulty',r.Difficulty);
   const kindIcon=r.Category==='Plant'?'seedling':'fish';
   const kindLabel=r.Category==='Plant'?'ไม้น้ำ':'ปลา';
   return `<article class="card" tabindex="0" role="button" aria-label="ดูรายละเอียด ${esc(r.NameTH||r.NameEN)}" data-open="${esc(r.ID)}" style="animation-delay:${Math.min(i,8)*30}ms">
-    <div class="card-media ${img?'has-image':''}">
-      ${img?`<img src="${esc(img)}" alt="${esc(r.NameTH)}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.remove('has-image')">`:''}
+    <div class="card-media ${img?'has-image is-loading':''}">
+      ${img?`<img src="${esc(img)}" ${srcset?`srcset="${esc(srcset)}" sizes="(max-width:700px) 92vw, (max-width:1100px) 46vw, 360px"`:''} alt="${esc(r.NameTH||r.NameEN)}" loading="lazy" decoding="async" onload="imageLoaded(this)" onerror="imageFailed(this)">`:''}
       <div class="media-fallback">${icon(kindIcon)}</div>
       <div class="media-shade"></div>
       <div class="card-kind">${icon(kindIcon)} <span>${kindLabel}</span></div>
-      ${img&&mediaFor(r).AuthorCreator?`<div class="card-credit">ภาพ: ${esc(mediaFor(r).AuthorCreator)}${mediaFor(r).License?` · ${esc(mediaFor(r).License)}`:''}</div>`:''}
+      ${img&&m.AuthorCreator?`<div class="card-credit">ภาพ: ${esc(m.AuthorCreator)}${m.License?` · ${esc(m.License)}`:''}</div>`:''}
     </div>
     <div class="card-body">
       <div class="card-title-row">
@@ -1562,16 +1645,6 @@ function randomProfile(){
   const pool=filtered.length?filtered:allData; if(!pool.length)return;
   openProfile(pool[Math.floor(Math.random()*pool.length)].ID);
 }
-async function shareRecord(r){
-  const title=`${r.NameTH||r.NameEN} — FishMepedia`;
-  const url=location.href.split('#')[0]+'#'+encodeURIComponent(r.ID);
-  try{
-    if(navigator.share){await navigator.share({title,text:title,url});return;}
-    if(navigator.clipboard){await navigator.clipboard.writeText(url);alert('คัดลอกลิงก์ไว้ให้แล้ว');return;}
-    const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('คัดลอกลิงก์ไว้ให้แล้ว');
-  }catch(e){}
-}
-
 function profileFactsV17(r){
   return r.Category==='Plant'
     ? [['sun','แสง',thaiDisplay('Lighting',r.Lighting)||'—'],['cloud','CO₂',thaiDisplay('CO2',r.CO2)||'—'],['ruler','ขนาด',r.Size||'—'],['location-dot','ตำแหน่ง',thaiDisplay('Placement',r.Placement)||'—']]
@@ -1580,10 +1653,11 @@ function profileFactsV17(r){
 
 function openProfile(id){
   const r=allData.find(x=>x.ID===id); if(!r)return;
+  lastFocused=document.activeElement;
   $('#modal').classList.add('open');
   $('#modal').setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
-  const m=mediaFor(r), img=imageFor(r,1600);
+  const m=mediaFor(r), originalImg=firstUrl(m.CoverURL), img=displayImageUrl(originalImg,1600), srcset=displayImageSrcset(originalImg,[640,1000,1600]);
   const facts=profileFactsV17(r), related=relatedRecords(r);
   const creditText=m?.AttributionText || [m?.AuthorCreator,m?.License].filter(Boolean).join(' · ');
   const intro=r.Description||'';
@@ -1595,8 +1669,8 @@ function openProfile(id){
   $('#profileContent').innerHTML=`
     <div class="profile-left">
       <div class="profile-media-wrap">
-        <div class="profile-media v17-media ${img?'has-image':''}">
-          ${img?`<img src="${esc(img)}" alt="${esc(r.NameTH||r.NameEN)}" decoding="async" fetchpriority="high" onerror="this.style.display='none';this.parentElement.classList.remove('has-image')">`:''}
+        <div class="profile-media v17-media ${img?'has-image is-loading':''}">
+          ${img?`<img src="${esc(img)}" ${srcset?`srcset="${esc(srcset)}" sizes="(max-width:860px) 100vw, 42vw"`:''} alt="${esc(r.NameTH||r.NameEN)}" decoding="async" fetchpriority="high" onload="imageLoaded(this)" onerror="imageFailed(this)">`:''}
           <div class="media-fallback">${icon(r.Category==='Plant'?'seedling':'fish')}</div>
         </div>
         ${img?`<div class="image-credit-inline v17-credit">
@@ -1613,7 +1687,7 @@ function openProfile(id){
     <div class="profile-right">
       <div class="profile-head">
         <div class="profile-eyebrow">${icon(r.Category==='Plant'?'seedling':'fish')} ${r.Category==='Plant'?'ไม้น้ำ':'ปลา'}${r.SubCategory?` · ${esc(r.SubCategory)}`:''}</div>
-        <h2>${esc(r.NameTH||r.NameEN)}</h2>
+        <h2 id="profileTitle">${esc(r.NameTH||r.NameEN)}</h2>
         ${r.NameEN?`<div class="profile-en">${esc(r.NameEN)}</div>`:''}
         <div class="profile-science">${esc(r.ScientificName||'')}</div>
         ${intro?`<div class="profile-intro">${esc(intro)}</div>`:''}
@@ -1678,7 +1752,6 @@ function openProfile(id){
   $('#saveProfile')?.addEventListener('click',()=>toggleFav(r.ID));
   document.querySelectorAll('[data-related]').forEach(b=>b.addEventListener('click',()=>openProfile(b.dataset.related)));
 
-  lastFocused=document.activeElement;
   try{history.replaceState(null,'','#'+encodeURIComponent(r.ID))}catch(e){}
   setTimeout(()=>$('#closeModal')?.focus(),0);
 }
@@ -1713,11 +1786,28 @@ document.addEventListener('keydown',e=>{
     else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
   }
 });
-$('#search').addEventListener('input',()=>{page=1;applyFilters()});
+$('#cards').addEventListener('click',e=>{
+  const card=e.target.closest('.card[data-open]');
+  if(card) openProfile(card.dataset.open);
+});
+$('#cards').addEventListener('keydown',e=>{
+  const card=e.target.closest('.card[data-open]');
+  if(card && (e.key==='Enter'||e.key===' ')){e.preventDefault();openProfile(card.dataset.open);}
+});
+$('#search').addEventListener('input',debounce(()=>{page=1;applyFilters()},140));
 ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).addEventListener('change',()=>{page=1;applyFilters()}));
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.cat;page=1;applyFilters()});
-document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{const same=quick===b.dataset.quick;document.querySelectorAll('.quick button').forEach(x=>x.classList.remove('active'));quick=same?'':b.dataset.quick;if(!same)b.classList.add('active');page=1;applyFilters()});
-$('#reset').onclick=()=>{$('#search').value='';['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');quick='';document.querySelectorAll('.quick button').forEach(x=>x.classList.remove('active'));page=1;applyFilters()};
+document.querySelectorAll('.quick button[data-quick]').forEach(b=>b.onclick=()=>{const same=quick===b.dataset.quick;document.querySelectorAll('.quick button[data-quick]').forEach(x=>x.classList.remove('active'));quick=same?'':b.dataset.quick;if(!same)b.classList.add('active');page=1;applyFilters()});
+function resetFilters(){
+  $('#search').value='';
+  ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');
+  quick='';
+  document.querySelectorAll('.quick button[data-quick]').forEach(x=>x.classList.remove('active'));
+  page=1;
+  applyFilters();
+}
+$('#reset').onclick=resetFilters;
+$('#resetQuick').onclick=resetFilters;
 
 
 
