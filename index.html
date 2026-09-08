@@ -278,6 +278,106 @@ linear-gradient(180deg,#061a22,#031218 70%);box-shadow:var(--shadow);position:re
  .power-summary{grid-template-columns:1fr}
 }
 
+
+
+/* v26 — polished result header */
+.results-toolbar-view-right{
+  align-items:center!important;
+  padding:2px 0 11px;
+}
+.results-toolbar-view-right .results-head{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:3px!important;
+  min-width:0;
+}
+.results-toolbar-view-right .results-head h2{
+  margin:0!important;
+  line-height:1.25;
+}
+.results-toolbar-view-right .results-meta{
+  margin:0!important;
+  line-height:1.3;
+}
+.results-toolbar-view-right .view-switch{
+  margin-left:auto!important;
+  align-self:center!important;
+  flex:0 0 auto;
+}
+@media(max-width:560px){
+  .results-toolbar-view-right{
+    gap:10px!important;
+    padding-bottom:9px;
+  }
+  .results-toolbar-view-right .results-head{
+    flex:1 1 auto;
+  }
+  .results-toolbar-view-right .results-head h2{
+    font-size:14px;
+  }
+}
+
+/* v25 — dose calculator + right-aligned view switch */
+.results-toolbar-view-right{
+  display:flex;
+  align-items:flex-end;
+  gap:16px;
+  width:100%;
+}
+.results-toolbar-view-right .results-head{min-width:0}
+.results-toolbar-view-right .view-switch{
+  margin-left:auto;
+  flex:0 0 auto;
+  align-self:flex-end;
+}
+.dose-intro{
+  margin-top:12px;
+  padding:11px 13px;
+  border-radius:12px;
+  background:rgba(97,232,232,.045);
+  border:1px solid rgba(97,232,232,.09);
+  color:#91aaa6;
+  font-size:10.5px;
+  line-height:1.65;
+}
+.dose-intro b{color:#cfe3df;font-weight:500}
+.dose-result strong{color:var(--cyan)}
+.dose-mini{
+  margin-top:7px;
+  color:#6f8989;
+  font:500 10px Manrope,Kanit,sans-serif;
+}
+.dose-warning{
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(213,185,121,.045);
+  border:1px solid rgba(213,185,121,.10);
+  color:#8f8874;
+}
+.dose-warning i{color:var(--warm);margin-right:5px}
+html[data-theme="light"] .dose-intro{
+  background:rgba(20,127,120,.055)!important;
+  border-color:rgba(20,127,120,.12)!important;
+  color:#567574!important;
+}
+html[data-theme="light"] .dose-intro b{color:#244649!important}
+html[data-theme="light"] .dose-mini{color:#698281!important}
+html[data-theme="light"] .dose-warning{
+  background:rgba(165,128,47,.055)!important;
+  border-color:rgba(165,128,47,.13)!important;
+  color:#756b54!important;
+}
+@media(max-width:560px){
+  .results-toolbar-view-right{align-items:center}
+  .results-toolbar-view-right .results-head{display:block}
+  .results-toolbar-view-right .results-meta{margin-top:3px}
+  .results-toolbar-view-right .view-switch{align-self:center}
+  .dose-grid{grid-template-columns:1fr!important}
+}
+
 footer{border-top:1px solid var(--line);padding:26px 0 34px;color:#5d7779;font-size:11px}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
@@ -1722,7 +1822,7 @@ html[data-theme="light"] .media-fallback::after{color:#6f8b88}
 
   <section class="content content-wide">
     <div>
-      <div class="results-toolbar">
+      <div class="results-toolbar results-toolbar-view-right">
         <div class="results-head" style="margin-bottom:0;flex:1">
           <h2>มีใครอยู่ในตู้บ้าง</h2>
           <div class="results-meta" id="resultsMeta">กำลังโหลด...</div>
@@ -1800,6 +1900,9 @@ html[data-theme="light"] .media-fallback::after{color:#6f8b88}
       <button class="tool-tab" id="powerTab" type="button" role="tab" aria-selected="false" aria-controls="powerPanel" data-tool-tab="power">
         <i class="fa-solid fa-bolt"></i> ค่าไฟ
       </button>
+      <button class="tool-tab" id="doseTab" type="button" role="tab" aria-selected="false" aria-controls="dosePanel" data-tool-tab="dose">
+        <i class="fa-solid fa-droplet"></i> หยดให้น้องเท่าไหร่ดี?
+      </button>
     </div>
 
     <div class="tool-panel active" id="waterPanel" role="tabpanel" aria-labelledby="waterTab" data-tool-panel="water">
@@ -1835,6 +1938,41 @@ html[data-theme="light"] .media-fallback::after{color:#6f8b88}
           <div class="calc-result"><span>ค่าไฟประมาณ</span><strong id="costResult">— บาท</strong></div>
         </div>
         <div class="calc-hint"><i class="fa-solid fa-circle-info"></i> ค่าไฟ/หน่วยให้ใช้ค่าเฉลี่ยจากบิลของคุณ จะใกล้เคียงกว่าการใส่เรตตายตัว</div>
+      </div>
+    </div>
+
+    <div class="tool-panel" id="dosePanel" role="tabpanel" aria-labelledby="doseTab" data-tool-panel="dose" hidden>
+      <div class="tool-panel-title">
+        <strong>หยดให้น้องเท่าไหร่ดี?</strong>
+        <span>คำนวณยาและสารปรับสภาพน้ำตามอัตราที่ระบุบนฉลาก</span>
+      </div>
+      <div class="dose-intro">
+        ใส่ปริมาตรน้ำจริง แล้วกรอกอัตราบนฉลาก เช่น <b>5 ml ต่อน้ำ 40 ลิตร</b>
+      </div>
+      <div class="calc-grid dose-grid">
+        <div class="calc-field">
+          <label for="doseTankLiters">น้ำในตู้จริง (ลิตร)</label>
+          <input id="doseTankLiters" type="number" min="0" step="0.1" inputmode="decimal" placeholder="60">
+        </div>
+        <div class="calc-field">
+          <label for="doseLabelAmount">ฉลากให้ใช้ (ml)</label>
+          <input id="doseLabelAmount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="5">
+        </div>
+        <div class="calc-field">
+          <label for="doseLabelLiters">ต่อน้ำ (ลิตร)</label>
+          <input id="doseLabelLiters" type="number" min="0" step="0.1" inputmode="decimal" placeholder="40">
+        </div>
+      </div>
+      <div class="calc-result dose-result">
+        <span>ตู้ของเราควรใช้ตามสัดส่วน</span>
+        <strong id="doseResult">— ml</strong>
+      </div>
+      <div class="dose-mini">
+        <span id="doseFormula">กรอกตัวเลขจากฉลากเพื่อเริ่มคำนวณ</span>
+      </div>
+      <div class="calc-hint dose-warning">
+        <i class="fa-solid fa-shield-heart"></i>
+        เครื่องมือนี้คำนวณสัดส่วนจากฉลากเท่านั้น ไม่ได้วินิจฉัยโรคหรือแนะนำการรักษา ควรตรวจชนิดยา ความเข้มข้น ข้อห้าม และคำเตือนของผลิตภัณฑ์ก่อนใช้ทุกครั้ง
       </div>
     </div>
   </div>
@@ -2456,6 +2594,24 @@ function calcPower(){
 }
 document.querySelectorAll('#powerTool input').forEach(el=>el.addEventListener('input',calcPower));
 
+function calcDose(){
+  const tank=parseFloat($('#doseTankLiters')?.value);
+  const amount=parseFloat($('#doseLabelAmount')?.value);
+  const labelLiters=parseFloat($('#doseLabelLiters')?.value);
+  const result=(tank>0 && amount>0 && labelLiters>0) ? tank*amount/labelLiters : NaN;
+  const resultEl=$('#doseResult');
+  const formulaEl=$('#doseFormula');
+  if(resultEl) resultEl.textContent=Number.isFinite(result)?`${fmtNum(result,2)} ml`:'— ml';
+  if(formulaEl){
+    formulaEl.textContent=Number.isFinite(result)
+      ? `${fmtNum(amount,2)} ml ÷ ${fmtNum(labelLiters,1)} ลิตร × ${fmtNum(tank,1)} ลิตร = ${fmtNum(result,2)} ml`
+      : 'กรอกตัวเลขจากฉลากเพื่อเริ่มคำนวณ';
+  }
+}
+['doseTankLiters','doseLabelAmount','doseLabelLiters'].forEach(id=>{
+  $('#'+id)?.addEventListener('input',calcDose);
+});
+
 document.querySelectorAll('#toolModal input[type="number"]').forEach(input=>{
   input.addEventListener('change',()=>{
     let n=Number(input.value);
@@ -2466,6 +2622,7 @@ document.querySelectorAll('#toolModal input[type="number"]').forEach(input=>{
     if(max!==null && Number.isFinite(max) && n>max) n=max;
     input.value=String(n);
     if(['tankL','tankW','tankH'].includes(input.id)) calcWater();
+    else if(['doseTankLiters','doseLabelAmount','doseLabelLiters'].includes(input.id)) calcDose();
     else calcPower();
   });
 });
