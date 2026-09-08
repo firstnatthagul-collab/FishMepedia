@@ -280,6 +280,418 @@ linear-gradient(180deg,#061a22,#031218 70%);box-shadow:var(--shadow);position:re
 
 
 
+
+
+
+/* v27.3 — function QA
+   Reset -> All, robust Favorites, filtered Random,
+   synchronized overlay scroll lock, KEEP + PRIMARY preserved.
+*/
+/* v27.2 — interaction QA fixes */
+
+/* Make mobile tap targets comfortably large without visually bulking up. */
+@media(max-width:650px){
+  .view-switch button,
+  .tool-modal-close,
+  .modal-close,
+  .save-btn,
+  .saved-open,
+  .theme-toggle,
+  .hero-random-btn{
+    min-width:42px;
+    min-height:42px;
+  }
+
+  /* Prevent close/favorite overlap in detail modal on narrow screens. */
+  .profile-actions{
+    padding-right:52px!important;
+  }
+  .modal-close{
+    top:max(10px,env(safe-area-inset-top))!important;
+    right:10px!important;
+    z-index:8!important;
+  }
+
+  /* Tool dialog scrolling must stay inside the modal, not trap the page. */
+  .tool-dialog{
+    overflow-y:auto!important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tool-modal-head{
+    padding-right:42px;
+  }
+
+  /* Search/filter controls stay usable when the keyboard is open. */
+  .filter-bar,
+  .filter-panel{
+    scroll-margin-top:12px;
+  }
+
+  /* Avoid accidental horizontal scroll from card/list transitions. */
+  body,
+  main,
+  .cards-wrap{
+    overflow-x:hidden;
+  }
+}
+
+/* State feedback for filters/reset */
+.reset-filter-btn,
+#resetFilters{
+  transition:transform .18s ease,opacity .18s ease,background .18s ease;
+}
+.reset-filter-btn:active,
+#resetFilters:active{
+  transform:scale(.97);
+}
+
+/* Modal opening polish */
+.tool-modal[aria-hidden="false"] .tool-dialog,
+.modal.open .modal-content,
+.modal.active .modal-content{
+  animation:fmModalIn .22s cubic-bezier(.2,.75,.3,1);
+}
+@keyframes fmModalIn{
+  from{opacity:0;transform:translateY(8px) scale(.992)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* Keyboard focus: preserve accessibility in both themes */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible{
+  outline:2px solid rgba(97,232,232,.62)!important;
+  outline-offset:2px!important;
+}
+html[data-theme="light"] button:focus-visible,
+html[data-theme="light"] input:focus-visible,
+html[data-theme="light"] select:focus-visible,
+html[data-theme="light"] [role="button"]:focus-visible{
+  outline-color:rgba(26,126,119,.58)!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .tool-modal[aria-hidden="false"] .tool-dialog,
+  .modal.open .modal-content,
+  .modal.active .modal-content{
+    animation:none!important;
+  }
+}
+
+/* v27.1 — mobile QA fixes */
+
+/* Three tools now need a balanced tab layout. */
+.tool-tabs{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+.tool-tab{
+  min-width:0;
+  padding:0 8px;
+  white-space:nowrap;
+}
+
+/* On phones, make Grid and List genuinely different views. */
+@media(max-width:650px){
+  .cards:not(.list-view) .card{
+    display:block!important;
+    grid-template-columns:none!important;
+  }
+  .cards:not(.list-view) .card-media{
+    aspect-ratio:16/10!important;
+    min-height:0!important;
+  }
+  .cards:not(.list-view) .card-body{
+    display:block!important;
+    padding:14px!important;
+  }
+
+  .cards.list-view .card{
+    display:grid!important;
+    grid-template-columns:112px minmax(0,1fr)!important;
+    min-height:142px!important;
+  }
+  .cards.list-view .card-media{
+    aspect-ratio:auto!important;
+    min-height:142px!important;
+  }
+  .cards.list-view .card-body{
+    padding:12px 13px!important;
+  }
+  .cards.list-view .card h3{
+    font-size:16px!important;
+  }
+  .cards.list-view .sciname{
+    font-size:9.5px!important;
+  }
+  .cards.list-view .card-stats{
+    margin-top:9px!important;
+    gap:5px!important;
+  }
+  .cards.list-view .card-stat{
+    padding:6px!important;
+  }
+
+  /* Tool tabs stay on one row and can scroll instead of creating an orphan tab. */
+  .tool-tabs{
+    display:flex!important;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:none;
+    gap:6px!important;
+  }
+  .tool-tabs::-webkit-scrollbar{display:none}
+  .tool-tab{
+    flex:1 0 128px;
+    min-height:42px;
+  }
+
+  /* Keep dialog controls clear of phone edges / safe areas. */
+  .tool-modal{
+    padding:max(8px,env(safe-area-inset-top)) 8px max(8px,env(safe-area-inset-bottom))!important;
+  }
+  .tool-dialog{
+    width:100%!important;
+    max-height:94dvh!important;
+  }
+  .modal{
+    padding-bottom:env(safe-area-inset-bottom)!important;
+  }
+}
+
+/* Extra-small phones */
+@media(max-width:380px){
+  .results-toolbar-view-right{gap:7px!important}
+  .results-toolbar-view-right .results-head h2{font-size:13px!important}
+  .view-switch button{width:35px!important}
+  .cards.list-view .card{
+    grid-template-columns:104px minmax(0,1fr)!important;
+  }
+  .card-stats{gap:5px!important}
+}
+
+/* v27 — card hierarchy, FishMepedia fallback personality, micro motion */
+
+/* 1) Stronger visual hierarchy on cards */
+.card-body{
+  padding:16px 16px 15px!important;
+}
+.card h3{
+  font-size:20px!important;
+  font-weight:500!important;
+  letter-spacing:-.2px;
+  line-height:1.22!important;
+}
+.sciname{
+  margin-top:4px!important;
+  font-size:11px!important;
+  opacity:.82;
+}
+.card-stats{
+  margin-top:14px!important;
+  gap:6px!important;
+}
+.card-stat{
+  padding:7px 8px!important;
+  border-color:rgba(255,255,255,.025)!important;
+  background:rgba(255,255,255,.012)!important;
+}
+.card-stat i{
+  opacity:.75!important;
+}
+.card-stat span{
+  font-size:10.5px!important;
+  color:#a9beb9!important;
+}
+.card-bottom{
+  margin-top:11px!important;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.035);
+}
+.care-level small{
+  color:#5f7b78!important;
+}
+html[data-theme="light"] .card-stat{
+  background:rgba(30,112,106,.018)!important;
+  border-color:rgba(30,112,106,.035)!important;
+}
+html[data-theme="light"] .card-bottom{
+  border-top-color:rgba(31,109,105,.06)!important;
+}
+
+/* List view: cleaner, editorial feel */
+.cards.list-view .card{
+  grid-template-columns:172px minmax(0,1fr)!important;
+  min-height:126px!important;
+}
+.cards.list-view .card-body{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:15px 17px!important;
+}
+.cards.list-view .card-stats{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+.cards.list-view .card-bottom{
+  margin-top:9px!important;
+}
+@media(max-width:700px){
+  .cards.list-view .card{
+    grid-template-columns:116px minmax(0,1fr)!important;
+  }
+  .cards.list-view .card-stats{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+
+/* 2) FishMepedia fallback personality */
+.media-fallback{
+  overflow:hidden;
+}
+.media-fallback::before{
+  content:"";
+  position:absolute;
+  width:54%;
+  aspect-ratio:1;
+  left:50%;
+  top:45%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(97,232,232,.08);
+  box-shadow:
+    0 0 0 18px rgba(97,232,232,.018),
+    0 0 0 38px rgba(97,232,232,.012);
+  opacity:.95;
+}
+.media-fallback::after{
+  content:"รูปน้องกำลังว่ายมา";
+  position:absolute;
+  bottom:15px;
+  left:12px;
+  right:12px;
+  z-index:3;
+  text-align:center;
+  font-size:9px;
+  color:#789996;
+  letter-spacing:.01em;
+}
+.media-fallback i{
+  z-index:3!important;
+  font-size:34px!important;
+  opacity:.68!important;
+  transform:translateY(-7px)!important;
+  filter:drop-shadow(0 0 12px rgba(75,215,189,.10));
+}
+.media-fallback .fm-fallback-bubble{
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  border:1px solid rgba(97,232,232,.15);
+  opacity:.55;
+  animation:fallbackBubble 4.8s ease-in-out infinite;
+}
+.media-fallback .fm-fallback-bubble.b1{left:31%;top:28%;animation-delay:-1.2s}
+.media-fallback .fm-fallback-bubble.b2{left:38%;top:20%;width:3px;height:3px;animation-delay:-2.6s}
+.media-fallback .fm-fallback-bubble.b3{right:30%;top:31%;width:4px;height:4px;animation-delay:-3.5s}
+
+html[data-theme="light"] .media-fallback::before{
+  border-color:rgba(31,109,105,.09)!important;
+  box-shadow:
+    0 0 0 18px rgba(31,109,105,.018),
+    0 0 0 38px rgba(31,109,105,.012)!important;
+}
+html[data-theme="light"] .media-fallback::after{
+  color:#6f8b88!important;
+}
+html[data-theme="light"] .media-fallback .fm-fallback-bubble{
+  border-color:rgba(31,109,105,.16)!important;
+}
+
+@keyframes fallbackBubble{
+  0%,100%{transform:translateY(2px);opacity:.22}
+  50%{transform:translateY(-7px);opacity:.58}
+}
+
+/* 3) Micro-interactions */
+.card{
+  transition:
+    transform .24s ease,
+    border-color .24s ease,
+    box-shadow .24s ease,
+    opacity .22s ease!important;
+}
+.card-open{
+  transition:
+    transform .22s ease,
+    color .22s ease,
+    border-color .22s ease,
+    background .22s ease!important;
+}
+.card:hover .card-open{
+  transform:translateX(2px);
+}
+.view-switch button{
+  transition:
+    background-color .18s ease,
+    color .18s ease,
+    transform .18s ease!important;
+}
+.view-switch button:active{
+  transform:scale(.94);
+}
+.saved-open i,
+#saveProfile i{
+  transform-origin:center;
+}
+#saveProfile.is-saved i{
+  animation:heartPop .34s cubic-bezier(.2,.9,.3,1.25);
+}
+.hero-random-btn:active{
+  transform:scale(.97)!important;
+}
+.hero-random-btn i{
+  transition:transform .3s ease;
+}
+.hero-random-btn:hover i{
+  transform:rotate(18deg);
+}
+.calc-result strong{
+  transition:transform .18s ease,opacity .18s ease;
+}
+.calc-result.pulse strong{
+  animation:resultPulse .28s ease;
+}
+.cards.view-changing{
+  opacity:.72;
+  transform:translateY(2px);
+  transition:opacity .14s ease,transform .14s ease;
+}
+
+@keyframes heartPop{
+  0%{transform:scale(.72)}
+  55%{transform:scale(1.25)}
+  100%{transform:scale(1)}
+}
+@keyframes resultPulse{
+  0%{transform:translateY(2px);opacity:.5}
+  100%{transform:translateY(0);opacity:1}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .media-fallback .fm-fallback-bubble,
+  #saveProfile.is-saved i,
+  .calc-result.pulse strong{
+    animation:none!important;
+  }
+  .cards.view-changing{
+    opacity:1!important;
+    transform:none!important;
+  }
+}
+
 /* v26 — polished result header */
 .results-toolbar-view-right{
   align-items:center!important;
@@ -1901,7 +2313,7 @@ html[data-theme="light"] .media-fallback::after{color:#6f8b88}
         <i class="fa-solid fa-bolt"></i> ค่าไฟ
       </button>
       <button class="tool-tab" id="doseTab" type="button" role="tab" aria-selected="false" aria-controls="dosePanel" data-tool-tab="dose">
-        <i class="fa-solid fa-droplet"></i> หยดให้น้องเท่าไหร่ดี?
+        <i class="fa-solid fa-droplet"></i> โดสยา/สารน้ำ
       </button>
     </div>
 
@@ -2193,7 +2605,7 @@ function card(r,i){
   return `<article class="card" tabindex="0" role="button" aria-label="ดูรายละเอียด ${esc(r.NameTH||r.NameEN)}" data-open="${esc(r.ID)}" style="animation-delay:${Math.min(i,8)*30}ms">
     <div class="card-media ${img?'has-image is-loading':''}">
       ${img?`<img src="${esc(img)}" ${srcset?`srcset="${esc(srcset)}" sizes="(max-width:700px) 92vw, (max-width:1100px) 46vw, 360px"`:''} alt="${esc(r.NameTH||r.NameEN)}" loading="lazy" decoding="async" onload="imageLoaded(this)" onerror="imageFailed(this)">`:''}
-      <div class="media-fallback">${icon(kindIcon)}</div>
+      <div class="media-fallback">${icon(kindIcon)}<span class="fm-fallback-bubble b1"></span><span class="fm-fallback-bubble b2"></span><span class="fm-fallback-bubble b3"></span></div>
       <div class="media-shade"></div>
       <div class="card-kind">${icon(kindIcon)} <span>${kindLabel}</span></div>
       ${img&&m.AuthorCreator?`<div class="card-credit">ภาพ: ${esc(m.AuthorCreator)}${m.License?` · ${esc(m.License)}`:''}</div>`:''}
@@ -2254,7 +2666,14 @@ function careItem(ic,title,text){return valid(text)?`<div class="care-item">${ic
 
 
 const FAV_KEY='fishmepedia:favorites:v1';
-function getFavs(){try{return JSON.parse(localStorage.getItem(FAV_KEY)||'[]')}catch(e){return[]}}
+function getFavs(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(FAV_KEY)||'[]');
+    return Array.isArray(parsed)?parsed.map(String).filter(Boolean):[];
+  }catch(e){
+    return [];
+  }
+}
 function setFavs(v){try{localStorage.setItem(FAV_KEY,JSON.stringify(v))}catch(e){}}
 function isFav(id){return getFavs().includes(id)}
 function toggleFav(id){
@@ -2311,13 +2730,13 @@ function openSaved(){
   renderSaved();
   $('#savedBackdrop').classList.add('open');
   $('#savedBackdrop').setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
+  syncPageScrollLock();
   setTimeout(()=>$('#closeSaved')?.focus(),0);
 }
 function closeSaved(){
   $('#savedBackdrop').classList.remove('open');
   $('#savedBackdrop').setAttribute('aria-hidden','true');
-  if(!$('#modal').classList.contains('open'))document.body.style.overflow='';
+  syncPageScrollLock();
 }
 
 function relatedRecords(r){
@@ -2339,7 +2758,16 @@ function relatedRecords(r){
   }).sort((a,b)=>b.score-a.score).slice(0,3).map(v=>v.x);
 }
 function randomProfile(){
-  const pool=filtered.length?filtered:allData; if(!pool.length)return;
+  const pool=filtered;
+  if(!pool.length){
+    const meta=$('#resultsMeta');
+    if(meta){
+      const old=meta.textContent;
+      meta.textContent='ยังไม่มีน้องให้สุ่มจากตัวกรองนี้';
+      setTimeout(()=>{ if(meta.textContent==='ยังไม่มีน้องให้สุ่มจากตัวกรองนี้') meta.textContent=old; },1800);
+    }
+    return;
+  }
   openProfile(pool[Math.floor(Math.random()*pool.length)].ID);
 }
 function profileFactsV17(r){
@@ -2353,7 +2781,7 @@ function openProfile(id){
   lastFocused=document.activeElement;
   $('#modal').classList.add('open');
   $('#modal').setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
+  syncPageScrollLock();
   const m=mediaFor(r), originalImg=firstUrl(m.CoverURL), img=displayImageUrl(originalImg,1600), srcset=displayImageSrcset(originalImg,[640,1000,1600]);
   const facts=profileFactsV17(r), related=relatedRecords(r);
   const creditText=m?.AttributionText || [m?.AuthorCreator,m?.License].filter(Boolean).join(' · ');
@@ -2368,7 +2796,7 @@ function openProfile(id){
       <div class="profile-media-wrap">
         <div class="profile-media v17-media ${img?'has-image is-loading':''}">
           ${img?`<img src="${esc(img)}" ${srcset?`srcset="${esc(srcset)}" sizes="(max-width:860px) 100vw, 42vw"`:''} alt="${esc(r.NameTH||r.NameEN)}" decoding="async" fetchpriority="high" onload="imageLoaded(this)" onerror="imageFailed(this)">`:''}
-          <div class="media-fallback">${icon(r.Category==='Plant'?'seedling':'fish')}</div>
+          <div class="media-fallback">${icon(r.Category==='Plant'?'seedling':'fish')}<span class="fm-fallback-bubble b1"></span><span class="fm-fallback-bubble b2"></span><span class="fm-fallback-bubble b3"></span></div>
         </div>
         ${img?`<div class="image-credit-inline v17-credit">
           ${creditText?`ภาพ: ${esc(creditText)}`:'เครดิตภาพ: ไม่ระบุ'}
@@ -2453,7 +2881,7 @@ function openProfile(id){
   setTimeout(()=>$('#closeModal')?.focus(),0);
 }
 
-function closeProfile(){ $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); document.body.style.overflow=''; try{history.replaceState(null,'',location.pathname+location.search)}catch(e){} if(lastFocused&&lastFocused.focus) lastFocused.focus();}
+function closeProfile(){ $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); syncPageScrollLock(); try{history.replaceState(null,'',location.pathname+location.search)}catch(e){} if(lastFocused&&lastFocused.focus) lastFocused.focus();}
 
 $('#openSaved').onclick=openSaved;
 $('#closeSaved').onclick=closeSaved;
@@ -2499,7 +2927,9 @@ function resetFilters(){
   $('#search').value='';
   ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');
   quick='';
+  cat='All';
   document.querySelectorAll('.quick button[data-quick]').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.cat==='All'));
   page=1;
   applyFilters();
 }
@@ -2507,6 +2937,15 @@ $('#reset').onclick=resetFilters;
 $('#resetQuick').onclick=resetFilters;
 
 
+
+function syncPageScrollLock(){
+  const locked=
+    $('#toolModal')?.classList.contains('open') ||
+    $('#savedBackdrop')?.classList.contains('open') ||
+    $('#modal')?.classList.contains('open');
+  document.documentElement.style.overflow=locked?'hidden':'';
+  document.body.style.overflow=locked?'hidden':'';
+}
 
 let toolLastFocused=null;
 function setToolTab(name){
@@ -2525,14 +2964,14 @@ function openTools(){
   toolLastFocused=document.activeElement;
   $('#toolModal').classList.add('open');
   $('#toolModal').setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
+  syncPageScrollLock();
   setToolTab('water');
   setTimeout(()=>$('#closeTools')?.focus(),0);
 }
 function closeTools(){
   $('#toolModal').classList.remove('open');
   $('#toolModal').setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
+  syncPageScrollLock();
   if(toolLastFocused&&toolLastFocused.focus) toolLastFocused.focus();
 }
 $('#openTools').addEventListener('click',openTools);
@@ -2576,6 +3015,7 @@ function calcWater(){
   const l=parseFloat($('#tankL').value), w=parseFloat($('#tankW').value), h=parseFloat($('#tankH').value);
   const liters=(l>0&&w>0&&h>0)?(l*w*h/1000):NaN;
   $('#waterResult').textContent=Number.isFinite(liters)?`${fmtNum(liters,1)} ลิตร`:'— ลิตร';
+  if(Number.isFinite(liters)) pulseCalcResult($('#waterResult'));
 }
 ['tankL','tankW','tankH'].forEach(id=>$('#'+id).addEventListener('input',calcWater));
 
@@ -2591,6 +3031,10 @@ function calcPower(){
   const rate=parseFloat($('#powerRate').value);
   $('#kwhResult').textContent=dailyWh>0?`${fmtNum(kwh,2)} kWh`:'— kWh';
   $('#costResult').textContent=(dailyWh>0&&Number.isFinite(rate)&&rate>=0)?`${fmtNum(kwh*rate,2)} บาท`:'— บาท';
+  if(dailyWh>0){
+    pulseCalcResult($('#kwhResult'));
+    if(Number.isFinite(rate)&&rate>=0) pulseCalcResult($('#costResult'));
+  }
 }
 document.querySelectorAll('#powerTool input').forEach(el=>el.addEventListener('input',calcPower));
 
@@ -2602,6 +3046,7 @@ function calcDose(){
   const resultEl=$('#doseResult');
   const formulaEl=$('#doseFormula');
   if(resultEl) resultEl.textContent=Number.isFinite(result)?`${fmtNum(result,2)} ml`:'— ml';
+  if(Number.isFinite(result)) pulseCalcResult(resultEl);
   if(formulaEl){
     formulaEl.textContent=Number.isFinite(result)
       ? `${fmtNum(amount,2)} ml ÷ ${fmtNum(labelLiters,1)} ลิตร × ${fmtNum(tank,1)} ลิตร = ${fmtNum(result,2)} ml`
@@ -2630,9 +3075,26 @@ document.querySelectorAll('#toolModal input[type="number"]').forEach(input=>{
 
 
 
+
+function pulseCalcResult(el){
+  const box=el?.closest('.calc-result');
+  if(!box) return;
+  box.classList.remove('pulse');
+  void box.offsetWidth;
+  box.classList.add('pulse');
+  setTimeout(()=>box.classList.remove('pulse'),320);
+}
+
 function applyViewMode(mode){
   viewMode=mode==='list'?'list':'grid';
-  $('#cards')?.classList.toggle('list-view',viewMode==='list');
+  const cards=$('#cards');
+  if(cards){
+    cards.classList.add('view-changing');
+    setTimeout(()=>{
+      cards.classList.toggle('list-view',viewMode==='list');
+      cards.classList.remove('view-changing');
+    },80);
+  }
   $('#viewGrid')?.classList.toggle('active',viewMode==='grid');
   $('#viewList')?.classList.toggle('active',viewMode==='list');
 }
@@ -2671,6 +3133,7 @@ load();
 document.getElementById('randomProfileBtn')?.addEventListener('click',randomProfile);
 
 $('#randomFab')?.addEventListener('click', randomProfile);
+
 </script>
 </body>
 </html>
