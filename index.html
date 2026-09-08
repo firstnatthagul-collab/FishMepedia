@@ -1042,6 +1042,494 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,.card:focus-v
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 
+
+/* v23 — Light / Dark theme */
+:root{
+  color-scheme:dark;
+  --theme-bg-1:#020b12;
+  --theme-bg-2:#03131a;
+  --theme-bg-3:#021016;
+  --theme-header:rgba(2,11,18,.76);
+  --theme-surface:rgba(5,23,30,.52);
+  --theme-surface-strong:#061820;
+  --theme-card-1:rgba(7,29,37,.68);
+  --theme-card-2:rgba(4,20,27,.56);
+  --theme-input:#03131b;
+  --theme-profile-1:#061a22;
+  --theme-profile-2:#031218;
+  --theme-modal:rgba(0,7,11,.84);
+  --theme-panel:rgba(5,24,31,.99);
+  --theme-text:#f3f7f2;
+  --theme-muted:#91a9a9;
+  --theme-dim:#648082;
+  --theme-soft:#b4c5c1;
+  --theme-subtle:#78918f;
+  --theme-border:rgba(115,216,203,.14);
+  --theme-border-2:rgba(115,216,203,.24);
+  --theme-grid:rgba(255,255,255,.015);
+  --theme-grid-2:rgba(255,255,255,.012);
+  --theme-white-soft:rgba(255,255,255,.02);
+  --theme-white-softer:rgba(255,255,255,.018);
+  --theme-white-line:rgba(255,255,255,.045);
+  --theme-shadow:0 28px 80px rgba(0,0,0,.38);
+}
+html[data-theme="light"]{
+  color-scheme:light;
+  --abyss:#eef8f7;
+  --deep:#e4f2f1;
+  --forest:#d7ebe8;
+  --glass:rgba(255,255,255,.78);
+  --glass2:rgba(241,249,248,.82);
+  --cyan:#078b91;
+  --aqua:#168f7f;
+  --leaf:#4a8b60;
+  --lime:#708b45;
+  --warm:#a87424;
+  --text:#173237;
+  --muted:#5f7779;
+  --dim:#71898a;
+  --line:rgba(34,111,112,.14);
+  --line2:rgba(34,111,112,.24);
+  --shadow:0 24px 70px rgba(35,74,74,.14);
+
+  --theme-bg-1:#f6fbfa;
+  --theme-bg-2:#edf7f6;
+  --theme-bg-3:#e8f3f2;
+  --theme-header:rgba(248,252,251,.88);
+  --theme-surface:rgba(255,255,255,.72);
+  --theme-surface-strong:#ffffff;
+  --theme-card-1:rgba(255,255,255,.94);
+  --theme-card-2:rgba(244,250,249,.96);
+  --theme-input:#ffffff;
+  --theme-profile-1:#f8fcfb;
+  --theme-profile-2:#eef7f6;
+  --theme-modal:rgba(21,46,48,.42);
+  --theme-panel:rgba(250,253,252,.99);
+  --theme-text:#173237;
+  --theme-muted:#5f7779;
+  --theme-dim:#71898a;
+  --theme-soft:#4e696b;
+  --theme-subtle:#678082;
+  --theme-border:rgba(34,111,112,.14);
+  --theme-border-2:rgba(34,111,112,.24);
+  --theme-grid:rgba(20,82,84,.035);
+  --theme-grid-2:rgba(20,82,84,.028);
+  --theme-white-soft:rgba(26,96,98,.035);
+  --theme-white-softer:rgba(26,96,98,.025);
+  --theme-white-line:rgba(26,96,98,.08);
+  --theme-shadow:0 24px 70px rgba(35,74,74,.14);
+}
+
+body{
+  background:
+    radial-gradient(circle at 18% 8%,rgba(52,176,151,.11),transparent 24rem),
+    radial-gradient(circle at 86% 18%,rgba(58,184,201,.08),transparent 26rem),
+    linear-gradient(180deg,var(--theme-bg-1),var(--theme-bg-2) 46%,var(--theme-bg-3)) !important;
+  color:var(--theme-text)!important;
+}
+body:before{
+  background-image:
+    linear-gradient(var(--theme-grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--theme-grid-2) 1px,transparent 1px)!important;
+}
+header{background:var(--theme-header)!important;border-color:var(--theme-border)!important}
+.searchbox,.filter-card,.browse-controls{background:var(--theme-surface)!important}
+.fgroup select,.calc-field input,.power-rows input{background:var(--theme-input)!important;color:var(--theme-text)!important}
+.card{
+  background:linear-gradient(180deg,var(--theme-card-1),var(--theme-card-2))!important;
+  border-color:var(--theme-border)!important;
+}
+.profile{
+  background:
+    radial-gradient(circle at 80% 4%,rgba(75,215,189,.08),transparent 24rem),
+    linear-gradient(180deg,var(--theme-profile-1),var(--theme-profile-2) 70%)!important;
+  box-shadow:var(--theme-shadow)!important;
+}
+.modal{background:var(--theme-modal)!important}
+.profile-right,.profile-head{background-color:transparent}
+.profile-head{
+  background:linear-gradient(180deg,var(--theme-profile-1) 82%,transparent)!important;
+}
+.story p,.care-card p,.profile-intro,.story-body,.profile-story-open .story-copy{color:var(--theme-soft)!important}
+.sciname,.profile-en,.profile-science,.hero-updated,.tool-modal-head p{color:var(--theme-subtle)!important}
+.quick button,.saved-open,.tool-card,.tool-panel,.story section,.care-card,.source-block,.media-credit,.context-card,
+.profile-quick .qbox,.story-item,.related-card,.fishme-social-btn{
+  background-color:var(--theme-white-softer);
+}
+.saved-drawer,.saved-head{
+  background:linear-gradient(180deg,var(--theme-panel) 78%,rgba(255,255,255,0))!important;
+}
+.tool-dialog{
+  background:linear-gradient(180deg,var(--theme-panel),var(--theme-profile-2))!important;
+}
+html[data-theme="light"] .profile-media.v17-media,
+html[data-theme="light"] .profile-left,
+html[data-theme="light"] .profile-media-wrap{
+  background:#eaf5f4!important;
+}
+html[data-theme="light"] .profile-media.v17-media::before{
+  background:radial-gradient(circle at 45% 38%,rgba(22,143,127,.10),transparent 38%),linear-gradient(145deg,#e4f2f0,#d7ebe8)!important;
+}
+html[data-theme="light"] .profile-media.v17-media::after{
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(27,74,75,.10))!important;
+}
+html[data-theme="light"] .card-media{
+  background:radial-gradient(circle at 40% 35%,rgba(22,143,127,.11),transparent 34%),linear-gradient(145deg,#dff0ed,#cfe6e2)!important;
+}
+html[data-theme="light"] .media-fallback{color:#6e9996}
+html[data-theme="light"] .card-open{
+  border-color:rgba(33,102,103,.10);
+  background:rgba(33,102,103,.035);
+  color:#5b7d7e;
+}
+html[data-theme="light"] .card-stat span,
+html[data-theme="light"] .tool-title strong,
+html[data-theme="light"] .calc-result strong,
+html[data-theme="light"] .profile-quick .qbox strong,
+html[data-theme="light"] .story-section summary,
+html[data-theme="light"] .profile-story-open h3,
+html[data-theme="light"] .fieldline span{
+  color:#244649!important;
+}
+html[data-theme="light"] .card-kind,
+html[data-theme="light"] .image-credit-inline,
+html[data-theme="light"] .image-credit-inline.v17-credit,
+html[data-theme="light"] .profile-actions{
+  background:rgba(11,45,46,.68)!important;
+  color:#eaf6f3!important;
+}
+html[data-theme="light"] .modal .close,
+html[data-theme="light"] #closeModal,
+html[data-theme="light"] .profile-actions button{
+  background:rgba(14,53,54,.78)!important;
+  color:#eff8f6!important;
+}
+html[data-theme="light"] .detail-tabs{
+  background:rgba(248,252,251,.94)!important;
+}
+html[data-theme="light"] .saved-backdrop{background:rgba(28,58,59,.32)!important}
+html[data-theme="light"] .tool-modal{background:rgba(28,58,59,.34)!important}
+html[data-theme="light"] .random-fab,
+html[data-theme="light"] .hero-random-btn,
+html[data-theme="light"] .tools-launcher{
+  background:rgba(255,255,255,.82)!important;
+  color:#21494a!important;
+  border-color:rgba(28,112,111,.18)!important;
+}
+html[data-theme="light"] .hero-count{
+  background:rgba(255,255,255,.66);
+  color:#355c5d;
+}
+
+.theme-toggle{
+  margin-left:auto;
+  width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--line2);
+  background:rgba(255,255,255,.025);
+  color:var(--text);
+  display:grid;place-items:center;
+  transition:background-color .2s ease,border-color .2s ease,transform .2s ease;
+}
+.theme-toggle:hover{transform:translateY(-1px);border-color:rgba(97,232,232,.36)}
+.theme-toggle i{font-size:15px;color:var(--cyan)}
+html[data-theme="light"] .theme-toggle{background:rgba(255,255,255,.82)}
+body,header,.card,.filter-card,.browse-controls,.profile,.searchbox,.saved-drawer,.tool-dialog,.fishme-follow-inner{
+  transition:background-color .25s ease,color .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+
+
+/* v23.1 — FishMepedia Daylight: distinctive light-mode art direction */
+html[data-theme="light"]{
+  --day-paper:#f3faf7;
+  --day-paper-2:#eaf5f1;
+  --day-card:#fbfefd;
+  --day-card-2:#f2f9f6;
+  --day-ink:#18383a;
+  --day-muted:#607c7d;
+  --day-teal:#147f78;
+  --day-teal-deep:#0f6564;
+  --day-line:rgba(32,111,106,.13);
+  --day-shadow:0 10px 34px rgba(39,92,88,.10);
+  --day-shadow-hover:0 16px 44px rgba(39,92,88,.15);
+}
+
+html[data-theme="light"] body{
+  background:
+    radial-gradient(circle at 18% 4%,rgba(91,190,164,.16),transparent 26rem),
+    radial-gradient(circle at 84% 16%,rgba(80,168,185,.11),transparent 30rem),
+    linear-gradient(180deg,#f7fcfa 0%,#edf7f3 52%,#e8f3ef 100%)!important;
+}
+
+html[data-theme="light"] body:before{
+  opacity:.45!important;
+  background-image:
+    linear-gradient(rgba(31,109,105,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(31,109,105,.02) 1px,transparent 1px)!important;
+}
+
+html[data-theme="light"] header{
+  background:rgba(247,252,250,.78)!important;
+  border-bottom:1px solid rgba(31,109,105,.10)!important;
+  box-shadow:0 8px 26px rgba(55,102,97,.06);
+}
+
+html[data-theme="light"] .brand-mark{
+  background:
+    radial-gradient(circle at 30% 25%,rgba(46,158,146,.20),rgba(80,171,159,.07) 55%,rgba(239,248,245,.9))!important;
+  border-color:rgba(28,126,120,.18)!important;
+  box-shadow:0 7px 20px rgba(38,119,113,.08)!important;
+}
+
+html[data-theme="light"] h1 span{
+  background:linear-gradient(100deg,#087f89,#4f8d63)!important;
+  background-clip:text!important;
+  -webkit-background-clip:text!important;
+}
+
+html[data-theme="light"] .hero p,
+html[data-theme="light"] .hero-count-sub{
+  color:#6b8686!important;
+}
+
+html[data-theme="light"] .hero-count{
+  background:rgba(255,255,255,.54)!important;
+  border-color:rgba(25,126,118,.10)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.65);
+}
+
+html[data-theme="light"] .browse-controls,
+html[data-theme="light"] .filter-card,
+html[data-theme="light"] .searchbox{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.76),rgba(244,250,247,.72))!important;
+  border-color:rgba(31,109,105,.11)!important;
+  box-shadow:0 8px 28px rgba(47,99,94,.065)!important;
+}
+
+html[data-theme="light"] .card{
+  background:
+    linear-gradient(180deg,var(--day-card),var(--day-card-2))!important;
+  border-color:rgba(31,109,105,.10)!important;
+  box-shadow:var(--day-shadow)!important;
+}
+html[data-theme="light"] .card:hover{
+  box-shadow:var(--day-shadow-hover)!important;
+  border-color:rgba(20,127,120,.20)!important;
+}
+
+html[data-theme="light"] .card-media{
+  background:
+    radial-gradient(circle at 36% 30%,rgba(79,168,148,.15),transparent 38%),
+    linear-gradient(145deg,#dfeee9,#cfe4df)!important;
+}
+html[data-theme="light"] .media-shade{
+  background:linear-gradient(180deg,transparent 60%,rgba(16,47,48,.38))!important;
+}
+html[data-theme="light"] .card-kind,
+html[data-theme="light"] .card-credit{
+  background:rgba(15,51,52,.62)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  color:#edf7f4!important;
+}
+html[data-theme="light"] .card h3{color:#18383a!important}
+html[data-theme="light"] .sciname{color:#688381!important}
+html[data-theme="light"] .card-stat{
+  background:rgba(30,112,106,.025)!important;
+  border-color:rgba(30,112,106,.05)!important;
+}
+html[data-theme="light"] .card-stat span{color:#466565!important}
+html[data-theme="light"] .care-level small,
+html[data-theme="light"] .diff-word{color:#748f8d!important}
+html[data-theme="light"] .mini-bars b{background:rgba(35,106,103,.09)!important}
+
+html[data-theme="light"] .tab,
+html[data-theme="light"] .quick button,
+html[data-theme="light"] .saved-open,
+html[data-theme="light"] .clear-filters,
+html[data-theme="light"] .detail-tab{
+  background:rgba(255,255,255,.54)!important;
+  border-color:rgba(31,109,105,.09)!important;
+  color:#5d7978!important;
+}
+html[data-theme="light"] .tab.active,
+html[data-theme="light"] .quick button.active,
+html[data-theme="light"] .detail-tab.active{
+  background:rgba(28,133,121,.10)!important;
+  border-color:rgba(28,133,121,.18)!important;
+  color:#164e4c!important;
+}
+html[data-theme="light"] .quick button:hover,
+html[data-theme="light"] .tab:hover{
+  background:rgba(28,133,121,.06)!important;
+}
+
+html[data-theme="light"] .fgroup select,
+html[data-theme="light"] .calc-field input,
+html[data-theme="light"] .power-rows input{
+  background:rgba(255,255,255,.88)!important;
+  border-color:rgba(31,109,105,.12)!important;
+  color:#18383a!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.75);
+}
+
+html[data-theme="light"] .profile{
+  background:
+    radial-gradient(circle at 78% 6%,rgba(79,168,148,.08),transparent 22rem),
+    linear-gradient(180deg,#fbfefd,#eef7f4 72%)!important;
+  border-color:rgba(31,109,105,.12)!important;
+  box-shadow:0 28px 90px rgba(35,75,73,.22)!important;
+}
+html[data-theme="light"] .profile-head{
+  background:linear-gradient(180deg,rgba(251,254,253,.98) 82%,rgba(251,254,253,0))!important;
+}
+html[data-theme="light"] .profile-eyebrow,
+html[data-theme="light"] .profile-en,
+html[data-theme="light"] .profile-science{
+  color:#6b8583!important;
+}
+html[data-theme="light"] .profile-intro,
+html[data-theme="light"] .profile-story-open .story-copy,
+html[data-theme="light"] .story-body{
+  color:#4d6968!important;
+}
+html[data-theme="light"] .profile-quick .qbox,
+html[data-theme="light"] .story-item,
+html[data-theme="light"] .related-card{
+  background:rgba(255,255,255,.62)!important;
+  border-color:rgba(31,109,105,.07)!important;
+}
+html[data-theme="light"] .story-section,
+html[data-theme="light"] .profile-story-open,
+html[data-theme="light"] .profile-story-secondary{
+  border-color:rgba(31,109,105,.09)!important;
+}
+html[data-theme="light"] .profile-sources-quiet{
+  border-color:rgba(31,109,105,.07)!important;
+  color:#78918e!important;
+}
+html[data-theme="light"] .source-quiet-title{color:#66847f!important}
+
+html[data-theme="light"] .saved-drawer{
+  background:
+    radial-gradient(circle at 80% 0%,rgba(81,168,150,.08),transparent 18rem),
+    linear-gradient(180deg,#fbfefd,#edf7f3)!important;
+  border-left-color:rgba(31,109,105,.10)!important;
+}
+html[data-theme="light"] .saved-head{
+  background:linear-gradient(180deg,rgba(251,254,253,.99) 72%,rgba(251,254,253,0))!important;
+}
+html[data-theme="light"] .saved-item{
+  background:rgba(255,255,255,.64)!important;
+  border-color:rgba(31,109,105,.07)!important;
+}
+html[data-theme="light"] .saved-thumb{
+  background:#dbece7!important;
+  color:#6f9990!important;
+}
+
+html[data-theme="light"] .tool-dialog{
+  background:
+    radial-gradient(circle at 85% 0%,rgba(81,168,150,.08),transparent 18rem),
+    linear-gradient(180deg,#fbfefd,#eef7f4)!important;
+  border-color:rgba(31,109,105,.12)!important;
+}
+html[data-theme="light"] .tool-tabs,
+html[data-theme="light"] .tool-panel{
+  background:rgba(255,255,255,.52)!important;
+  border-color:rgba(31,109,105,.08)!important;
+}
+html[data-theme="light"] .tool-tab.active{
+  background:rgba(28,133,121,.09)!important;
+  color:#164e4c!important;
+  border-color:rgba(28,133,121,.15)!important;
+}
+html[data-theme="light"] .tool-panel-title strong{color:#18383a!important}
+html[data-theme="light"] .tool-panel-title span{color:#708a88!important}
+html[data-theme="light"] .calc-result{
+  background:rgba(28,133,121,.055)!important;
+  border-color:rgba(28,133,121,.10)!important;
+}
+html[data-theme="light"] .calc-result strong{color:#184b47!important}
+
+html[data-theme="light"] .fishme-follow-inner{
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.70),rgba(230,244,239,.64))!important;
+  border-color:rgba(31,109,105,.10)!important;
+  box-shadow:0 8px 28px rgba(47,99,94,.06)!important;
+}
+
+html[data-theme="light"] footer{
+  color:#738b89!important;
+  border-color:rgba(31,109,105,.10)!important;
+}
+
+/* Daylight ambience is intentionally quieter than night mode */
+html[data-theme="light"] .aquarium-ambience{opacity:.54}
+html[data-theme="light"] .light-ray{opacity:.16!important;filter:blur(26px)}
+html[data-theme="light"] .bubble{opacity:.18!important}
+html[data-theme="light"] .swim-fish{opacity:.055!important}
+html[data-theme="light"] .plant-silhouette{opacity:.055!important}
+html[data-theme="light"] .mid-plants{opacity:.085!important}
+html[data-theme="light"] .fish-school{opacity:.04!important}
+html[data-theme="light"] .hero-plant{opacity:.15!important}
+html[data-theme="light"] .hero-fish{opacity:.07!important}
+
+/* The hero gets its own subtle "sun-through-water" mood in daylight */
+html[data-theme="light"] .hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(112deg,rgba(255,255,255,.24),transparent 32%),
+    radial-gradient(circle at 74% 18%,rgba(72,161,150,.07),transparent 25rem);
+}
+
+
+/* v23.2 — Daylight ambience boost */
+html[data-theme="light"] .aquarium-ambience{opacity:.82!important}
+html[data-theme="light"] .light-ray{
+  opacity:.34!important;
+  filter:blur(18px)!important;
+}
+html[data-theme="light"] .bubble{
+  opacity:.42!important;
+  border-color:rgba(34,135,132,.28)!important;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(46,157,148,.10) 55%,transparent 72%)!important;
+}
+html[data-theme="light"] .swim-fish{opacity:.13!important}
+html[data-theme="light"] .swim-fish .fish-body{
+  background:linear-gradient(90deg,rgba(38,135,129,.55),rgba(47,155,166,.30))!important;
+}
+html[data-theme="light"] .swim-fish .fish-tail{
+  border-right-color:rgba(38,135,129,.34)!important;
+}
+html[data-theme="light"] .plant-silhouette{opacity:.14!important}
+html[data-theme="light"] .plant-silhouette .stem{
+  background:linear-gradient(180deg,rgba(75,142,94,.50),rgba(38,135,129,.09))!important;
+}
+html[data-theme="light"] .plant-silhouette .leaf{
+  background:linear-gradient(90deg,rgba(74,139,96,.40),rgba(22,143,127,.10))!important;
+}
+html[data-theme="light"] .mid-plants{opacity:.18!important}
+html[data-theme="light"] .fish-school{opacity:.10!important}
+html[data-theme="light"] .fish-school span{
+  background:rgba(25,126,132,.38)!important;
+}
+html[data-theme="light"] .hero-plant{opacity:.24!important}
+html[data-theme="light"] .hero-fish{opacity:.14!important}
+html[data-theme="light"] .hero-fish span{
+  background:linear-gradient(90deg,rgba(18,128,137,.46),rgba(32,137,118,.28))!important;
+}
+html[data-theme="light"] .hero-fish span::after{
+  border-right-color:rgba(32,137,118,.30)!important;
+}
+html[data-theme="light"] .hero-aquarium-scene{
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 97%)!important;
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 9%,#000 97%)!important;
+}
+
 </style>
 </head>
 <body>
@@ -1079,6 +1567,9 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,.card:focus-v
       <span class="brand-mark"><i class="fa-solid fa-fish"></i></span>
       <span><strong>FishMepedia</strong><small>by FishMe · aquarium knowledge</small></span>
     </a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="เปลี่ยนเป็นโหมดสว่าง" title="สลับโหมดมืด/สว่าง">
+      <i class="fa-solid fa-sun" aria-hidden="true"></i>
+    </button>
 </div>
 </header>
 
@@ -1914,6 +2405,31 @@ document.querySelectorAll('#toolModal input[type="number"]').forEach(input=>{
 
 
 for(let i=0;i<18;i++){const b=document.createElement('i');b.className='bubble';b.style.left=Math.random()*100+'%';b.style.animationDuration=(10+Math.random()*18)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.style.opacity=.1+Math.random()*.35;b.style.width=b.style.height=(3+Math.random()*6)+'px';$('#bubbles').appendChild(b)}
+
+const THEME_KEY='fishmepedia:theme:v1';
+function applyTheme(theme){
+  const next=theme==='light'?'light':'dark';
+  document.documentElement.dataset.theme=next;
+  const btn=document.getElementById('themeToggle');
+  if(btn){
+    const light=next==='light';
+    btn.innerHTML=`<i class="fa-solid fa-${light?'moon':'sun'}" aria-hidden="true"></i>`;
+    btn.setAttribute('aria-label',light?'เปลี่ยนเป็นโหมดมืด':'เปลี่ยนเป็นโหมดสว่าง');
+    btn.title=light?'เปลี่ยนเป็นโหมดมืด':'เปลี่ยนเป็นโหมดสว่าง';
+  }
+}
+function initTheme(){
+  let saved='dark';
+  try{saved=localStorage.getItem(THEME_KEY)||'dark'}catch(e){}
+  applyTheme(saved);
+}
+initTheme();
+document.getElementById('themeToggle')?.addEventListener('click',()=>{
+  const next=document.documentElement.dataset.theme==='light'?'dark':'light';
+  applyTheme(next);
+  try{localStorage.setItem(THEME_KEY,next)}catch(e){}
+});
+
 load();
 
 document.getElementById('randomProfileBtn')?.addEventListener('click',randomProfile);
