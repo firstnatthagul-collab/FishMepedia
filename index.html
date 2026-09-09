@@ -285,6 +285,160 @@ linear-gradient(180deg,#061a22,#031218 70%);box-shadow:var(--shadow);position:re
 
 
 
+
+/* v30 — favorites become a useful shortlist */
+.saved-head-copy{min-width:0}
+.saved-summary{
+  margin-top:4px;
+  color:#6f8c87;
+  font-size:9px;
+}
+.saved-tools{
+  position:sticky;
+  top:70px;
+  z-index:2;
+  margin:0 0 11px;
+  padding:9px;
+  border:1px solid rgba(255,255,255,.045);
+  border-radius:14px;
+  background:rgba(5,24,31,.94);
+  backdrop-filter:blur(12px);
+}
+.saved-search{
+  position:relative;
+}
+.saved-search i{
+  position:absolute;
+  left:11px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#607d78;
+  font-size:9px;
+  pointer-events:none;
+}
+.saved-search input{
+  width:100%;
+  height:38px;
+  padding:0 11px 0 29px;
+  border:1px solid rgba(255,255,255,.055);
+  border-radius:11px;
+  background:rgba(255,255,255,.018);
+  color:#d7e9e5;
+  font:400 10.5px Kanit,Manrope,sans-serif;
+  outline:none;
+}
+.saved-search input::placeholder{color:#56716c}
+.saved-filter-row{
+  display:flex;
+  gap:5px;
+  margin-top:7px;
+}
+.saved-filter-chip{
+  flex:1 1 0;
+  min-height:30px;
+  padding:4px 7px;
+  border:1px solid rgba(255,255,255,.045);
+  border-radius:9px;
+  background:rgba(255,255,255,.012);
+  color:#758f8a;
+  font:500 9px Kanit,Manrope,sans-serif;
+  cursor:pointer;
+}
+.saved-filter-chip.active{
+  color:#cfe7e1;
+  border-color:rgba(75,215,189,.13);
+  background:rgba(75,215,189,.065);
+}
+.saved-view-all{
+  width:100%;
+  min-height:38px;
+  margin-top:7px;
+  border:1px solid rgba(75,215,189,.12);
+  border-radius:10px;
+  background:rgba(75,215,189,.065);
+  color:#cfe9e3;
+  font:500 10px Kanit,Manrope,sans-serif;
+  cursor:pointer;
+  transition:transform .18s ease,background .18s ease,border-color .18s ease;
+}
+.saved-view-all:hover{
+  background:rgba(75,215,189,.10);
+  border-color:rgba(75,215,189,.18);
+}
+.saved-view-all:active{transform:scale(.985)}
+.saved-view-all:disabled{opacity:.38;cursor:not-allowed}
+
+.saved-item{transition:border-color .18s ease,background .18s ease,transform .18s ease}
+.saved-item:hover{
+  border-color:rgba(75,215,189,.08);
+  background:rgba(75,215,189,.025);
+}
+.saved-item:active{transform:scale(.992)}
+.saved-list-note{
+  padding:22px 10px;
+  text-align:center;
+  color:#68827e;
+  font-size:10px;
+}
+
+.fav-filter-chip{
+  display:none;
+  align-items:center;
+  gap:6px;
+  margin-top:5px;
+  padding:4px 8px;
+  width:max-content;
+  max-width:100%;
+  border-radius:999px;
+  border:1px solid rgba(226,143,161,.12);
+  background:rgba(226,143,161,.045);
+  color:#9b7c83;
+  font-size:9px;
+}
+.fav-filter-chip.show{display:inline-flex}
+.fav-filter-chip button{
+  width:18px;height:18px;padding:0;border:0;border-radius:50%;
+  background:transparent;color:#9b7c83;cursor:pointer;
+}
+.fav-filter-chip button:hover{
+  background:rgba(226,143,161,.07);
+  color:#d9a4b0;
+}
+
+html[data-theme="light"] .saved-tools{
+  background:rgba(245,251,249,.94)!important;
+  border-color:rgba(30,112,106,.08)!important;
+}
+html[data-theme="light"] .saved-search input{
+  background:rgba(30,112,106,.025)!important;
+  border-color:rgba(30,112,106,.08)!important;
+  color:#294d49!important;
+}
+html[data-theme="light"] .saved-filter-chip{
+  background:rgba(30,112,106,.02)!important;
+  border-color:rgba(30,112,106,.06)!important;
+  color:#627d79!important;
+}
+html[data-theme="light"] .saved-filter-chip.active{
+  background:rgba(30,112,106,.07)!important;
+  border-color:rgba(30,112,106,.12)!important;
+  color:#315d58!important;
+}
+html[data-theme="light"] .saved-view-all{
+  background:rgba(30,112,106,.07)!important;
+  border-color:rgba(30,112,106,.12)!important;
+  color:#315d58!important;
+}
+html[data-theme="light"] .fav-filter-chip{
+  background:rgba(171,91,110,.04)!important;
+  border-color:rgba(171,91,110,.10)!important;
+  color:#8a6870!important;
+}
+
+@media(max-width:520px){
+  .saved-tools{top:67px}
+}
+
 /* v29 — beginner-friendly water matcher */
 .easy-match-grid{
   display:grid;
@@ -2501,6 +2655,11 @@ html[data-theme="light"] .media-fallback::after{color:#6f8b88}
           <span id="waterMatchChipText"></span>
           <button id="clearWaterMatch" type="button" aria-label="ยกเลิกตัวกรองค่าน้ำ"><i class="fa-solid fa-xmark"></i></button>
         </div>
+        <div class="fav-filter-chip" id="favFilterChip">
+          <i class="fa-solid fa-heart"></i>
+          <span>เฉพาะน้องที่เล็งไว้</span>
+          <button id="clearFavFilter" type="button" aria-label="ยกเลิกตัวกรองรายการโปรด"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         </div>
         <div class="view-switch" role="group" aria-label="เลือกรูปแบบการแสดงผล">
           <button id="viewGrid" class="active" type="button" aria-label="มุมมองการ์ด"><i class="fa-solid fa-grip"></i></button>
@@ -2546,12 +2705,29 @@ html[data-theme="light"] .media-fallback::after{color:#6f8b88}
 <div class="saved-backdrop" id="savedBackdrop" aria-hidden="true">
   <aside class="saved-drawer" role="dialog" aria-modal="true" aria-labelledby="savedTitle">
     <div class="saved-head">
-      <div>
+      <div class="saved-head-copy">
         <small>FishMe จำไว้ให้</small>
-        <h2 id="savedTitle">ที่จำไว้</h2>
+        <h2 id="savedTitle">น้องที่เล็งไว้</h2>
+        <div class="saved-summary" id="savedSummary">ยังไม่มีน้องที่จำไว้</div>
       </div>
-      <button id="closeSaved" type="button" aria-label="ปิดที่จำไว้"><i class="fa-solid fa-xmark"></i></button>
+      <button id="closeSaved" type="button" aria-label="ปิดน้องที่เล็งไว้"><i class="fa-solid fa-xmark"></i></button>
     </div>
+
+    <div class="saved-tools">
+      <div class="saved-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="savedSearch" type="search" placeholder="ค้นหาในน้องที่เล็งไว้..." autocomplete="off">
+      </div>
+      <div class="saved-filter-row" role="group" aria-label="กรองน้องที่เล็งไว้">
+        <button class="saved-filter-chip active" type="button" data-saved-cat="All">ทั้งหมด</button>
+        <button class="saved-filter-chip" type="button" data-saved-cat="Fish">ปลา</button>
+        <button class="saved-filter-chip" type="button" data-saved-cat="Plant">ไม้น้ำ</button>
+      </div>
+      <button class="saved-view-all" id="viewSavedOnPage" type="button">
+        <i class="fa-solid fa-heart"></i> ดูเฉพาะน้องที่เล็งไว้บนหน้าเว็บ
+      </button>
+    </div>
+
     <div class="saved-list" id="savedList"></div>
   </aside>
 </div>
@@ -2753,7 +2929,7 @@ const SHEET_ID='1mbgj4inxRxZ3hwsBVwFpEMXKSAE4gBsYXOl9CNikvRM';
 const GID={master:'177066136',media:'2001001',refs:'2001002'};
 const csvUrl=gid=>`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
 const PAGE_SIZE=18;
-let allData=[], filtered=[], mediaMap=new Map(), refsMap=new Map(), page=1, cat='All', quick='', waterMatch=null, easyWaterType=null, easyTemp=null, lastFocused=null;
+let allData=[], filtered=[], mediaMap=new Map(), refsMap=new Map(), page=1, cat='All', quick='', waterMatch=null, favOnly=false, savedDrawerCat='All', easyWaterType=null, easyTemp=null, lastFocused=null;
 let searchTimer=null, loadInFlight=false;
 let viewMode='grid';
 
@@ -2927,6 +3103,7 @@ function applyFilters(){
   const diff=$('#difficulty').value, plc=$('#placement').value, sub=$('#subcategory').value;
   const lighting=$('#lighting').value, co2=$('#co2').value;
   filtered=allData.filter(r=>{
+    if(favOnly && !getFavs().includes(String(r.ID))) return false;
     if(waterMatch){
       if(!inRange(waterMatch.temp,r.Temperature)) return false;
       const speciesPH=parseNumericRange(r.pH);
@@ -2970,6 +3147,7 @@ function applyFilters(){
   page=Math.min(page,Math.max(1,Math.ceil(filtered.length/PAGE_SIZE)));
   render();
   updateWaterMatchChip();
+  updateFavFilterChip();
   updateSavedCount();
 }
 function mediaFor(r){return mediaMap.get(norm(r.ID))||{}}
@@ -3129,26 +3307,64 @@ function toggleFav(id){
 
 
 
+function validSavedRows(){
+  const ids=getFavs();
+  return ids.map(id=>allData.find(r=>String(r.ID)===String(id))).filter(Boolean);
+}
 function updateSavedCount(){
-  const n=getFavs().filter(id=>allData.some(r=>r.ID===id)).length;
-  const el=$('#savedCount'); if(el)el.textContent=n;
+  const rows=validSavedRows();
+  const el=$('#savedCount'); if(el)el.textContent=rows.length;
+  const summary=$('#savedSummary');
+  if(summary){
+    const fish=rows.filter(r=>r.Category==='Fish').length;
+    const plants=rows.filter(r=>r.Category==='Plant').length;
+    summary.textContent=rows.length?`เก็บไว้ ${rows.length} · ปลา ${fish} · ไม้น้ำ ${plants}`:'ยังไม่มีน้องที่จำไว้';
+  }
+  const btn=$('#viewSavedOnPage');
+  if(btn) btn.disabled=!rows.length;
+}
+function updateFavFilterChip(){
+  $('#favFilterChip')?.classList.toggle('show',favOnly);
+}
+function clearFavFilter(){
+  favOnly=false;
+  updateFavFilterChip();
+  page=1;
+  applyFilters();
 }
 function renderSaved(){
-  const ids=getFavs();
-  const rows=ids.map(id=>allData.find(r=>r.ID===id)).filter(Boolean);
+  let rows=validSavedRows();
   updateSavedCount();
-  if(!rows.length){
+
+  const q=norm($('#savedSearch')?.value).toLowerCase();
+  if(savedDrawerCat!=='All') rows=rows.filter(r=>r.Category===savedDrawerCat);
+  if(q){
+    rows=rows.filter(r=>[
+      r.NameTH,r.NameEN,r.ScientificName,r.SubCategory,r.Tags
+    ].some(v=>norm(v).toLowerCase().includes(q)));
+  }
+
+  if(!validSavedRows().length){
     $('#savedList').innerHTML='<div class="saved-empty"><i class="fa-regular fa-heart"></i><strong>ยังไม่มีใครอยู่ตรงนี้</strong><span>เวลาเจอตัวที่ถูกใจ กด “จำไว้ก่อน” แล้ว FishMe จะเก็บไว้ให้ในเครื่องนี้</span></div>';
     return;
   }
+  if(!rows.length){
+    $('#savedList').innerHTML='<div class="saved-list-note">ยังไม่เจอน้องที่ตรงกับคำค้นหาหรือตัวกรองนี้</div>';
+    return;
+  }
+
   $('#savedList').innerHTML=rows.map(r=>{
     const img=imageFor(r,360);
     return `<div class="saved-item">
       <div class="saved-thumb">${img?`<img src="${esc(img)}" alt="${esc(r.NameTH||r.NameEN)}">`:icon(r.Category==='Plant'?'seedling':'fish')}</div>
-      <div class="saved-copy" data-saved-open="${esc(r.ID)}"><strong>${esc(r.NameTH||r.NameEN)}</strong><small>${esc(r.ScientificName||r.NameEN||'')}</small></div>
-      <button class="saved-remove" type="button" data-saved-remove="${esc(r.ID)}" aria-label="เอา ${esc(r.NameTH||r.NameEN)} ออกจากที่จำไว้"><i class="fa-solid fa-xmark"></i></button>
+      <div class="saved-copy" data-saved-open="${esc(r.ID)}">
+        <strong>${esc(r.NameTH||r.NameEN)}</strong>
+        <small>${esc(r.ScientificName||r.NameEN||'')}</small>
+      </div>
+      <button class="saved-remove" type="button" data-saved-remove="${esc(r.ID)}" aria-label="เอา ${esc(r.NameTH||r.NameEN)} ออกจากน้องที่เล็งไว้"><i class="fa-solid fa-xmark"></i></button>
     </div>`;
   }).join('');
+
   document.querySelectorAll('[data-saved-open]').forEach(el=>el.onclick=()=>{
     closeSaved(); openProfile(el.dataset.savedOpen);
   });
@@ -3156,6 +3372,7 @@ function renderSaved(){
     const id=el.dataset.savedRemove;
     setFavs(getFavs().filter(x=>x!==id));
     renderSaved();
+    if(favOnly) applyFilters();
     const b=$('#saveProfile');
     if(b && location.hash.slice(1)===encodeURIComponent(id)){
       b.classList.remove('is-saved');
@@ -3164,6 +3381,10 @@ function renderSaved(){
   });
 }
 function openSaved(){
+  savedDrawerCat='All';
+  const search=$('#savedSearch');
+  if(search) search.value='';
+  document.querySelectorAll('[data-saved-cat]').forEach(x=>x.classList.toggle('active',x.dataset.savedCat==='All'));
   renderSaved();
   $('#savedBackdrop').classList.add('open');
   $('#savedBackdrop').setAttribute('aria-hidden','false');
@@ -3365,6 +3586,8 @@ function resetFilters(){
   ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>$('#'+id).value='');
   quick='';
   waterMatch=null;
+  favOnly=false;
+  updateFavFilterChip();
   easyWaterType=null;
   easyTemp=null;
   document.querySelectorAll('#waterTypeChoices .easy-choice,#tempChoices .easy-choice').forEach(x=>x.classList.remove('active'));
@@ -3471,6 +3694,36 @@ $('#matchGo')?.addEventListener('click',()=>{
   document.querySelector('.results-toolbar')?.scrollIntoView({behavior:'smooth',block:'start'});
 });
 $('#clearWaterMatch')?.addEventListener('click',clearWaterMatch);
+
+$('#savedSearch')?.addEventListener('input',renderSaved);
+document.querySelectorAll('[data-saved-cat]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    savedDrawerCat=btn.dataset.savedCat||'All';
+    document.querySelectorAll('[data-saved-cat]').forEach(x=>x.classList.toggle('active',x===btn));
+    renderSaved();
+  });
+});
+$('#viewSavedOnPage')?.addEventListener('click',()=>{
+  if(!validSavedRows().length) return;
+  favOnly=true;
+  waterMatch=null;
+  updateWaterMatchChip();
+
+  $('#search').value='';
+  ['difficulty','placement','subcategory','lighting','co2'].forEach(id=>{const el=$('#'+id); if(el) el.value='';});
+  quick='';
+  cat='All';
+  document.querySelectorAll('.quick button[data-quick]').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.cat==='All'));
+
+  updateFavFilterChip();
+  page=1;
+  applyFilters();
+  closeSaved();
+  document.querySelector('.results-toolbar')?.scrollIntoView({behavior:'smooth',block:'start'});
+});
+$('#clearFavFilter')?.addEventListener('click',clearFavFilter);
+
 
 
 
