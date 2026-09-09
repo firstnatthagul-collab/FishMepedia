@@ -286,6 +286,51 @@ linear-gradient(180deg,#061a22,#031218 70%);box-shadow:var(--shadow);position:re
 
 
 
+
+/* v30.1 — QA & interaction polish (no new features) */
+.saved-copy{
+  cursor:pointer;
+  min-width:0;
+}
+.saved-copy:focus-visible,
+.saved-remove:focus-visible,
+.saved-filter-chip:focus-visible,
+.saved-view-all:focus-visible,
+#closeSaved:focus-visible{
+  outline:2px solid rgba(97,232,232,.72);
+  outline-offset:2px;
+}
+.saved-remove,
+#closeSaved{
+  min-width:42px;
+  min-height:42px;
+}
+.saved-filter-chip{
+  min-height:38px;
+}
+.saved-view-all{
+  min-height:42px;
+}
+.water-match-chip button,
+.fav-filter-chip button{
+  min-width:28px;
+  min-height:28px;
+}
+@media(max-width:650px){
+  .saved-drawer{
+    width:min(100%,430px);
+  }
+  .saved-tools{
+    padding:8px;
+  }
+  .saved-filter-row{
+    gap:6px;
+  }
+  .saved-item{
+    min-height:68px;
+  }
+}
+
 /* v30 — favorites become a useful shortlist */
 .saved-head-copy{min-width:0}
 .saved-summary{
@@ -2457,10 +2502,6 @@ html[data-theme="light"] .hero-aquarium-scene{
 
   .cards.list-view .card{grid-template-columns:120px minmax(0,1fr)}
   .cards.list-view .card-stats{grid-template-columns:1fr 1fr}
-  .compare-tray{align-items:stretch;flex-direction:column}
-  .compare-items{overflow:auto}
-  .compare-dialog{padding:16px}
-  .compare-grid{grid-template-columns:120px repeat(var(--compare-cols,2),minmax(155px,1fr));overflow:auto}
 }
 
 
@@ -3303,6 +3344,10 @@ function toggleFav(id){
   }
   updateSavedCount();
   if($('#savedBackdrop')?.classList.contains('open'))renderSaved();
+  if(favOnly){
+    page=1;
+    applyFilters();
+  }
 }
 
 
@@ -3357,7 +3402,7 @@ function renderSaved(){
     const img=imageFor(r,360);
     return `<div class="saved-item">
       <div class="saved-thumb">${img?`<img src="${esc(img)}" alt="${esc(r.NameTH||r.NameEN)}">`:icon(r.Category==='Plant'?'seedling':'fish')}</div>
-      <div class="saved-copy" data-saved-open="${esc(r.ID)}">
+      <div class="saved-copy" data-saved-open="${esc(r.ID)}" role="button" tabindex="0" aria-label="เปิดข้อมูล ${esc(r.NameTH||r.NameEN)}">
         <strong>${esc(r.NameTH||r.NameEN)}</strong>
         <small>${esc(r.ScientificName||r.NameEN||'')}</small>
       </div>
@@ -3365,8 +3410,15 @@ function renderSaved(){
     </div>`;
   }).join('');
 
-  document.querySelectorAll('[data-saved-open]').forEach(el=>el.onclick=()=>{
-    closeSaved(); openProfile(el.dataset.savedOpen);
+  document.querySelectorAll('[data-saved-open]').forEach(el=>{
+    const open=()=>{ closeSaved(); openProfile(el.dataset.savedOpen); };
+    el.onclick=open;
+    el.onkeydown=e=>{
+      if(e.key==='Enter'||e.key===' '){
+        e.preventDefault();
+        open();
+      }
+    };
   });
   document.querySelectorAll('[data-saved-remove]').forEach(el=>el.onclick=()=>{
     const id=el.dataset.savedRemove;
@@ -3381,6 +3433,7 @@ function renderSaved(){
   });
 }
 function openSaved(){
+  savedLastFocused=document.activeElement;
   savedDrawerCat='All';
   const search=$('#savedSearch');
   if(search) search.value='';
@@ -3395,6 +3448,9 @@ function closeSaved(){
   $('#savedBackdrop').classList.remove('open');
   $('#savedBackdrop').setAttribute('aria-hidden','true');
   syncPageScrollLock();
+  const target=savedLastFocused;
+  savedLastFocused=null;
+  if(target&&target.focus) target.focus();
 }
 
 function relatedRecords(r){
@@ -3436,7 +3492,8 @@ function profileFactsV17(r){
 
 function openProfile(id){
   const r=allData.find(x=>x.ID===id); if(!r)return;
-  lastFocused=document.activeElement;
+  const wasOpen=$('#modal').classList.contains('open');
+  if(!wasOpen) lastFocused=document.activeElement;
   $('#modal').classList.add('open');
   $('#modal').setAttribute('aria-hidden','false');
   syncPageScrollLock();
@@ -3539,7 +3596,15 @@ function openProfile(id){
   setTimeout(()=>$('#closeModal')?.focus(),0);
 }
 
-function closeProfile(){ $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); syncPageScrollLock(); try{history.replaceState(null,'',location.pathname+location.search)}catch(e){} if(lastFocused&&lastFocused.focus) lastFocused.focus();}
+function closeProfile(){
+  $('#modal').classList.remove('open');
+  $('#modal').setAttribute('aria-hidden','true');
+  syncPageScrollLock();
+  try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+  const target=lastFocused;
+  lastFocused=null;
+  if(target&&target.focus) target.focus();
+}
 
 $('#openSaved').onclick=openSaved;
 $('#closeSaved').onclick=closeSaved;
@@ -3551,6 +3616,15 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape' && $('#toolModal').classList.contains('open')){closeTools();return;}
   if(e.key==='Escape' && $('#savedBackdrop').classList.contains('open')){closeSaved();return;}
   if(e.key==='Escape' && $('#modal').classList.contains('open')) closeProfile();
+  if(e.key==='Tab' && $('#savedBackdrop').classList.contains('open')){
+    const focusable=[...$('#savedBackdrop').querySelectorAll('button,input,[href],[tabindex]:not([tabindex="-1"])')]
+      .filter(el=>!el.disabled && el.offsetParent!==null);
+    if(!focusable.length)return;
+    const first=focusable[0], last=focusable[focusable.length-1];
+    if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
+    return;
+  }
   if(e.key==='Tab' && $('#toolModal').classList.contains('open')){
     const focusable=[...$('#toolModal').querySelectorAll('button,input,[href],[tabindex]:not([tabindex="-1"])')]
       .filter(el=>!el.disabled && el.offsetParent!==null);
@@ -3612,6 +3686,7 @@ function syncPageScrollLock(){
   document.body.style.overflow=locked?'hidden':'';
 }
 
+let savedLastFocused=null;
 let toolLastFocused=null;
 function setToolTab(name){
   document.querySelectorAll('[data-tool-tab]').forEach(btn=>{
